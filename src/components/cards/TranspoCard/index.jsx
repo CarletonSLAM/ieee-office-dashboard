@@ -5,9 +5,6 @@ import ArrivalSlide from './ArrivalSlide'
 
 
 const styles = theme => ({
-  root: {
-    // height: '14vh',,
-  },
   item: {
     paddingTop: '21px'
     
@@ -21,7 +18,6 @@ class TranspoCard extends Component {
   render() {
     const { classes, card } = this.props
     var sliderSettings = {
-      className: classes.root,
       arrows: false,
       dots: true,
       infinite: true,

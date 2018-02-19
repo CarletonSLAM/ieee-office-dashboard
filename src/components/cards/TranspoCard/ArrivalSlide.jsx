@@ -5,7 +5,6 @@ import Grid from 'material-ui/Grid'
 
 const styles = theme => ({
     root: {
-        height: '12vh',
         textAlign: 'center',
     },
     route: {
@@ -47,7 +46,7 @@ const styles = theme => ({
 const ArrivalsSlide = ({ classes, routeNo, trips, heading }) => {
 
     return (
-        <Grid container spacing={8} className={classes.root}>
+        <Grid container spacing={0} className={classes.root}>
             <Grid item xs={3}>
                 <Grid container spacing={8}>
                     <Grid item xs={12}>

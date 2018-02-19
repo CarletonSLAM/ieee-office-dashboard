@@ -6,7 +6,6 @@ import Slider from 'react-slick'
 
 const styles = theme => ({
   root: {
-    height: '14vh' 
   }
 })
 

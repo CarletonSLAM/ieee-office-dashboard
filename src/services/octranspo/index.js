@@ -1,7 +1,7 @@
 
 import credentials from '../../credentials'
 import moment from 'moment'
-
+const OCTranspoStops = { otrain: '3062', mackenzie: '5813' }
 
 const aggregateTrips = (Trips = []) => {
     if (!(Trips instanceof Array)) {
@@ -17,7 +17,7 @@ const aggregateTrips = (Trips = []) => {
 export default {
     getData: () => {
 
-        return Promise.all([5813, 3062].map(stopNo => {
+        return Promise.all(Object.values(OCTranspoStops).map(stopNo => {
             return fetch(`http://localhost:8000/transpo?stopNo=${stopNo}`).then(
                 response => {if (response.ok) { return response.json()}},
                 error => {console.error(error); return error }
@@ -27,12 +27,28 @@ export default {
 
     },
     transformResponse: (responses) => {
+        console.log(responses);
         const routearrays = responses.map((response) => {
-            const routesinStops = response.GetRouteSummaryForStopResult.Routes.Route.filter((route) => route.RouteNo !== 750);
+            let stop = response.GetRouteSummaryForStopResult
+            if (stop.StopNo === OCTranspoStops.otrain) {
+                stop.Routes.Route = stop.Routes.Route || [
+                    {
+                        RouteHeading: 'Northbound',
+                        RouteNo: 2,
+                        Trips: []
+                    },
+                    {
+                        RouteHeading: 'Southbound',
+                        RouteNo: 2,
+                        Trips: []
+                    }
+                ]
+            }
+            const routesinStops = stop.Routes.Route.filter((route) => route.RouteNo !== 750);
             return routesinStops.map((route) => {
                 return {
                     routeNo: route.RouteNo,
-                    heading: route.Direction,
+                    heading: route.RouteHeading,
                     trips: aggregateTrips(route.Trips)
                 }
             })

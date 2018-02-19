@@ -6,9 +6,6 @@ import WeatherRow from './WeatherRow'
 
 
 const styles = theme => ({
-  root: {
-    height: '14vh',
-  },
   error: {
     fontSize: '30px',
     color: '#333',
@@ -25,7 +22,6 @@ class WeatherCard extends Component {
   render() {
     const { classes, card, onRefreshClick } = this.props;
     var sliderSettings = {
-      className: classes.root,
       arrows: false,
       dots: true,
       infinite: true,
@@ -38,10 +34,8 @@ class WeatherCard extends Component {
     }
     if (card && card.data && card.data[0] && card.data[0].status) {
       return (
-        <div className={classes.root}>
-          <div className={classes.error}>
-                Server Error: {card.data[0].msg}
-          </div>
+        <div className={classes.error}>
+              Server Error: {card.data[0].msg}
         </div>
       )
     }
@@ -55,7 +49,7 @@ class WeatherCard extends Component {
           {
             dataRows.map((dataRow, indD) => {
               return (
-                <div className={classes.item} key={`weather-dataSet-${indD}`}>
+                <div key={`weather-dataSet-${indD}`}>
                   <WeatherRow dataRow={dataRow} />
                 </div>
               )

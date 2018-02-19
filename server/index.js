@@ -10,7 +10,6 @@ const credentials = require('../src/credentials')
 const app = module.exports = new Koa()
 
 app.use(cors({origin: '*'}))
-
 router.get('/', hellowWorld)
   .get('/insta', getInsta)
   .get('/transpo', getTranspo)

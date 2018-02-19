@@ -4,7 +4,6 @@ import Slider from 'react-slick'
 
 const styles = theme => ({
   root: {
-    height: '75vh',
     padding: '1vh',
     // backgroundColor: '#000',
     overflow: 'hidden'

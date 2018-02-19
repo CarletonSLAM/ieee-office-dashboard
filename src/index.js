@@ -20,7 +20,7 @@ const wrapper = () => {
         <MuiThemeProvider theme={theme}>
             <Provider store={store}>
                 <App />
-            </Provider>,
+            </Provider>
         </MuiThemeProvider>
     )
 }

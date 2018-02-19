@@ -6,16 +6,20 @@ import EventSlide from './EventSlide'
 
 const styles = theme => ({
   root: {
-    // height: '77vh'
-  },
-  slider: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
   },
   title: {
     textAlign: 'center',
     fontSize: '3rem',
     fontWeight: 'bold',
     color:'#444',
-    padding: '1vh 0'
+    padding: '1vh 0',
+    flex: '1 5%'
+  },
+  slider: {
+    flex: '1 90%',
   }
 })
 
@@ -26,7 +30,6 @@ class CalendarCard extends Component {
   render() {
     const { classes, card, onRefreshClick } = this.props;
     var sliderSettings = {
-      className: classes.slider,
       arrows: false,
       dots: true,
       infinite: true,
@@ -42,17 +45,19 @@ class CalendarCard extends Component {
         <div className={classes.title}>
           Upcoming Events
         </div>
-        <Slider {...sliderSettings}>
-          {
-            cardData.map((event, ind) => {
-              return (
-                <div className={classes.item} key={`event-${ind}`}>
-                  <EventSlide {...event} />
-                </div>
-              )
-            })
-          }
-        </Slider>
+        <div className={classes.slider}>
+          <Slider {...sliderSettings}>
+            {
+              cardData.map((event, ind) => {
+                return (
+                  <div className={classes.item} key={`event-${ind}`}>
+                    <EventSlide {...event} />
+                  </div>
+                )
+              })
+            }
+          </Slider>
+        </div>
       </div>
     )
   }

@@ -6,10 +6,9 @@ import EventSlide from './EventSlide'
 
 const styles = theme => ({
   root: {
-    height: '77vh'
+    // height: '77vh'
   },
   slider: {
-    height: '71vh'    
   },
   title: {
     textAlign: 'center',

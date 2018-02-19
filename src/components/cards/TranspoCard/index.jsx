@@ -6,7 +6,7 @@ import ArrivalSlide from './ArrivalSlide'
 
 const styles = theme => ({
   root: {
-    height: '14vh',
+    // height: '14vh',,
   },
   item: {
     paddingTop: '21px'

@@ -25,9 +25,13 @@
     "typeface-roboto": "0.0.45"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "client-dev": "react-scripts start",
+    "start": "concurrently 'node server/index.js' 'npm run client-dev'",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1"
   }
 }

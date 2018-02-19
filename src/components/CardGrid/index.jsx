@@ -24,6 +24,22 @@ import {
 
 const styles = theme => ({
   root: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column'
+  },
+  topSection: {
+      flexGrow: '5',
+      display: 'flex',
+      flexDirection: 'row'
+  },
+  bottomSection: {
+    flexGrow: '1',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  items: {
+      flexBasis: '50%'
   }
 });
 
@@ -49,55 +65,42 @@ class CardGrid extends Component {
     const { classes, annoucements, instagram, gallery, calendar, transpo, weather, onRefreshClick } = this.props;
     const gridProps = {
       root: {
-        spacing: 40,
-        className: classes.root,
-        container: true,
+        className: classes.root
       },
-      top: { width: 4 },
-      bottom: { width: 6 },
-      middle: {
-        spacing: 40,
-        container: true,
-        tile: {
-          width: 12
-        }
-
+      topSection: {
+          className: classes.topSection
+      },
+      bottomSection: {
+        className: classes.bottomSection
+      },
+      items: {
+          className: classes.items
       }
 
     }
     console.log(this.props)
     return (
-      <Grid {...gridProps.root}>
-        <CardTile {...gridProps.top}>
-          <AnnoucementCard card={annoucements || {}} />
-        </CardTile>
-
-        {/* <Grid item xs={gridProps.top.width}>
-          <Grid {...gridProps.middle}>
-            <CardTile {...gridProps.middle.tile}>
-              <GalleryCard card={gallery || {}} />
+      <div {...gridProps.root}>
+        <div {...gridProps.topSection}>
+            <CardTile {...gridProps.topItems}>
+                <AnnoucementCard card={annoucements || {}} />
             </CardTile>
-            <CardTile {...gridProps.middle.tile}>
-              <InstagramCard card={instagram || {}} />
+            <CardTile {...gridProps.topItems}>
+                <InstagramCard card={instagram || {}} />
             </CardTile>
-          </Grid>
-        </Grid> */}
-        <CardTile {...gridProps.top}>
-            <InstagramCard card={instagram || {}} />
-        </CardTile>
-        <CardTile {...gridProps.top}>
-          <CalendarCard card={calendar} />
-        </CardTile>
-
-        <CardTile {...gridProps.bottom}>
-          <TranspoCard card={transpo} />
-        </CardTile>
-
-        <CardTile {...gridProps.bottom}>
-          <WeatherCard card={weather} />
-        </CardTile>
-
-      </Grid>
+            <CardTile {...gridProps.topItems}>
+                <CalendarCard card={calendar} />
+            </CardTile>
+        </div>
+        <div {...gridProps.bottomSection}>
+            <CardTile {...gridProps.items}>
+                <TranspoCard card={transpo} />
+            </CardTile>
+            <CardTile {...gridProps.bottomItems}>
+                <WeatherCard card={weather} />
+            </CardTile>
+        </div>
+      </div>
     )
   }
 }

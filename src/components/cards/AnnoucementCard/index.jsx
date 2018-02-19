@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   root: {
-    height: '77vh' 
+    // height: '77vh' 
   }
 });
 

@@ -2,39 +2,41 @@ import React from 'react'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 
-
+const wordLimit = 700
 const styles = theme => ({
     root: {
         textAlign: 'left',
         padding: '0vh 2vh',
         overflow: 'hidden',
-        height: '75vh',
+        height: '74vh',
         display: 'flex',
         flexDirection: 'column'
     },
     summary: {
-        flex: '1 15%',
+        flex: '1 13%',
         fontSize: '2.8rem',
         fontWeight: 'bold',
         color: '#2A5A8C',
     },
     duration: {
-        flex: '1 15%',
+        flex: '1 13%',
         fontSize: '2.2rem',
         fontWeight: 'bold',
         color: '#3d3d3d',
     },
     location: {
-        flex: '1 15%',
+        flex: '1 13%',
         fontSize: '2rem',
         fontWeight: 'bold',
         color: '#161616',
     },
     description: {
-        flex: '1 55%',
+        flex: '1 61%',
         fontSize: '1.5rem',
         fontWeight: 'bold',
+        lineHeight: '150%',
         color: '#111',
+        whiteSpace: 'pre-wrap'
     },
     label: {
         fontSize: '1.2rem',
@@ -45,7 +47,10 @@ const styles = theme => ({
 })
 
 const EventSlide = ({ classes, summary, duration, location, description }) => {
-    description = (description.length > 800) ? description.slice(0, 800) + '...' : description;
+    let tempDesc = document.createElement('div');
+    tempDesc.innerHTML = description;
+    description = tempDesc.innerText;
+    description = (description.length > wordLimit) ? description.slice(0, wordLimit) + '...' : description;
     return (
         <div className={classes.root}>
             <div className={classes.summary}>
@@ -61,7 +66,9 @@ const EventSlide = ({ classes, summary, duration, location, description }) => {
             </div>      
             <div className={classes.description}>
                 <div className={classes.label}> Description</div>
-                {description || 'No Description Provided'}
+                <p>
+                    {description || 'No Description Provided'}
+                </p> 
             </div>
         </div>
     )

@@ -37,7 +37,7 @@ function shouldGetData(state, card) {
   } else if (cardData.isFetching) {
     return false
   } else {
-    return cardData.didInvalidate
+    return cardData.isStale
   }
 }
 

@@ -31,7 +31,6 @@ class CalendarCard extends Component {
     const { classes, card, onRefreshClick } = this.props;
     var sliderSettings = {
       arrows: false,
-      dots: true,
       infinite: true,
       speed: 400,
       slidesToShow: 1,

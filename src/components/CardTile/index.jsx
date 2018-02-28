@@ -12,8 +12,8 @@ const styles = theme => ({
 
 const CardTile = (props) => {
   return (
-    <div className={props.className + ' ' + props.classes.tile}>
-      {props.children}
+    <div className={props.className + ' ' + props.classes.tile} style={props.loading ? {backgroundColor: '#eff7ff'} : { backgroundColor: '#fff'}} style={props.style}>
+      {!props.loading ? props.children : ''}
     </div>
   )
 }

@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CardTile from '../CardTile'
-import Grid from 'material-ui/Grid'
 import { withStyles } from 'material-ui/styles'
-import services from '../../services'
 
 import {
   CalendarCard,
-  GalleryCard,
+  FacebookCard,
+  InfoCard,
   InstagramCard,
-  AnnoucementCard,
   TranspoCard,
   WeatherCard
 } from '../cards'
@@ -24,7 +22,49 @@ import {
 
 const styles = theme => ({
   root: {
-  }
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  topSection: {
+    flex: '1 84%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch'
+  },
+
+  topMiddleSection: {
+    flex: '1 28%',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '0'
+  },
+  topLeftRightSection: {
+    flex: '1 36%',
+    margin: '1vh',
+    width: '0',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  bottomSection: {
+    flex: '1 16%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch'
+  },
+  bottomItems: {
+    flex: '1 50%',
+    margin: '1vh',
+    width: '0'
+  },
+  topLeftItems: {
+    flex: '1 50%'
+  },
+  topMiddleItems: {
+    flex: '1 50%',
+    margin: '1vh',
+    // width: '0'
+  },
 });
 
 class CardGrid extends Component {
@@ -33,11 +73,29 @@ class CardGrid extends Component {
     this.handleRefreshClick = this.handleRefreshClick.bind(this)
   }
   componentDidMount() {
+    this.fetchDatasources()
+    setInterval(this.fetchDatasources.bind(this), 100000);
+  }
+
+  fetchDatasources() {
     const { dispatch } = this.props
+
+
+    console.log('staling');
+    dispatch(setDataStale('weather'))
+    dispatch(setDataStale('transpo'))
+    dispatch(setDataStale('calendar'))
+    dispatch(setDataStale('instagram'))
+    dispatch(setDataStale('instagram'))
+    dispatch(setDataStale('facebook'))
+    console.log('fetching');
+
     dispatch(getDataIfNeeded('weather'))
     dispatch(getDataIfNeeded('transpo'))
     dispatch(getDataIfNeeded('calendar'))
     dispatch(getDataIfNeeded('instagram'))
+    dispatch(getDataIfNeeded('instagram'))
+    dispatch(getDataIfNeeded('facebook'))
   }
 
   handleRefreshClick(card) {
@@ -46,64 +104,45 @@ class CardGrid extends Component {
     dispatch(getDataIfNeeded(card))
   }
   render() {
-    const { classes, annoucements, instagram, gallery, calendar, transpo, weather, onRefreshClick } = this.props;
-    const gridProps = {
-      root: {
-        spacing: 40,
-        className: classes.root,
-        container: true,
-      },
-      top: { width: 4 },
-      bottom: { width: 6 },
-      middle: {
-        spacing: 40,
-        container: true,
-        tile: {
-          width: 12
-        }
-
-      }
-
-    }
-    console.log(this.props)
+    const { classes, annoucements, facebook, instagram, calendar, transpo, weather, onRefreshClick } = this.props;
     return (
-      <Grid {...gridProps.root}>
-        <CardTile {...gridProps.top}>
-          <AnnoucementCard card={annoucements || {}} />
-        </CardTile>
-
-        {/* <Grid item xs={gridProps.top.width}>
-          <Grid {...gridProps.middle}>
-            <CardTile {...gridProps.middle.tile}>
-              <GalleryCard card={gallery || {}} />
-            </CardTile>
-            <CardTile {...gridProps.middle.tile}>
+      <div className={classes.root} >
+        <div className={classes.topSection}>
+          <div className={classes.topLeftRightSection}>
+            <CardTile loading={instagram && instagram.isFetching || false} className={classes.topLeftItems} style= {{marginBottom: '1vh'}}>
               <InstagramCard card={instagram || {}} />
             </CardTile>
-          </Grid>
-        </Grid> */}
-        <CardTile {...gridProps.top}>
-            <InstagramCard card={instagram || {}} />
-        </CardTile>
-        <CardTile {...gridProps.top}>
-          <CalendarCard card={calendar} />
-        </CardTile>
-
-        <CardTile {...gridProps.bottom}>
-          <TranspoCard card={transpo} />
-        </CardTile>
-
-        <CardTile {...gridProps.bottom}>
-          <WeatherCard card={weather} />
-        </CardTile>
-
-      </Grid>
+            <CardTile loading={facebook && facebook.isFetching || false} className={classes.topLeftItems} style= {{marginTop: '1vh'}}>
+              <FacebookCard card={facebook || {}} />
+            </CardTile>
+          </div>
+          <div className={classes.topMiddleSection}>
+            <CardTile className={classes.topMiddleItems}>
+              <InfoCard />
+            </CardTile>
+            <CardTile loading={instagram && instagram.isFetching || facebook && facebook.isFetching || false} className={classes.topMiddleItems}>
+              {/* <InstagramCard cards={[instagram, facebook] || []} /> */}
+            </CardTile>
+          </div>
+          <CardTile loading={calendar && calendar.isFetching || false} className={classes.topLeftRightSection}>
+            <CalendarCard card={calendar} />
+          </CardTile>
+        </div>
+        <div className={classes.bottomSection}>
+          <CardTile loading={transpo && transpo.isFetching || false} className={classes.bottomItems}>
+            <TranspoCard card={transpo} />
+          </CardTile>
+          <CardTile loading={weather && weather.isFetching || false} className={classes.bottomItems}>
+            <WeatherCard card={weather} />
+          </CardTile>
+        </div>
+      </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {...state.cards }
+  return { ...state.cards }
 }
 
 CardGrid.propTypes = {

@@ -7,7 +7,6 @@ import Grid from 'material-ui/Grid'
 
 const styles = theme => ({
     root: {
-        margin: '0.8vh 0',
         padding: '0.9vh',
         textAlign: 'center'
     },

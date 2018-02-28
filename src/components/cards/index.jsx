@@ -1,15 +1,15 @@
 import CalendarCard from './CalendarCard'
-import GalleryCard from './GalleryCard'
+import FacebookCard from './FacebookCard'
+import InfoCard from './InfoCard'
 import InstagramCard from './InstagramCard'
-import AnnoucementCard from './AnnoucementCard'
 import TranspoCard from './TranspoCard'
 import WeatherCard from './WeatherCard';
 
 export {
     CalendarCard,
-    GalleryCard,
+    FacebookCard,
+    InfoCard,
     InstagramCard ,
-    AnnoucementCard,
     TranspoCard,
     WeatherCard   
 }

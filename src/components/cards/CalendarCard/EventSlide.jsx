@@ -2,33 +2,41 @@ import React from 'react'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 
-
+const wordLimit = 700
 const styles = theme => ({
     root: {
         textAlign: 'left',
-        padding: '2vh',
-        height: '69vh',
-        overflow: 'hidden'
+        padding: '0vh 2vh',
+        overflow: 'hidden',
+        height: '74vh',
+        display: 'flex',
+        flexDirection: 'column'
     },
     summary: {
+        flex: '1 13%',
         fontSize: '2.8rem',
         fontWeight: 'bold',
         color: '#2A5A8C',
     },
     duration: {
+        flex: '1 13%',
         fontSize: '2.2rem',
         fontWeight: 'bold',
         color: '#3d3d3d',
     },
     location: {
+        flex: '1 13%',
         fontSize: '2rem',
         fontWeight: 'bold',
         color: '#161616',
     },
     description: {
+        flex: '1 61%',
         fontSize: '1.5rem',
         fontWeight: 'bold',
+        lineHeight: '150%',
         color: '#111',
+        whiteSpace: 'pre-wrap'
     },
     label: {
         fontSize: '1.2rem',
@@ -39,27 +47,30 @@ const styles = theme => ({
 })
 
 const EventSlide = ({ classes, summary, duration, location, description }) => {
-
+    let tempDesc = document.createElement('div');
+    tempDesc.innerHTML = description;
+    description = tempDesc.innerText;
+    description = (description.length > wordLimit) ? description.slice(0, wordLimit) + '...' : description;
     return (
-        <Grid container spacing={16} className={classes.root}>
-            <Grid item xs={12}>
-                <div className={classes.label}> Summary</div>
-                <div className={classes.summary}>{summary}</div>                
-            </Grid>
-            <Grid item xs={12}>
-                <div className={classes.label}> Date and Time</div>
-                <div className={classes.duration}>{duration}</div>
-            </Grid>
-            <Grid item xs={12}>
-                <div className={classes.label}> Location</div>
-                <div className={classes.location}>{location}</div>                
-            </Grid>
-            <Grid item xs={12}>
+        <div className={classes.root}>
+            <div className={classes.summary}>
+                {summary}
+            </div>   
+            <div className={classes.duration}>
+            <div className={classes.label}>Duration</div>
+                {duration}
+            </div>
+            <div className={classes.location}>
+            <div className={classes.label}> Location</div>
+                {location}
+            </div>      
+            <div className={classes.description}>
                 <div className={classes.label}> Description</div>
-                <div className={classes.description}>{description || 'No Description Provided'}</div>
-            </Grid>
-
-        </Grid>
+                <p>
+                    {description || 'No Description Provided'}
+                </p> 
+            </div>
+        </div>
     )
 }
 

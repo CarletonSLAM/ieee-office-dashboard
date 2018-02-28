@@ -5,7 +5,6 @@ import Grid from 'material-ui/Grid'
 import WeatherTile from './WeatherTile'
 const WeatherRow = ({ dataRow}) => {
   return (
-
     <Grid container spacing={0}>
       {dataRow.map((data, ind) => {
         return (

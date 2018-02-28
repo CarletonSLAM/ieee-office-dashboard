@@ -4,57 +4,81 @@ import Slider from 'react-slick'
 
 const styles = theme => ({
   root: {
-    height: '75vh',
-    padding: '1vh',
-    // backgroundColor: '#000',
-    overflow: 'hidden'
+  },
+  label: {
+    fontSize: '3em',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#000',
+    paddingBottom: '1vh'
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: '30vh',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: '0vh 2vh',
   },
   imgCon: {
+    flex: '1 50%',
     overflow: 'hidden',
-    width: '40h',
     backgroundColor: '#000',
   },
-  img: {
-    height: '40vh',
-    float: 'none',
-    margin: 'auto',
-    borderRadius: '3px',
-  },
   caption: {
-    padding: '2vh',
+    flex: '1 50%',    
+    padding: '0vh 2vh',
     color: '#444',
     fontWeight: 'bold',
     fontSize: '1.5rem',
     textAlign: 'center',
-  }
+  },
+  img: {
+    height: '30vh',
+    float: 'none',
+    margin: 'auto',
+    borderRadius: '3px',
+  },
 });
 
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+}
+
 const InstagramCard = ({ classes, card }) => {
+  let cardData = [];
   var sliderSettings = {
-    className: classes.root,
     arrows: false,
-    dots: true,
     infinite: true,
     speed: 400,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1000,
+    autoplaySpeed: 100000,
   }
-  const cardData = card.data || [];
+  cardData = card.data || [];
   return (
     <div className={classes.root}>
+      <div className={classes.label}>Instagram</div>
       <Slider {...sliderSettings}>
-        {cardData.map(({ caption, imgSrc, date }, ind) => {
-          return (
-            <div key={`img-${ind}`}>
-              <div className={classes.imgCon} >
-                <img className={classes.img} src={imgSrc} alt={caption} />
+        {cardData.map(( data, ind) => {
+            const {caption,imgSrc} = data;
+            return (
+              <div key={`img-${ind}`}>
+                <div className={classes.container}>
+                <div className={classes.imgCon}>
+                  <img className={classes.img} src={imgSrc} alt={caption} />
+                </div>
+                <div className={classes.caption}>
+                  {(caption.length > 350) ? caption.substring(0, 350) + '...' : caption}
+                </div>
               </div>
-              <div className={classes.caption}>
-                {(caption.length > 350) ? caption.substring(0, 350) + '...' : caption}
               </div>
-            </div>
             )
         })}
       </Slider>

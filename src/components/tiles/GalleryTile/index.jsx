@@ -6,23 +6,32 @@ import { flexAlign, card } from '../../../styles'
 
 const styles = theme => ({
   root: {
+    height: '650px',
+    ...flexAlign.centerHorVert,
 
   },
   item: {
-    height: '619px',
-    ...flexAlign.centerHorVert
+    ...flexAlign.centerHorVert,
+    backgroundColor: '#222',
+    margin: '24px',
+    width: '95%',
+    height: '90%',
+    flexDirection: 'column',
+    boxShadow: card.boxShadow,
   },
   imgContainer: {
-    height: '90%',
-    width: '100%',
-    margin: '24px',
-    backgroundColor: '#222',
-    boxShadow: card.boxShadow,
+    flex: '1 90%',
     ...flexAlign.centerHorVert
+  },
+  caption: {
+    flex: '1 10%',
+    color: '#fff',
+    fontSize: '2.5em',
+    fontWeight: 'bold'
   },
   img: {
     maxWidth: '90%',
-    maxHeight: '90%',
+    maxHeight: '100%',
   }
 })
 
@@ -38,15 +47,20 @@ const GalleryCard = ({ classes, card, onRefreshClick }) => {
   }
   const cardData = card.data || []
   return (
-    <div className={classes.root}>
+    <div>
       <Slider {...sliderSettings}>
         {
-          (cardData).map(({ src }, ind) => {
+          (cardData).map(({ src, caption }, ind) => {
             return (
               <div key={`event-${ind}`}>
-                <div className={classes.item}>
-                  <div className={classes.imgContainer}>
-                    <img className={classes.img} src={src} alt={src} />
+                <div className={classes.root}>
+                  <div className={classes.item}>
+                    <div className={classes.imgContainer}>
+                      <img className={classes.img} src={src} alt={src} />
+                    </div>
+                    <div className={classes.caption}>
+                      {caption || 'IEEE Carleton Event'}
+                    </div>
                   </div>
                 </div>
               </div>

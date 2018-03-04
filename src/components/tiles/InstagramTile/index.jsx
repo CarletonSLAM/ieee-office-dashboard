@@ -1,6 +1,7 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 import Slider from 'react-slick'
+import { card, flexAlign } from '../../../styles'
 
 const styles = theme => ({
   root: {
@@ -19,6 +20,7 @@ const styles = theme => ({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: '0vh 2vh',
+    ...card
   },
   imgCon: {
     flex: '1 50%',
@@ -62,13 +64,13 @@ const InstagramCard = ({ classes, card }) => {
             return (
               <div key={`img-${ind}`}>
                 <div className={classes.container}>
-                <div className={classes.imgCon}>
-                  <img className={classes.img} src={imgSrc} alt={caption} />
+                  <div className={classes.imgCon}>
+                    <img className={classes.img} src={imgSrc} alt={caption} />
+                  </div>
+                  <div className={classes.caption}>
+                    {(caption.length > 350) ? caption.substring(0, 350) + '...' : caption}
+                  </div>
                 </div>
-                <div className={classes.caption}>
-                  {(caption.length > 350) ? caption.substring(0, 350) + '...' : caption}
-                </div>
-              </div>
               </div>
             )
         })}

@@ -3,7 +3,7 @@ import { withStyles } from 'material-ui/styles'
 import Slider from 'react-slick'
 
 
-import WeatherTile from './WeatherTile'
+import WeatherCard from './WeatherCard'
 
 
 const styles = theme => ({
@@ -32,7 +32,7 @@ const sliderSettings = {
   vertical: true,
 }
 
-const WeatherCard = ({ classes, card, onRefreshClick }) => {
+const WeatherTile = ({ classes, card, onRefreshClick }) => {
 
   if (card && card.data && card.data[0] && card.data[0].status) {
     return (
@@ -55,7 +55,7 @@ const WeatherCard = ({ classes, card, onRefreshClick }) => {
                 <div className={classes.rowFlex} >
                   {dataRow.map((data, ind) => {
                     return (
-                      <WeatherTile {...data} index={ind} />
+                      <WeatherCard {...data} key={`weather-dataSet-${(indD*2) + ind}`} />
                     )
                   })}
                 </div>
@@ -68,4 +68,4 @@ const WeatherCard = ({ classes, card, onRefreshClick }) => {
   }
 }
 
-export default withStyles(styles)(WeatherCard);
+export default withStyles(styles)(WeatherTile);

@@ -5,9 +5,11 @@ import gallery from './gallery'
 import instagram from './instagram'
 import facebook from './facebook'
 
-export default { transpo,
+export default {
+    transpo,
     weather,
     calendar,
     instagram,
     facebook,
-    gallery }
+    gallery
+}

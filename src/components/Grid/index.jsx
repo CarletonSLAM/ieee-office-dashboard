@@ -80,7 +80,7 @@ class Grid extends Component {
   }
   componentDidMount() {
     this.fetchDatasources()
-    setInterval(this.fetchDatasources.bind(this), 100000);
+    setInterval(this.fetchDatasources.bind(this), 60000);
   }
 
   fetchDatasources() {
@@ -126,7 +126,7 @@ class Grid extends Component {
           </div>
           <div className={classes.topMiddleSection}>
             <GridTile className={classes.topMiddleInfoTile}>
-              <InfoTile />
+              <InfoTile card={calendar}/>
             </GridTile>
             <GridTile loading={gallery && gallery.isFetching} className={classes.topMiddleGalleryTile}>
               <GalleryTile card={gallery || {}} />

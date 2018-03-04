@@ -6,10 +6,10 @@ const wordLimit = 700
 const styles = theme => ({
     root: {
         textAlign: 'left',
-        margin: '2vh',
+        margin: '1vh',
         padding: '2vh',
         overflow: 'hidden',
-        height: '67vh',
+        height: '71vh',
         display: 'flex',
         flexDirection: 'column',
         ...card

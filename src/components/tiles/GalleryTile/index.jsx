@@ -6,16 +6,16 @@ import { flexAlign, card } from '../../../styles'
 
 const styles = theme => ({
   root: {
-    height: '650px',
+    height: '680px',
     ...flexAlign.centerHorVert,
 
   },
   item: {
     ...flexAlign.centerHorVert,
     backgroundColor: '#222',
-    margin: '24px',
-    width: '95%',
-    height: '90%',
+    margin: '1vh',
+    width: '98%',
+    height: '95%',
     flexDirection: 'column',
     boxShadow: card.boxShadow,
   },
@@ -30,7 +30,7 @@ const styles = theme => ({
     fontWeight: 'bold'
   },
   img: {
-    maxWidth: '90%',
+    maxWidth: '95%',
     maxHeight: '100%',
   }
 })
@@ -43,7 +43,7 @@ const GalleryCard = ({ classes, card, onRefreshClick }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 100000,
+    autoplaySpeed: 5000,
   }
   const cardData = card.data || []
   return (

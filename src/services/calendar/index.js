@@ -31,6 +31,7 @@ export default {
         summary, start, end, description, location
     }) => ({
         summary,
+        start: start.dateTime,
         duration: calculateEventDuration(moment(start.dateTime), moment(end.dateTime)),
         description,
         location

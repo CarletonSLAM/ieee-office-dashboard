@@ -5,27 +5,37 @@ import { card, flexAlign } from '../../../styles'
 
 const styles = theme => ({
   root: {
+    height: '30vh',
+    display: 'flex',
+    flexDirection: 'column'
   },
   label: {
-    fontSize: '3em',
+    flex: '1 5%',
+    fontSize: '2em',
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#000',
-    paddingBottom: '1vh'
+    paddingTop: '0.5vh'
+  },
+  slider: {
+    flex: '1 95%',
   },
   container: {
     display: 'flex',
     flexDirection: 'row',
-    height: '30vh',
+    height: '31vh',
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: '0vh 2vh',
-    ...card
+    margin: '1vh',
+    padding: '1vh',
+    ...card,
+
+    ...flexAlign.centerHorVert
   },
   imgCon: {
     flex: '1 50%',
     overflow: 'hidden',
-    backgroundColor: '#000',
+    ...flexAlign.centerHorVert
   },
   caption: {
     flex: '1 50%',    
@@ -36,7 +46,8 @@ const styles = theme => ({
     textAlign: 'center',
   },
   img: {
-    height: '30vh',
+    maxHeight: '100%',
+    maxWidth: '100%',
     float: 'none',
     margin: 'auto',
     borderRadius: '3px',
@@ -52,29 +63,31 @@ const InstagramCard = ({ classes, card }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 100000,
+    autoplaySpeed: 5000,
   }
   cardData = card.data || [];
   return (
     <div className={classes.root}>
       <div className={classes.label}>Instagram</div>
-      <Slider {...sliderSettings}>
-        {cardData.map(( data, ind) => {
-            const {caption,imgSrc} = data;
-            return (
-              <div key={`img-${ind}`}>
-                <div className={classes.container}>
-                  <div className={classes.imgCon}>
-                    <img className={classes.img} src={imgSrc} alt={caption} />
-                  </div>
-                  <div className={classes.caption}>
-                    {(caption.length > 350) ? caption.substring(0, 350) + '...' : caption}
+      <div className={classes.slider}>
+        <Slider {...sliderSettings}>
+          {cardData.map(( data, ind) => {
+              const {caption,imgSrc} = data;
+              return (
+                <div key={`img-${ind}`}>
+                  <div className={classes.container}>
+                    <div className={classes.imgCon}>
+                      <img className={classes.img} src={imgSrc} alt={caption} />
+                    </div>
+                    <div className={classes.caption}>
+                      {(caption.length > 350) ? caption.substring(0, 350) + '...' : caption}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-        })}
-      </Slider>
+              )
+          })}
+        </Slider>
+      </div>
     </div>
   )
 }

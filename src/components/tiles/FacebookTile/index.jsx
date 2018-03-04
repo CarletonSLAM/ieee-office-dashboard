@@ -1,31 +1,46 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 import Slider from 'react-slick'
+import { card, flexAlign } from '../../../styles'
 
 const styles = theme => ({
   root: {
-    height: '20vh'
+    display:'flex',
+    height: '39vh',
+    flexDirection: 'column'
   },
   label: {
-    fontSize: '3em',
+    flex: '1 5%',
+    fontSize: '2em',
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#3b5998',
-    paddingBottom: '1vh'
+    paddingTop: '0.5vh'
+  },
+  slider: {
+    flex: '1 95%',
   },
   container: {
     flex: '1',
     display: 'flex',
     flexDirection: 'column',
     fontWeight: 'bold',
-    padding: '0vh 2vh',
+    margin: '1vh',
+    padding: '1vh',
+    height: '31vh',
+    ...card
   },
   story: {
     textAlign: 'left',
-    flex: '1 10%',
+    flex: '1 5%',
     fontSize: '1.2em',
     color: '#333'
-
+  },
+  time: {
+    textAlign: 'left',
+    flex: '1 5%',
+    fontSize: '1.2em',
+    color: '#333'
   },
   name: {
     flex: '1 10%',
@@ -34,24 +49,30 @@ const styles = theme => ({
     padding: '10px 0px'
   },
   postBody: {
-    flex: '1 80%',
+    flex: '1 75%',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    ...flexAlign.centerHorVert
+  },
+  postBodyBig: {
+    flex: '1 90%'
   },
   message: {
+    textAlign: 'center',
+    paddingLeft: '2vh',
     flex: '1 60%',
     fontSize: '1.5rem',
   },
   messageBig: {
-    flex: '1 60%',
-    fontSize: '2.5rem',
+    flex: '1 100%',
+    fontSize: '3.5rem',
   },
   imgContainer: {
     flex: '1 30%',
   },
   img: {
     height: '20vh',
-    
+
   },
 })
 const sliderSettings = {
@@ -64,30 +85,33 @@ const sliderSettings = {
   autoplaySpeed: 100000,
 }
 
-const SocialCard = ({classes, card}) => {
+const SocialCard = ({ classes, card }) => {
   const cardData = card.data || [];
   return (
     <div className={classes.root}>
-    <div className={classes.label}>Facebook</div>
-      <Slider {...sliderSettings}>
-      {cardData.map(({story, src, message, name} , ind) => {
-       return (
-          <div key={`fb-${ind}`}>
-            <div className={classes.container}>
-              <div className={classes.story}>{story || 'IEEE Carleton Posted'}</div>
-              <div className={classes.name}>{name}</div>
-              <div className={classes.postBody}>
-                { (src) ? 
-                    <div className={classes.imgContainer}><img className={classes.img} src={src} alt={message} /></div>
-                  : '' 
-                }
-                { message.length ? <div className={ (src) ? classes.message : classes.messageBig}>{(message.length > 280) ? message.substring(0, 280) + '...' : message}</div> : '' }
+      <div className={classes.label}>Facebook</div>
+      <div className={classes.slider}>
+        <Slider {...sliderSettings}>
+          {cardData.map(({ story, src, message, name, time }, ind) => {
+            return (
+              <div key={`fb-${ind}`}>
+                <div className={classes.container}>
+                  <div className={classes.story}>{story || 'IEEE Carleton Posted'}</div>
+                  <div className={classes.time}>{time}</div>
+                  {name ? <div className={classes.name}>{name}</div> : ''}
+                  <div className={(src) ?  classes.postBody : classes.postBodyBig}>
+                    {(src) ?
+                      <div className={classes.imgContainer}><img className={classes.img} src={src} alt={message} /></div>
+                      : ''
+                    }
+                    {message.length ? <div className={(src) ? classes.message : classes.messageBig}>{(message.length > 280) ? message.substring(0, 280) + '...' : message}</div> : ''}
+                  </div>
+                </div>
               </div>
-            </div>
-        </div>
-       );
-      })}
-      </Slider>
+            );
+          })}
+        </Slider>
+      </div>
     </div>
   );
 }

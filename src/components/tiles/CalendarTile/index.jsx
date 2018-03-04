@@ -12,11 +12,14 @@ const styles = theme => ({
   },
   title: {
     textAlign: 'center',
-    fontSize: '3rem',
+    fontSize: '2em',
     fontWeight: 'bold',
     color: '#444',
-    paddingTop: '1vh',
-    flex: '1 10%'
+    paddingTop: '0.5vh',
+    flex: '1 5%'
+  },
+  slider: {
+    flex: '1 95%'
   }
 })
 

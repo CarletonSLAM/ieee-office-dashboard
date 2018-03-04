@@ -42,7 +42,7 @@ const styles = theme => ({
     padding: '0vh 2vh',
     color: '#444',
     fontWeight: 'bold',
-    fontSize: '1.5rem',
+    fontSize: '1.1em',
     textAlign: 'center',
   },
   img: {

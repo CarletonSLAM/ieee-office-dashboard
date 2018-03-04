@@ -6,7 +6,10 @@ import { flexAlign, card } from '../../../styles'
 
 const styles = theme => ({
   root: {
-    height: '680px',
+    height: '468px'
+  },
+  container: {
+    height: '465px',
     ...flexAlign.centerHorVert,
 
   },
@@ -14,7 +17,7 @@ const styles = theme => ({
     ...flexAlign.centerHorVert,
     backgroundColor: '#222',
     margin: '1vh',
-    width: '98%',
+    width: '95%',
     height: '95%',
     flexDirection: 'column',
     boxShadow: card.boxShadow,
@@ -31,7 +34,7 @@ const styles = theme => ({
   },
   img: {
     maxWidth: '95%',
-    maxHeight: '100%',
+    maxHeight: '90%',
   }
 })
 
@@ -47,13 +50,13 @@ const GalleryCard = ({ classes, card, onRefreshClick }) => {
   }
   const cardData = card.data || []
   return (
-    <div>
+    <div className={classes.root}>
       <Slider {...sliderSettings}>
         {
           (cardData).map(({ src, name }, ind) => {
             return (
               <div key={`event-${ind}`}>
-                <div className={classes.root}>
+                <div className={classes.container}>
                   <div className={classes.item}>
                     <div className={classes.imgContainer}>
                       <img className={classes.img} src={src} alt={src} />

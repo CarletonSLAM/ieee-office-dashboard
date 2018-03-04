@@ -26,14 +26,15 @@ const styles = theme => ({
     flexDirection: 'column',
     fontWeight: 'bold',
     margin: '1vh',
+    marginTop: '0',
     padding: '1vh',
-    height: '31vh',
+    height: '32vh',
     ...card
   },
   story: {
     textAlign: 'left',
     flex: '1 5%',
-    fontSize: '1.2em',
+    fontSize: '1em',
     color: '#333'
   },
   time: {
@@ -45,7 +46,7 @@ const styles = theme => ({
   name: {
     flex: '1 10%',
     textAlign: 'left',
-    fontSize: '2.5em',
+    fontSize: '2em',
     padding: '10px 0px'
   },
   postBody: {
@@ -61,7 +62,7 @@ const styles = theme => ({
     textAlign: 'center',
     paddingLeft: '2vh',
     flex: '1 60%',
-    fontSize: '1.5rem',
+    fontSize: '1.2em',
   },
   messageBig: {
     flex: '1 100%',

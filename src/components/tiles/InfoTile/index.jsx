@@ -14,10 +14,10 @@ const styles = theme => ({
     padding: '1vh'
   },
   time: {
-    fontSize: '4em',
+    fontSize: '3em',
   },
   nextEvent: {
-    fontSize: '4em',
+    fontSize: '3em',
     paddingTop: '2vh',
     color: '#2A5A8C',
   },

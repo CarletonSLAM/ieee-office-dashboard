@@ -46,7 +46,8 @@ const styles = theme => ({
         fontWeight: 'bold',
     },
     label: {
-        color: '#444'
+        color: '#444',
+        fontSize: '0.7em'
     }
 });
 

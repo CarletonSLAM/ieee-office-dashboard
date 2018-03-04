@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import moment from 'moment'
-import Slider from 'react-slick'
 
 
 const updateRateHalfMinute = 5000
@@ -20,7 +19,7 @@ const styles = theme => ({
 class InfoCard extends Component {
   constructor(props) {
     super(props)
-    this.state={
+    this.state = {
       dateTime: moment().format(timeFormat),
       dateInterval: setInterval(this.refreshDate.bind(this), updateRateHalfMinute)
     }

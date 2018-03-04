@@ -1,12 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { withStyles } from 'material-ui/styles'
-import moment from 'moment'
 import Slider from 'react-slick'
-
-
-const updateRateHalfMinute = 5000
-const timeFormat = 'ddd. MMM Do, hh:mm A'
-
 
 const styles = theme => ({
   root: {
@@ -29,7 +23,7 @@ const styles = theme => ({
   story: {
     textAlign: 'left',
     flex: '1 10%',
-    fontSize: '1.5em',
+    fontSize: '1.2em',
     color: '#333'
 
   },
@@ -84,7 +78,7 @@ const SocialCard = ({classes, card}) => {
               <div className={classes.name}>{name}</div>
               <div className={classes.postBody}>
                 { (src) ? 
-                    <div className={classes.imgContainer}><img className={classes.img} src={src} /></div>
+                    <div className={classes.imgContainer}><img className={classes.img} src={src} alt={message} /></div>
                   : '' 
                 }
                 { message.length ? <div className={ (src) ? classes.message : classes.messageBig}>{(message.length > 280) ? message.substring(0, 280) + '...' : message}</div> : '' }

@@ -3,5 +3,16 @@
     "extends": "airbnb",
     "plugins": [
         "react"
-    ]
+    ],
+    "rules": {
+        "indent": ["error", 4],
+        "object-curly-newline": ["error", "never"],
+        "comma-dangle": ["error", "never"],
+        "max-len": [1,200],
+        "semi": ["error", "never"],
+        "object-property-newline": [
+            "error",
+            {"allowMultiplePropertiesPerLine": true}
+        ]
+    }
 }

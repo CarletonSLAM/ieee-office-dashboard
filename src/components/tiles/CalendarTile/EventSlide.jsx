@@ -1,16 +1,18 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
+import { card } from '../../../styles'
 
 const wordLimit = 700
 const styles = theme => ({
     root: {
         textAlign: 'left',
-        padding: '0vh 2vh',
+        margin: '2vh',
+        padding: '2vh',
         overflow: 'hidden',
-        height: '74vh',
+        height: '67vh',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        ...card
     },
     summary: {
         flex: '1 13%',
@@ -36,6 +38,7 @@ const styles = theme => ({
         fontWeight: 'bold',
         lineHeight: '150%',
         color: '#111',
+        overflowY: 'hidden',
         whiteSpace: 'pre-wrap'
     },
     label: {
@@ -49,7 +52,7 @@ const styles = theme => ({
 const EventSlide = ({ classes, summary, duration, location, description }) => {
     let tempDesc = document.createElement('div');
     tempDesc.innerHTML = description;
-    description = tempDesc.innerText;
+    description = tempDesc.innerText.trim();
     description = (description.length > wordLimit) ? description.slice(0, wordLimit) + '...' : description;
     return (
         <div className={classes.root}>
@@ -66,7 +69,7 @@ const EventSlide = ({ classes, summary, duration, location, description }) => {
             </div>      
             <div className={classes.description}>
                 <div className={classes.label}> Description</div>
-                <p>
+                <p style={{margin:0}} >
                     {description || 'No Description Provided'}
                 </p> 
             </div>

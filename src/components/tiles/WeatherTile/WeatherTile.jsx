@@ -1,29 +1,48 @@
 
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
-
 import Grid from 'material-ui/Grid'
+import { card, flexAlign } from '../../../styles'
 
 
 const styles = theme => ({
     root: {
-        padding: '0.9vh',
-        textAlign: 'center'
+        flex: '1 50%',
+        padding: '1vh',
+        margin: '1vh',
+        textAlign: 'center',
+        height: '9.5vh',
+        ...card
+    },
+    topSection: {
+        flex: '1 40%',
+        flexDirection: 'row',
+        ...flexAlign.centerHorVert
+    },
+    bottomSection: {
+        flex: '1 60%',
+        flexDirection: 'row',
+        ...flexAlign.centerHorVert
     },
     day: {
+        flex: '1 33%',
         fontSize: '2rem',
         fontWeight: 'bold',
 
     },
+    iconContainer: {
+        flex: '1 33%',
+    },
     icon: {
-        display: 'inline-block'
+        maxHeight: '100%'
     },
     condition: {
+        flex: '1 33%',
         fontSize: '1.5rem',
         fontWeight: 'bold',
-        height: '60px'
     },
     metric: {
+        flex: '1 33%',
         fontSize: '1.8rem',
         fontWeight: 'bold',
     },
@@ -31,13 +50,36 @@ const styles = theme => ({
         color: '#444'
     }
 });
-const cardBorderStyle = '#444 2px solid'
 
-const WeatherTile = ({ classes, date, condition, icon, high, low, wind , index}) => {
+const WeatherTile = ({ classes, date, condition, icon, high, low, wind, index }) => {
 
-    const divStyle = (index===0) ? { borderRight: cardBorderStyle } : { borderLeft: cardBorderStyle } 
     return (
-        <div style={divStyle}>
+        <div className={classes.root}>
+            <div className={classes.topSection}>
+                <div className={classes.day}>{date}</div>
+                <div className={classes.icon}>
+                    <img className={classes.iconContainer} src={icon} alt={condition} />
+                </div>
+                <div className={classes.condition}>{condition}</div>
+            </div>
+            <div className={classes.bottomSection}>
+                <div item xs={4} className={classes.metric}>
+                    <div>{high} ℃</div>
+                    <div className={classes.label}>HIGH</div>
+
+                </div>
+                <div item xs={4} className={classes.metric}>
+                    <div>{low} ℃</div>
+                    <div className={classes.label}>LOW</div>
+
+                </div>
+                <div item xs={4} className={classes.metric}>
+                    <div>{wind} kph</div>
+                    <div className={classes.label}>WIND</div>
+                </div>
+            </div>
+
+{/* 
             <Grid className={classes.root} container spacing={8}>
                 <Grid item xs={12}>
                     <Grid container spacing={16} style={{ justifyContent: 'space-around' }}>
@@ -74,7 +116,7 @@ const WeatherTile = ({ classes, date, condition, icon, high, low, wind , index})
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Grid> */}
         </div>
     )
 

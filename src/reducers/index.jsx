@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux'
 import {
     SET_DATA_STALE,
     REQUEST_DATA,
@@ -44,8 +43,4 @@ function cardsStateReducer(state = {}, action) {
     }
 }
 
-// const rootReducer = combineReducers({cardsStateReducer})
-const rootReducer = cardsStateReducer
-
-
-export default rootReducer
+export default cardsStateReducer

@@ -1,14 +1,14 @@
-import moment from 'moment';
+import fetch from 'cross-fetch'
 
 export default {
-  getData: () => fetch('http://localhost:8000/insta').then(
-    (response) => { if (response.ok) { return response.json(); } },
-    (error) => { console.error(error); return error; },
-  ),
-  transformResponse: response => response.user.media.nodes.map(({ caption, display_src, date }) => ({
-    type: 'instagram',
-    caption,
-    imgSrc: display_src,
-    date,
-  })),
-};
+    getData: () => fetch('http://localhost:8000/insta').then(
+        response => response.json(),
+        error => error,
+    ),
+    transformResponse: response => response.user.media.nodes.map(({ caption, display_src: src, date }) => ({
+        type: 'instagram',
+        caption,
+        imgSrc: src,
+        date
+    }))
+}

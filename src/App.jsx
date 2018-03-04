@@ -1,29 +1,53 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles'
-import CardGrid from './components/CardGrid'
+
+import { createStore, applyMiddleware } from 'redux'
+import { createLogger } from 'redux-logger'
+import { Provider } from 'react-redux'
+import thunkMiddleware from 'redux-thunk'
+import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
+
+import rootReducer from './reducers'
+import GridTile from './components/Grid'
+import { body } from './styles'
+
 
 const styles = theme => ({
   body: {
-    backgroundColor:'#0c2e51',
     padding: '1vh',
     height: '98vh',
-    overflow: 'none'
+    overflow: 'none',
+    ...body
   }
 });
 
+const loggerMiddleware = createLogger()
+
+
+const theme = createMuiTheme()
+
+const store = createStore(
+    rootReducer,
+    { cards: {} },
+    applyMiddleware(
+        thunkMiddleware,
+        loggerMiddleware,
+    )
+)
 
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
-      <div  className={this.props.classes.body}>
-        <CardGrid />
-      </div>
-    );
+      <MuiThemeProvider theme={theme}>
+        <Provider store={store}>
+          <div  className={this.props.classes.body}>
+            <GridTile />
+          </div>
+      </Provider>
+    </MuiThemeProvider>
+    )
   }
 }
 
-export default (withStyles(styles)(App));
+const AppWithStyles = withStyles(styles)(App)
+export default (() => <AppWithStyles/>);

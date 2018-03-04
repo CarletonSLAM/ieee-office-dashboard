@@ -31,7 +31,7 @@
     "client-dev": "react-scripts start",
     "start": "concurrently 'node server/index.js' 'npm run client-dev'",
     "build": "react-scripts build",
-    "lint": "eslint --fix ./",
+    "lint": "eslint ./src --fix",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

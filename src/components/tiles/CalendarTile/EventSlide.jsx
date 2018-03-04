@@ -52,7 +52,7 @@ const styles = theme => ({
 const EventSlide = ({ classes, summary, duration, location, description }) => {
     let tempDesc = document.createElement('div');
     tempDesc.innerHTML = description;
-    description = tempDesc.innerText.trim();
+    description = tempDesc.innerText.trim()
     description = (description.length > wordLimit) ? description.slice(0, wordLimit) + '...' : description;
     return (
         <div className={classes.root}>

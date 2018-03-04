@@ -17,9 +17,6 @@ const styles = theme => ({
     color: '#444',
     paddingTop: '1vh',
     flex: '1 10%'
-  },
-  slider: {
-    flex: '1 90%',
   }
 })
 

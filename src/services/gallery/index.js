@@ -13,4 +13,4 @@ export default { getData: () => new Promise(((resolve, reject) => {
         res => reject(res.result.error.message),
     ))
 })),
-transformResponse: response => response.files.map(({ id }) => ({ src: `https://drive.google.com/uc?export=view&id=${id}` })) }
+transformResponse: response => response.files.map(({ id, name }) => ({ name: name.split('.')[0], src: `https://drive.google.com/uc?export=view&id=${id}` })) }

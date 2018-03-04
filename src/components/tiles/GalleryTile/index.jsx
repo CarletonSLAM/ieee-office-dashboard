@@ -50,7 +50,7 @@ const GalleryCard = ({ classes, card, onRefreshClick }) => {
     <div>
       <Slider {...sliderSettings}>
         {
-          (cardData).map(({ src, caption }, ind) => {
+          (cardData).map(({ src, name }, ind) => {
             return (
               <div key={`event-${ind}`}>
                 <div className={classes.root}>
@@ -59,7 +59,7 @@ const GalleryCard = ({ classes, card, onRefreshClick }) => {
                       <img className={classes.img} src={src} alt={src} />
                     </div>
                     <div className={classes.caption}>
-                      {caption || 'IEEE Carleton Event'}
+                      {name || 'IEEE Carleton Event'}
                     </div>
                   </div>
                 </div>

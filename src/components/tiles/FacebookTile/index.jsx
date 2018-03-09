@@ -83,7 +83,7 @@ const sliderSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 100000,
+  autoplaySpeed: 6000,
 }
 
 const SocialCard = ({ classes, card }) => {

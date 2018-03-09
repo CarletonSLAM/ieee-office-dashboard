@@ -4,7 +4,7 @@ const router = require('koa-router')();
 const cors = require('@koa/cors');
 const static = require('koa-static');
 const request = require('request');
-const credentials = require('../src/config.raw');
+const credentials = require('./config');
 const { google } = require('googleapis');
 
 

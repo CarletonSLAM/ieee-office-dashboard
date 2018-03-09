@@ -9,7 +9,7 @@ const styles = theme => ({
         margin: '1vh',
         padding: '2vh',
         overflow: 'hidden',
-        height: '71vh',
+        height: '70vh',
         display: 'flex',
         flexDirection: 'column',
         ...card
@@ -34,11 +34,11 @@ const styles = theme => ({
     },
     description: {
         flex: '1 61%',
-        fontSize: '1.2em',
+        fontSize: '1.25em',
         fontWeight: 'bold',
         lineHeight: '150%',
         color: '#111',
-        overflowY: 'hidden',
+        overflow: 'hidden',
         whiteSpace: 'pre-wrap'
     },
     label: {

@@ -9,7 +9,7 @@ const styles = theme => ({
     height: '468px'
   },
   container: {
-    height: '465px',
+    height: '505px',
     ...flexAlign.centerHorVert,
 
   },

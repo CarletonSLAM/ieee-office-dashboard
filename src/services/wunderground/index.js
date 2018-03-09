@@ -1,8 +1,9 @@
 import fetch from 'cross-fetch'
 import moment from 'moment'
+import AppConfig from '../../App.config'
 
 export default {
-    getData: () => fetch('http://localhost:8000/weather').then(
+    getData: () => fetch(`${AppConfig.server}/weather`).then(
         response => response.json(),
         error => ({ status: 500, error }),
     ),

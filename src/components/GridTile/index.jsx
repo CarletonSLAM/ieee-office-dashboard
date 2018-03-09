@@ -1,21 +1,32 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
-import { card } from '../../styles'
+import { card, flexAlign } from '../../styles'
 
 
 const styles = theme => ({
   tile: {
     borderRadius: '3px',
     ...card
-  }
+  },
+  loading: {
+    backgroundColor: '#eff7ff',
+    color: "#87b9ed",
+    fontWeight: "bold",
+    maxWidth: '100%',
+    maxHeight: '100%',
+    ...flexAlign.centerHorVert
+  },
+  doneLoading: {
+    backgroundColor: '#fff'
+  },
 });
 
-const GridTile = (props) => {
+const GridTile = ({loading, className, children, classes, style}) => {
 
-  const styles = Object.assign(props.loading ? {backgroundColor: '#eff7ff'} : { backgroundColor: '#fff'}, props.style);
+  const dynamicClass = loading ? classes.loading : classes.doneLoading;
   return (
-    <div className={props.className + ' ' + props.classes.tile} style={styles}>
-      {!props.loading ? props.children : ''}
+    <div className={className + ' ' + classes.tile + ' ' + dynamicClass} style={style}>
+      {!loading ? children : <div>Refreshing</div>}
     </div>
   )
 }

@@ -1,7 +1,8 @@
 import fetch from 'cross-fetch'
+import AppConfig from '../../App.config'
 
 export default {
-    getData: () => fetch('http://localhost:8000/insta').then(
+    getData: () => fetch(`${AppConfig.server}/insta`).then(
         response => response.json(),
         error => error,
     ),

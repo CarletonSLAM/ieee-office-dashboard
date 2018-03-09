@@ -12,6 +12,7 @@
     "instagram-screen-scrape": "git+https://github.com/irushavm/instagram-screen-scrape.git",
     "koa": "^2.4.1",
     "koa-router": "^7.3.0",
+    "koa-static": "^4.0.2",
     "material-ui": "1.0.0-beta.25",
     "moment": "^2.20.1",
     "react": "^16.2.0",
@@ -29,11 +30,14 @@
   },
   "scripts": {
     "client-dev": "react-scripts start",
-    "start": "concurrently 'node server/index.js' 'npm run client-dev'",
-    "build": "react-scripts build",
+    "start": "concurrently 'npm run server' 'npm run client-dev'",
+    "build": "react-scripts build && npm run delete-map-files",
+    "delete-map-files": "find ./build -name '*.map' -delete",
     "lint": "eslint ./src --fix",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server/index.js",
+    "serve": "npm run build && npm run server"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

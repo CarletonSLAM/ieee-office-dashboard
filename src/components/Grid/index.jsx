@@ -15,11 +15,6 @@ import {
 
 import { connect } from 'react-redux'
 
-import {
-  getDataIfNeeded,
-  setDataStale
-} from '../../actions'
-
 
 const styles = theme => ({
   root: {
@@ -74,43 +69,10 @@ const styles = theme => ({
 });
 
 class Grid extends Component {
-  constructor(props) {
-    super(props)
-    this.handleRefreshClick = this.handleRefreshClick.bind(this)
-  }
   componentDidMount() {
-    this.fetchDatasources()
-    setInterval(this.fetchDatasources.bind(this), 60000);
+    this.props.onLoad();
   }
 
-  fetchDatasources() {
-    const { dispatch } = this.props
-
-
-    console.log('staling');
-    dispatch(setDataStale('weather'))
-    dispatch(setDataStale('transpo'))
-    dispatch(setDataStale('calendar'))
-    dispatch(setDataStale('instagram'))
-    dispatch(setDataStale('instagram'))
-    dispatch(setDataStale('facebook'))
-    dispatch(setDataStale('gallery'))
-    console.log('fetching');
-
-    dispatch(getDataIfNeeded('weather'))
-    dispatch(getDataIfNeeded('transpo'))
-    dispatch(getDataIfNeeded('calendar'))
-    dispatch(getDataIfNeeded('instagram'))
-    dispatch(getDataIfNeeded('instagram'))
-    dispatch(getDataIfNeeded('facebook'))
-    dispatch(getDataIfNeeded('gallery'))
-  }
-
-  handleRefreshClick(card) {
-    const { dispatch } = this.props
-    dispatch(setDataStale(card))
-    dispatch(getDataIfNeeded(card))
-  }
   render() {
     const { classes, facebook, instagram, gallery, calendar, transpo, weather } = this.props;
     return (

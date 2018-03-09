@@ -6,9 +6,11 @@ import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 
+import { getDataIfNeeded, setDataStale } from './actions'
 import rootReducer from './reducers'
 import GridTile from './components/Grid'
 import { body } from './styles'
+import AppConfig from './App.config'
 
 
 const styles = theme => ({
@@ -30,18 +32,33 @@ const store = createStore(
     { cards: {} },
     applyMiddleware(
         thunkMiddleware,
-        loggerMiddleware,
+        // loggerMiddleware,
     )
 )
 
 
 class App extends Component {
+    onDashboardLoad() {
+        this.intervals = AppConfig.services.map(({name, timeout}) => {
+            this.fetchDatasource(name);
+            return setInterval( () => this.fetchDatasource(name), timeout);
+        });
+    }
+
+    fetchDatasource(name) {
+        console.log('getting', name);
+        store.dispatch(setDataStale(name))
+        store.dispatch(getDataIfNeeded(name))
+    }
+    componentWillUnmount() {
+        this.intervals.forEach( i => clearInterval(i) );
+    }
   render() {
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <div  className={this.props.classes.body}>
-            <GridTile />
+            <GridTile onLoad={this.onDashboardLoad.bind(this)} />
           </div>
       </Provider>
     </MuiThemeProvider>

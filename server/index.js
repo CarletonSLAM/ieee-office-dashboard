@@ -2,23 +2,21 @@
 const Koa = require('koa');
 const router = require('koa-router')();
 const cors = require('@koa/cors');
+const static = require('koa-static');
 const request = require('request');
-const credentials = require('../src/config');
+const credentials = require('../src/config.raw');
 const { google } = require('googleapis');
 
 
 const app = module.exports = new Koa();
 
-app.use(cors({ origin: '*' })).use(router.routes());
+app.use(async (ctx, next) => {
+        if (ctx.request.host.includes('localhost')) await next();
+        else return ctx.throw(403, '');
+    })
+    .use(router.routes()).use(static('./build'));
 
 const endpoints = [
-  {
-    path: '/',
-    digester: async (ctx, next) => {
-      ctx.body = { msg: 'Hello World!' };
-      await next();
-    },
-  },
   {
     path: '/insta',
     digester: async (ctx, next) => {
@@ -42,7 +40,8 @@ const endpoints = [
   },
 
 ];
-
 endpoints.forEach(e => router.get(e.path, e.digester));
 
-if (!module.parent) app.listen(8000);
+const server = app.listen(8129);
+
+console.log(`Server Listening on ${server.address().address}:${server.address().port}`);

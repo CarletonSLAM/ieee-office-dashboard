@@ -6,10 +6,14 @@ export default {
         response => response.json(),
         error => error,
     ),
-    transformResponse: response => response.user.media.nodes.map(({ caption, display_src: src, date }) => ({
-        type: 'instagram',
-        caption,
-        imgSrc: src,
-        date
-    }))
+    transformResponse: response => {
+        return response.graphql.user.edge_owner_to_timeline_media.edges.map(({ node }) => {
+            return {
+                type: 'instagram',
+                caption: node.edge_media_to_caption.edges[0].node.text,
+                imgSrc: node.display_url,
+                date: node.taken_at_timestamp
+            }
+        })
+    }
 }

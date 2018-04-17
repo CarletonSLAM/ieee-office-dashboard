@@ -32,7 +32,7 @@ const store = createStore(
     { cards: {} },
     applyMiddleware(
         thunkMiddleware,
-        // loggerMiddleware,
+        loggerMiddleware,
     )
 )
 

@@ -27,6 +27,7 @@ const endpoints = [
   {
     path: '/transpo',
     digester: async (ctx, next) => {
+    console.log(`https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes?appID=${credentials.transpo.appID}&apiKey=${credentials.transpo.apiKey}&stopNo=${ctx.query.stopNo}&format=json`);
       ctx.body = ctx.req.pipe(request(`https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes?appID=${credentials.transpo.appID}&apiKey=${credentials.transpo.apiKey}&stopNo=${ctx.query.stopNo}&format=json`));
       await next();
     },

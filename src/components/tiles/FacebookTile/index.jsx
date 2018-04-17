@@ -105,7 +105,7 @@ const SocialCard = ({ classes, card }) => {
                       <div className={classes.imgContainer}><img className={classes.img} src={src} alt={message} /></div>
                       : ''
                     }
-                    {message.length ? <div className={(src) ? classes.message : classes.messageBig}>{(message.length > 280) ? message.substring(0, 280) + '...' : message}</div> : ''}
+                    {message ? <div className={(src) ? classes.message : classes.messageBig}>{(message.length > 280) ? message.substring(0, 280) + '...' : message}</div> : ''}
                   </div>
                 </div>
               </div>

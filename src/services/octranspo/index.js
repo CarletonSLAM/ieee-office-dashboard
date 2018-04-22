@@ -19,6 +19,7 @@ export default {
     transformResponse: (responses) => {
         const routearrays = responses.map((response) => {
             const stop = response.GetRouteSummaryForStopResult
+            if (!stop) return undefined
             if (stop.StopNo === OCTranspoStops.otrain) {
                 stop.Routes.Route = stop.Routes.Route || [
                     {

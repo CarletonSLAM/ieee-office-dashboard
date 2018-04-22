@@ -7,6 +7,7 @@ const styles = theme => ({
   root: {
     display:'flex',
     height: '39vh',
+    maxWidth: '32vw',
     flexDirection: 'column'
   },
   label: {
@@ -87,7 +88,7 @@ const sliderSettings = {
 }
 
 const SocialCard = ({ classes, card }) => {
-  const cardData = card.data || [];
+  const cardData = (card) ? card.data : []
   return (
     <div className={classes.root}>
       <div className={classes.label}>Facebook</div>

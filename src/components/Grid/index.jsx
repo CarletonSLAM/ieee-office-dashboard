@@ -2,70 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GridTile from '../GridTile'
 import { withStyles } from 'material-ui/styles'
-
-import {
-  CalendarTile,
-  FacebookTile,
-  GalleryTile,
-  InfoTile,
-  InstagramTile,
-  TranspoTile,
-  WeatherTile
-} from '../tiles'
-
 import { connect } from 'react-redux'
 
+import tiles from '../tiles'
 
 const styles = theme => ({
   root: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column'
-  },
-  topSection: {
-    flex: '1 84%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'stretch'
-  },
-
-  topMiddleSection: {
-    flex: '1 33%',
-    display: 'flex',
-    flexDirection: 'column',
-    width: '0'
-  },
-  topLeftRightSection: {
-    flex: '1 33%',
-    margin: '1vh',
-    width: '0',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  bottomSection: {
-    flex: '1 16%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'stretch'
-  },
-  bottomItems: {
-    flex: '1 50%',
-    margin: '1vh',
-    width: '0'
-  },
-  topLeftItems: {
-    flex: '1 50%'
-  },
-  topMiddleInfoTile: {
-    flex: '1 40%',
-    margin: '1vh',
-    // width: '0'
-  },
-  topMiddleGalleryTile: {
-    flex: '1 60%',
-    margin: '1vh',
-    // width: '0'
-  },
+  }
 });
 
 class Grid extends Component {
@@ -73,39 +19,36 @@ class Grid extends Component {
     this.props.onLoad();
   }
 
-  render() {
-    const { classes, facebook, instagram, gallery, calendar, transpo, weather } = this.props;
+  createLayout(element) {
+    const flexAmount = (element.h === 1) ? element.w : element.h;
+    
+    if(element.tile) {
+      const tileData = this.props[element.tile]
+      const tileType = element.tile[0].toUpperCase() + element.tile.slice(1);
+      const TileElement = tiles[`${tileType}Tile`]
+      return (
+        <GridTile loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '0.5vh'}}>
+          <TileElement card={tileData}/>
+        </GridTile>
+      )
+    }
+
+    // Create layout and call function recursively
+    const flexDir = element.layout[0].h === 1  ? 'row' : 'column';
+    this.layoutHasChildren = true;
     return (
-      <div className={classes.root} >
-        <div className={classes.topSection}>
-          <div className={classes.topLeftRightSection}>
-            <GridTile loading={instagram && instagram.isFetching} className={classes.topLeftItems} style= {{marginBottom: '1vh'}}>
-              <InstagramTile card={instagram || {}} />
-            </GridTile>
-            <GridTile loading={ facebook && facebook.isFetching} className={classes.topLeftItems} style= {{marginTop: '1vh'}}>
-              <FacebookTile card={facebook || {}} />
-            </GridTile>
-          </div>
-          <div className={classes.topMiddleSection}>
-            <GridTile className={classes.topMiddleInfoTile}>
-              <InfoTile card={calendar}/>
-            </GridTile>
-            <GridTile loading={gallery && gallery.isFetching} className={classes.topMiddleGalleryTile}>
-              <GalleryTile card={gallery || {}} />
-            </GridTile>
-          </div>
-          <GridTile loading={calendar && calendar.isFetching} className={classes.topLeftRightSection}>
-            <CalendarTile card={calendar} />
-          </GridTile>
-        </div>
-        <div className={classes.bottomSection}>
-          <GridTile loading={transpo && transpo.isFetching} className={classes.bottomItems}>
-            <TranspoTile card={transpo} />
-          </GridTile>
-          <GridTile loading={weather && weather.isFetching} className={classes.bottomItems}>
-            <WeatherTile card={weather} />
-          </GridTile>
-        </div>
+      <div style={{ display: 'flex', flex: `${flexAmount*100}%`, flexDirection: flexDir, margin: this.layoutHasChildren ? '' : '1vh'}} >
+        {element.layout.map(this.createLayout.bind(this))}
+      </div>
+    )
+  }
+
+  render() {
+    const { classes, layout } = this.props;
+    this.layoutHasChildren = false;
+    return (
+      <div className={classes.root}>
+        {layout.map(this.createLayout.bind(this))}
       </div>
     )
   }

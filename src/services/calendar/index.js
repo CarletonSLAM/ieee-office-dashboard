@@ -2,7 +2,7 @@
 /* global gapi */
 
 import moment from 'moment'
-import config from '../../config'
+import { google } from '../../App.creds'
 
 const calculateEventDuration = (start, end) => {
     if (start.format('l') === end.format('l')) {
@@ -14,8 +14,8 @@ const calculateEventDuration = (start, end) => {
 export default {
     getData: () => new Promise(((resolve, reject) => {
         gapi.load('client', () => {
-            gapi.client.init(config.google.client).then(() => gapi.client.calendar.events.list({
-                calendarId: config.google.calID,
+            gapi.client.init(google.client).then(() => gapi.client.calendar.events.list({
+                calendarId: google.calID,
                 timeMin: (new Date()).toISOString(),
                 showDeleted: false,
                 singleEvents: true,

@@ -6,10 +6,10 @@ import { flexAlign, card } from '../../../styles'
 
 const styles = theme => ({
   root: {
-    height: '468px'
+    maxWidth: '32vw',
   },
   container: {
-    height: '505px',
+    height: '515px',
     ...flexAlign.centerHorVert,
 
   },
@@ -48,7 +48,7 @@ const GalleryCard = ({ classes, card, onRefreshClick }) => {
     autoplay: true,
     autoplaySpeed: 5000,
   }
-  const cardData = card.data || []
+  const cardData = (card) ? card.data : []
   return (
     <div className={classes.root}>
       <Slider {...sliderSettings}>

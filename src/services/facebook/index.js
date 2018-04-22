@@ -1,6 +1,6 @@
 import moment from 'moment'
 import fetch from 'cross-fetch'
-import { facebook } from '../../config'
+import { facebook } from '../../App.creds'
 
 const postLimit = 10
 const postFields = 'id,message,story, caption,description,name, full_picture, created_time'

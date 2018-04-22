@@ -6,6 +6,7 @@ import { card, flexAlign } from '../../../styles'
 const styles = theme => ({
   root: {
     height: '30vh',
+    maxWidth: '32vw',
     display: 'flex',
     flexDirection: 'column'
   },
@@ -55,7 +56,6 @@ const styles = theme => ({
 });
 
 const InstagramCard = ({ classes, card }) => {
-  let cardData = [];
   var sliderSettings = {
     arrows: false,
     infinite: true,
@@ -65,7 +65,7 @@ const InstagramCard = ({ classes, card }) => {
     autoplay: true,
     autoplaySpeed: 5000,
   }
-  cardData = card.data || [];
+  const cardData = (card) ? card.data : []
   return (
     <div className={classes.root}>
       <div className={classes.label}>Instagram</div>

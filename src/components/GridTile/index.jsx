@@ -25,7 +25,7 @@ const GridTile = ({loading, className, children, classes, style}) => {
 
   const dynamicClass = loading ? classes.loading : classes.doneLoading;
   return (
-    <div className={className + ' ' + classes.tile + ' ' + dynamicClass} style={style}>
+    <div className={classes.tile + ' ' + dynamicClass} style={style}>
       {!loading ? children : <div>Refreshing</div>}
     </div>
   )

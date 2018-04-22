@@ -7,6 +7,7 @@ import EventSlide from './EventSlide'
 const styles = theme => ({
   root: {
     height: '170vh',
+    maxWidth: '32vw',
     display: 'flex',
     flexDirection: 'column'
   },

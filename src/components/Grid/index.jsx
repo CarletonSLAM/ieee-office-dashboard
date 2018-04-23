@@ -17,17 +17,18 @@ const styles = theme => ({
 class Grid extends Component {
   componentDidMount() {
     this.props.onLoad();
+    this.layoutLevels = 0;
   }
 
-  createLayout(element) {
+  createLayout(element, index) {
     const flexAmount = (element.h === 1) ? element.w : element.h;
-    
+    this.layoutLevels++;    
     if(element.tile) {
       const tileData = this.props[element.tile]
       const tileType = element.tile[0].toUpperCase() + element.tile.slice(1);
       const TileElement = tiles[`${tileType}Tile`]
       return (
-        <GridTile loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '0.5vh'}}>
+        <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '1vh'}}>
           <TileElement card={tileData}/>
         </GridTile>
       )
@@ -37,7 +38,7 @@ class Grid extends Component {
     const flexDir = element.layout[0].h === 1  ? 'row' : 'column';
     this.layoutHasChildren = true;
     return (
-      <div style={{ display: 'flex', flex: `${flexAmount*100}%`, flexDirection: flexDir, margin: this.layoutHasChildren ? '' : '1vh'}} >
+      <div key={`level-${this.layoutLevels}-${index}`} style={{ display: 'flex', flex: `${flexAmount*100}%`, flexDirection: flexDir, margin: this.layoutHasChildren ? '' : '1vh'}} >
         {element.layout.map(this.createLayout.bind(this))}
       </div>
     )

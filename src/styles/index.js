@@ -1,7 +1,10 @@
 module.exports = {
     body: {
         background: '#113b65',
-        fontFamily: '\'Roboto\', sans-serif'
+        fontFamily: '\'Roboto\', sans-serif',
+        padding: '1vh',
+        height: '98vh',
+        overflow: 'hidden'
     },
     card: {
         background: '#fff',

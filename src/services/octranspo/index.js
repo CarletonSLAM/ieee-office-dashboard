@@ -1,5 +1,6 @@
 import fetch from 'cross-fetch'
 import moment from 'moment'
+import { generateHeaders } from '../helpers'
 import AppConfig from '../../App.config'
 
 const OCTranspoStops = { otrain: '3062', mackenzie: '5813' }
@@ -12,7 +13,7 @@ const aggregateTrips = (trips = []) => {
     }))
 }
 export default {
-    getData: () => Promise.all(Object.values(OCTranspoStops).map(stopNo => fetch(`${AppConfig.server}/transpo?stopNo=${stopNo}`).then(
+    getData: () => Promise.all(Object.values(OCTranspoStops).map(stopNo => fetch(`${AppConfig.server}/transpo?stopNo=${stopNo}`, { headers: generateHeaders() }).then(
         response => response.json(),
         error => error,
     ))),

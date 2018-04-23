@@ -13,14 +13,7 @@ import { body } from './styles'
 import AppConfig from './App.config'
 
 
-const styles = theme => ({
-  body: {
-    padding: '1vh',
-    height: '98vh',
-    overflow: 'none',
-    ...body
-  }
-});
+const styles = theme => ({ body });
 
 const loggerMiddleware = createLogger()
 
@@ -32,7 +25,8 @@ const store = createStore(
     { cards: {} },
     applyMiddleware(
         thunkMiddleware,
-        loggerMiddleware,
+        // Enable for Debug State
+        // loggerMiddleware, 
     )
 )
 
@@ -46,7 +40,6 @@ class App extends Component {
     }
 
     fetchDatasource(name) {
-        console.log('getting', name);
         store.dispatch(setDataStale(name))
         store.dispatch(getDataIfNeeded(name))
     }

@@ -10,11 +10,11 @@ const postFields = 'id,message,story, caption,description,name, full_picture, cr
 export default {
     getData: () => fetch(`${AppConfig.server}/facebook`, { headers: generateHeaders() }).then(
         response => response.json(),
-        error => ({ status: 500, error })
+        error => ({ status: 500, error }),
     ).then((serverResonse) => {
         if (!serverResonse.success) return
         const creds = JSON.parse(atob(serverResonse.data))
-        fetch(`https://graph.facebook.com/oauth/access_token?client_id=${creds.client}&client_secret=${creds.secret}&grant_type=client_credentials`)
+        return fetch(`https://graph.facebook.com/oauth/access_token?client_id=${creds.client}&client_secret=${creds.secret}&grant_type=client_credentials`)
             .then(response => response.ok && response.json(), error => ({ status: 500, error }))
             .then((accessResp) => {
                 this.access_token = accessResp.access_token
@@ -28,8 +28,9 @@ export default {
     transformResponse: responses => (responses[0].id ?
         responses.map(({
             id, story, name, message, full_picture: src, created_time: time
-        }) => ({
-            type: 'facebook', id, story, name, message, src, time: moment(time).calendar()
-        })) :
-        { status: responses[0].error.code, msg: responses[0].error.message })
+        }) => (
+            {
+                id, story, name, message, src, time: moment(time).calendar()
+            }
+        )) : { status: responses[0].error.code, msg: responses[0].error.message })
 }

@@ -73,8 +73,7 @@ const styles = theme => ({
     flex: '1 30%',
   },
   img: {
-    height: '20vh',
-
+    width: '14vw',
   },
 })
 const sliderSettings = {

@@ -6,10 +6,11 @@ import { flexAlign, card } from '../../../styles'
 
 const styles = theme => ({
   root: {
-    maxWidth: '32vw',
+    maxWidth: '31vw',
+
   },
   container: {
-    height: '515px',
+    height: '48vh',
     ...flexAlign.centerHorVert,
 
   },

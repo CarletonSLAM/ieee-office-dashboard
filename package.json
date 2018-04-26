@@ -28,7 +28,7 @@
     "start": "concurrently 'npm run server' 'npm run client-dev'",
     "build": "node ./config/build.js && react-scripts build && npm run delete-map-files",
     "delete-map-files": "find ./build -name '*.map' -delete",
-    "lint": "eslint ./src --fix",
+    "lint": "eslint ./src ./server ./config --fix",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "node server/index.js",

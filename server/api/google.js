@@ -1,4 +1,3 @@
-const request = require('request-promise-native')
 const { google } = JSON.parse(Buffer.from(require('../config'), 'base64').toString('binary'))
 
 module.exports = {

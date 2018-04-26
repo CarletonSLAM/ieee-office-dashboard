@@ -28,14 +28,14 @@ const styles = theme => ({
     },
     routeNumber: {
         flex: '1 60%',
-        fontSize: '4em',
+        fontSize: '5em',
         fontWeight: 'bold',
         color: '#b70101',
     },
     routeHeading: {
         flex: '1 40%',
         color: '#444',
-        fontSize: '1.5em',
+        fontSize: '2em',
         fontWeight: 'bold',
     },
     trip: {
@@ -45,7 +45,7 @@ const styles = theme => ({
     tripTime: {
         flex: '1 50%',
         color: '#000',
-        fontSize: '2.3em',
+        fontSize: '3em',
         fontWeight: 'bold',
         marginTop: '0vh'
     },
@@ -53,7 +53,7 @@ const styles = theme => ({
         padding: '0vh 1vh',
         flex: '1 50%',
         color: '#444',
-        fontSize: '1.5rem',
+        fontSize: '2em',
         fontWeight: 'bold',
         textAlign: 'center'
     },

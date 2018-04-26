@@ -26,7 +26,7 @@ const store = createStore(
     applyMiddleware(
         thunkMiddleware,
         // Enable for Debug State
-        // loggerMiddleware, 
+        loggerMiddleware, 
     )
 )
 

@@ -9,70 +9,23 @@ const SERVICES = {
     GALLERY: 'gallery',
     FACEBOOK: 'facebook',
     INSTAGRAM: 'instagram',
-    INFO: 'info'
+    INFO: 'info',
+    TOP: 'top',
+    BOTTOM: 'bottom'
 }
 
 module.exports = {
     server: 'http://localhost:8129',
     layout: [
         {
-            h: 0.84,
+            h: 0.9,
             w: 1,
-            layout: [
-                {
-                    w: 0.33,
-                    h: 1,
-                    layout: [
-                        {
-                            w: 1,
-                            h: 0.5,
-                            tile: SERVICES.INSTAGRAM
-                        },
-                        {
-                            w: 1,
-                            h: 0.5,
-                            tile: SERVICES.FACEBOOK
-                        }
-                    ]
-                },
-                {
-                    w: 0.33,
-                    h: 1,
-                    layout: [
-                        {
-                            w: 1,
-                            h: 0.4,
-                            tile: SERVICES.INFO
-                        },
-                        {
-                            w: 1,
-                            h: 0.6,
-                            tile: SERVICES.GALLERY
-                        }
-                    ]
-                },
-                {
-                    w: 0.33,
-                    h: 1,
-                    tile: SERVICES.CALENDAR
-                }
-            ]
+            tile: SERVICES.TOP
         },
         {
-            h: 0.16,
+            h: 0.1,
             w: 1,
-            layout: [
-                {
-                    w: 0.5,
-                    h: 1,
-                    tile: SERVICES.TRANSPO
-                },
-                {
-                    w: 0.5,
-                    h: 1,
-                    tile: SERVICES.WEATHER
-                }
-            ]
+            tile: SERVICES.BOTTOM
         }
     ],
     services: [

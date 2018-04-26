@@ -6,7 +6,7 @@ import ArrivalSlide from './ArrivalSlide'
 
 const styles = theme => ({
   root: {
-    height: '13vh'
+    height: '80vh'
   }
 })
 
@@ -15,7 +15,7 @@ const sliderSettings = {
   dots: false,
   infinite: true,
   speed: 400,
-  slidesToShow: 1,
+  slidesToShow: 6,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 4000,

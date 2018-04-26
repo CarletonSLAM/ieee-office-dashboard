@@ -24,11 +24,19 @@ class Grid extends Component {
     const flexAmount = (element.h === 1) ? element.w : element.h;
     this.layoutLevels++;    
     if(element.tile) {
-      const tileData = this.props[element.tile]
+      console.log(element.tile)
+      const tileData =  element.tile === 'top' ? [
+        // {name:'calendar', data: this.props.calendar},
+        // {name:'facebook', data: this.props.facebook},
+        // {name:'gallery', data: this.props.gallery},
+        // {name:'instagram', data: this.props.instagram},
+        // {name:'weather', data: this.props.weather},
+        {name:'transpo', data: this.props.transpo}
+      ] : this.props[element.tile]
       const tileType = element.tile[0].toUpperCase() + element.tile.slice(1);
       const TileElement = tiles[`${tileType}Tile`]
       return (
-        <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '1vh'}}>
+        <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '0.5vh'}}>
           <TileElement card={tileData}/>
         </GridTile>
       )

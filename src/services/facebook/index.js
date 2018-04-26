@@ -23,14 +23,16 @@ export default {
             .then(response => response.ok && response.json(), error => ({ status: 500, error }))
             .then(({ data }) => Promise.all(data.map(post => fetch(`https://graph.facebook.com/v2.9/${post.id}?access_token=${this.access_token}&fields=${postFields}`)
                 .then((response) => { if (!response.ok) { throw new Error(response.statusText) } return response.json() })
-                .catch(error => error))))
+                .catch(error => error)
+            )))
     }),
-    transformResponse: responses => (responses[0].id ?
-        responses.map(({
+    transformResponse: responses => {
+        return responses[0].id ? responses.map(({
             id, story, name, message, full_picture: src, created_time: time
         }) => (
             {
                 id, story, name, message, src, time: moment(time).calendar()
             }
-        )) : { status: responses[0].error.code, msg: responses[0].error.message })
+        )) : { status: responses[0].error.code, msg: responses[0].error.message }
+    }
 }

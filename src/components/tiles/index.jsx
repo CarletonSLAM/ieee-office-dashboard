@@ -1,10 +1,13 @@
 import CalendarTile from './CalendarTile'
 import FacebookTile from './FacebookTile'
-import GalleryTile from './GalleryTile';
+import GalleryTile from './GalleryTile'
 import InfoTile from './InfoTile'
 import InstagramTile from './InstagramTile'
 import TranspoTile from './TranspoTile'
-import WeatherTile from './WeatherTile';
+import WeatherTile from './WeatherTile'
+
+import TopTile from './TopTile'
+import BottomTile from './BottomTile'
 
 export default {
     CalendarTile,
@@ -13,6 +16,8 @@ export default {
     InfoTile,
     InstagramTile,
     TranspoTile,
-    WeatherTile   
+    WeatherTile,
+    TopTile,
+    BottomTile
 }
   

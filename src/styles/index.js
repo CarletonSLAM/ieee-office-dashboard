@@ -1,9 +1,9 @@
 module.exports = {
     body: {
-        background: '#113b65',
+        // background: '#113b65',
         fontFamily: '\'Roboto\', sans-serif',
-        padding: '1vh',
-        height: '98vh',
+        // padding: '1vh',
+        height: '100vh',
         overflow: 'hidden'
     },
     card: {

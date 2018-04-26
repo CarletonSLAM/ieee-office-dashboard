@@ -1,47 +1,31 @@
 
 const Koa = require('koa');
+const path = require('path');
 const router = require('koa-router')();
-const cors = require('@koa/cors');
 const static = require('koa-static');
-const request = require('request');
-const credentials = require('./config');
-const { google } = require('googleapis');
+const api = require('./api');
+const app = new Koa();
+const decrypt = require('./middleware/rsa-decrypt');
+const ipRestrict = require('./middleware/ip-restrict');
+const addCors = require('./middleware/add-cors')
+//Decrypt headers to validate auth
+if (process.env.NODE_ENV === 'production') {
+  console.log('Decryption stage enabled')
+  router.use(decrypt)
+}
+//Generate API Endpoints
+api.forEach(e => router.get(e.path, e.digester));
+
+app.use(ipRestrict)
+app.use(addCors)
+app.use(static(path.resolve(__dirname, '../build')))
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 
-const app = module.exports = new Koa();
 
-app.use(async (ctx, next) => {
-        if (ctx.request.host.includes('localhost')) await next();
-        else return ctx.throw(403, '');
-    })
-    .use(router.routes()).use(static('./build'));
 
-const endpoints = [
-  {
-    path: '/insta',
-    digester: async (ctx, next) => {
-      ctx.body = ctx.req.pipe(request('https://instagram.com/ieeeorg/?__a=1'));
-      await next();
-    },
-  },
-  {
-    path: '/transpo',
-    digester: async (ctx, next) => {
-      ctx.body = ctx.req.pipe(request(`https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes?appID=${credentials.transpo.appID}&apiKey=${credentials.transpo.apiKey}&stopNo=${ctx.query.stopNo}&format=json`));
-      await next();
-    },
-  },
-  {
-    path: '/weather',
-    digester: async (ctx, next) => {
-      ctx.body = ctx.req.pipe(request(`http://api.wunderground.com/api/${credentials.weather.apiKey}/forecast/q/Canada/Ottawa.json`));
-      await next();
-    },
-  },
 
-];
-endpoints.forEach(e => router.get(e.path, e.digester));
-
-const server = app.listen(8129);
-
-console.log(`Server Listening on ${server.address().address}:${server.address().port}`);
+const server = app.listen(8129, '127.0.0.1', () => {
+  console.log(`Server Listening on ${server.address().address}:${server.address().port}`);
+});

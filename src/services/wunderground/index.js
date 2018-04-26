@@ -1,9 +1,10 @@
 import fetch from 'cross-fetch'
 import moment from 'moment'
+import { generateHeaders } from '../helpers'
 import AppConfig from '../../App.config'
 
 export default {
-    getData: () => fetch(`${AppConfig.server}/weather`).then(
+    getData: () => fetch(`${AppConfig.server}/weather`, { headers: generateHeaders() }).then(
         response => response.json(),
         error => ({ status: 500, error }),
     ),

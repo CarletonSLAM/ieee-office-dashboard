@@ -73,7 +73,7 @@ const ArrivalsSlide = ({ classes, routeNo, trips, heading }) => {
                 <div className={classes.routeHeading}>{heading}</div>
             </div>
             <div className={classes.rightSection}>
-            {(trips.length) ? 
+            {(trips && trips.length) ? 
                     trips.map(({dest, time}, ind) => {
                         return (
                             <div key={`trip-${ind}`}className={classes.trip}>

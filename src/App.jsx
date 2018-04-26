@@ -8,19 +8,12 @@ import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles
 
 import { getDataIfNeeded, setDataStale } from './actions'
 import rootReducer from './reducers'
-import GridTile from './components/Grid'
+import Grid from './components/Grid'
 import { body } from './styles'
 import AppConfig from './App.config'
 
 
-const styles = theme => ({
-  body: {
-    padding: '1vh',
-    height: '98vh',
-    overflow: 'none',
-    ...body
-  }
-});
+const styles = theme => ({ body });
 
 const loggerMiddleware = createLogger()
 
@@ -32,7 +25,8 @@ const store = createStore(
     { cards: {} },
     applyMiddleware(
         thunkMiddleware,
-        // loggerMiddleware,
+        // Enable for Debug State
+        // loggerMiddleware, 
     )
 )
 
@@ -46,7 +40,6 @@ class App extends Component {
     }
 
     fetchDatasource(name) {
-        console.log('getting', name);
         store.dispatch(setDataStale(name))
         store.dispatch(getDataIfNeeded(name))
     }
@@ -58,7 +51,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <div  className={this.props.classes.body}>
-            <GridTile onLoad={this.onDashboardLoad.bind(this)} />
+            <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
           </div>
       </Provider>
     </MuiThemeProvider>

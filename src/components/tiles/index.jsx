@@ -6,7 +6,7 @@ import InstagramTile from './InstagramTile'
 import TranspoTile from './TranspoTile'
 import WeatherTile from './WeatherTile';
 
-export {
+export default {
     CalendarTile,
     FacebookTile,
     GalleryTile,

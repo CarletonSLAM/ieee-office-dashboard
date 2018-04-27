@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GridTile from '../GridTile'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
+import Slider from 'react-slick'
 
 import tiles from '../tiles'
 
@@ -21,32 +22,34 @@ class Grid extends Component {
   }
 
   createLayout(element, index) {
-    const flexAmount = (element.h === 1) ? element.w : element.h;
-    this.layoutLevels++;    
-    if(element.tile) {
-      console.log(element.tile)
-      const tileData =  element.tile === 'top' ? [
-        // {name:'calendar', data: this.props.calendar},
-        // {name:'facebook', data: this.props.facebook},
-        // {name:'gallery', data: this.props.gallery},
-        // {name:'instagram', data: this.props.instagram},
-        // {name:'weather', data: this.props.weather},
-        {name:'transpo', data: this.props.transpo}
-      ] : this.props[element.tile]
-      const tileType = element.tile[0].toUpperCase() + element.tile.slice(1);
-      const TileElement = tiles[`${tileType}Tile`]
+    const flexAmount = (!element.w && !element.h) ? 1 : ((element.h === 1) ? element.w : element.h)
+    this.layoutLevels++;
+    if (element.carosel) {
+      const caroselLayouts = element.carosel.layout.map(e => ({tile: e}));
       return (
-        <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '0.5vh'}}>
-          <TileElement card={tileData}/>
+        <div key={`carosel-${this.layoutLevels}-level-${index}`} style={{flex: `${flexAmount * 100}%`, ...element.carosel.style}} >
+          <Slider {...element.carosel.settings}>
+            {caroselLayouts.map(this.createLayout.bind(this))}
+          </Slider>
+        </div>
+      )
+    }
+    if (element.tile) {
+      console.log(element.tile)
+      const tileData = this.props[element.tile]
+      const TileElement = tiles[`${element.tile[0].toUpperCase() + element.tile.slice(1)}Tile`]
+      return (
+        <GridTile key={`level-${this.layoutLevels}-${index}`} hideCard={element.hideCard} loading={tileData && tileData.isFetching} style={{ flex: `${flexAmount * 100}%`, margin: '0.5vh' }}>
+          <TileElement card={tileData} />
         </GridTile>
       )
     }
 
     // Create layout and call function recursively
-    const flexDir = element.layout[0].h === 1  ? 'row' : 'column';
+    const flexDir = element.layout[0].h === 1 ? 'row' : 'column';
     this.layoutHasChildren = true;
     return (
-      <div key={`level-${this.layoutLevels}-${index}`} style={{ display: 'flex', flex: `${flexAmount*100}%`, flexDirection: flexDir, margin: this.layoutHasChildren ? '' : '1vh'}} >
+      <div key={`level-${this.layoutLevels}-${index}`} style={{ display: 'flex', flex: `${flexAmount * 100}%`, flexDirection: flexDir, margin: this.layoutHasChildren ? '' : '1vh' }} >
         {element.layout.map(this.createLayout.bind(this))}
       </div>
     )

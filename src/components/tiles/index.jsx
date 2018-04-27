@@ -6,7 +6,6 @@ import InstagramTile from './InstagramTile'
 import TranspoTile from './TranspoTile'
 import WeatherTile from './WeatherTile'
 
-import TopTile from './TopTile'
 import BottomTile from './BottomTile'
 
 export default {
@@ -17,7 +16,6 @@ export default {
     InstagramTile,
     TranspoTile,
     WeatherTile,
-    TopTile,
     BottomTile
 }
   

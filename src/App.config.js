@@ -18,12 +18,38 @@ module.exports = {
     server: 'http://localhost:8129',
     layout: [
         {
-            h: 0.9,
+            h: 0.95,
             w: 1,
-            tile: SERVICES.TOP
+            hideCard: false,
+            carosel: {
+                layout: [
+                    SERVICES.TRANSPO,
+                    SERVICES.WEATHER,
+                    SERVICES.CALENDAR,
+                    SERVICES.GALLERY,
+                    SERVICES.FACEBOOK,
+                    SERVICES.INSTAGRAM
+                ],
+                settings: {
+                    arrows: false,
+                    infinite: true,
+                    speed: 400,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 1000,
+                },
+                style: {
+                    height: '80vh',
+                    width:'98vw',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    padding: '1vh'
+                }
+            }
         },
         {
-            h: 0.1,
+            h: 0.05,
             w: 1,
             tile: SERVICES.BOTTOM
         }

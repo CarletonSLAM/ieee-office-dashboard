@@ -4,9 +4,9 @@ import { card, flexAlign } from '../../styles'
 
 
 const styles = theme => ({
+  card,
   tile: {
-    borderRadius: '3px',
-    ...card
+    borderRadius: '3px'
   },
   loading: {
     backgroundColor: '#eff7ff',
@@ -21,11 +21,11 @@ const styles = theme => ({
   },
 });
 
-const GridTile = ({loading, className, children, classes, style}) => {
+const GridTile = ({loading, className, children, classes, style, hideCard}) => {
 
   const dynamicClass = loading ? classes.loading : classes.doneLoading;
   return (
-    <div className={classes.tile + ' ' + dynamicClass} style={style}>
+    <div className={[classes.tile, hideCard ? classes.card : '', dynamicClass]} style={style}>
       {!loading ? children : <div>Refreshing</div>}
     </div>
   )

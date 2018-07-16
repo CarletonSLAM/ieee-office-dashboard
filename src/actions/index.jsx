@@ -13,6 +13,7 @@ export const requestData = card => {
 
 export const RECEIVE_DATA = 'RECEIVE_DATA'
 export const receiveData = (card, data) => {
+  data.success = true;
   return {
     type: RECEIVE_DATA,
     card,
@@ -21,12 +22,31 @@ export const receiveData = (card, data) => {
   }
 }
 
+export const RECEIVE_ERROR = 'RECEIVE_ERROR'
+export const receiveError = (card, error) => {
+  return {
+    type: RECEIVE_ERROR,
+    card,
+    error,
+    lastUpdated: Date.now()
+  }
+}
+
 
 export const fetchData = card => dispatch => {
   dispatch(requestData(card))
+  let errorOccured = false
   return services[card].getData()
-    .then(services[card].transformResponse)
-    .then(data => dispatch(receiveData(card, data)))
+  .catch((error) => {
+    errorOccured = true
+    dispatch(receiveError(card,{type: "API", error: error.message}))})
+  .then(services[card].transformResponse)
+  .catch((error) => {
+    if (errorOccured === true) return
+    errorOccured = true
+    dispatch(receiveError(card,{type: "Transform", error: error.message}))
+  })
+  .then(data => data && dispatch(receiveData(card, data)))
 }
 
 

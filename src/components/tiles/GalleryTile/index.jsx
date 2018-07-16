@@ -39,7 +39,7 @@ const styles = theme => ({
   }
 })
 
-const GalleryCard = ({ classes, card, onRefreshClick }) => {
+const GalleryTile = ({ classes, card, onRefreshClick }) => {
   const sliderSettings = {
     arrows: false,
     infinite: true,
@@ -76,4 +76,4 @@ const GalleryCard = ({ classes, card, onRefreshClick }) => {
   )
 }
 
-export default withStyles(styles)(GalleryCard);
+export default withStyles(styles)(GalleryTile);

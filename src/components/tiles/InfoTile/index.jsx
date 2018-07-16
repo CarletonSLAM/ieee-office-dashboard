@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 })
 
-class InfoCard extends Component {
+class InfoTile extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -78,4 +78,4 @@ class InfoCard extends Component {
   }
 }
 
-export default withStyles(styles)(InfoCard);
+export default withStyles(styles)(InfoTile);

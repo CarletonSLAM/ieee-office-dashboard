@@ -1,13 +1,10 @@
 import fetch from 'cross-fetch'
 import moment from 'moment'
-import { generateHeaders } from '../helpers'
+import { generateHeaders, handleErrors } from '../helpers'
 import AppConfig from '../../App.config'
 
 export default {
-    getData: () => fetch(`${AppConfig.server}/weather`, { headers: generateHeaders() }).then(
-        response => response.json(),
-        error => ({ status: 500, error }),
-    ),
+    getData: () => fetch(`${AppConfig.server}/weather`, { headers: generateHeaders() }).then(handleErrors),
     transformResponse: (response) => {
         if (response.forecast) {
             return response.forecast.simpleforecast.forecastday.map(cast => ({

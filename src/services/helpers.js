@@ -6,3 +6,8 @@ const rsa = new NodeRSA(atob('LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0K') + pemKey + 
 export const generateHeaders = () => ({
     authorization: rsa.encrypt(Buffer.from('React Error')).toString('base64')
 })
+
+export const handleErrors = (response) => {
+    if (!response.ok) throw Error(response.statusText == "" ? response._bodyText : response.statusText)
+    return response.json()
+}

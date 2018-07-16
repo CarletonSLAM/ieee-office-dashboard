@@ -55,7 +55,7 @@ const styles = theme => ({
   },
 });
 
-const InstagramCard = ({ classes, card }) => {
+const InstagramTile = ({ classes, card }) => {
   var sliderSettings = {
     arrows: false,
     infinite: true,
@@ -92,4 +92,4 @@ const InstagramCard = ({ classes, card }) => {
   )
 }
 
-export default withStyles(styles)(InstagramCard);
+export default withStyles(styles)(InstagramTile);

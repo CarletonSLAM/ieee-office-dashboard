@@ -22,7 +22,7 @@ const sliderSettings = {
   vertical: true,
 }
 
-const TranspoCard = ({ classes, card }) => {
+const TranspoTile = ({ classes, card }) => {
   const cardData = (card) ? card.data : []
   return (
     <div className={classes.root}>
@@ -41,4 +41,4 @@ const TranspoCard = ({ classes, card }) => {
   );
 }
 
-export default withStyles(styles)(TranspoCard);
+export default withStyles(styles)(TranspoTile);

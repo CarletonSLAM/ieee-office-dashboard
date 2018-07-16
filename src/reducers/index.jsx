@@ -1,7 +1,8 @@
 import {
     SET_DATA_STALE,
     REQUEST_DATA,
-    RECEIVE_DATA
+    RECEIVE_DATA,
+    RECEIVE_ERROR
 } from '../actions'
 
 
@@ -20,7 +21,15 @@ const dataStates = (state = { isFetching: false, isStale: false, data: [] }, act
             return Object.assign({}, state, {
                 isFetching: false,
                 isStale: false,
+                isValid: true,
                 data: action.data,
+                lastUpdated: action.lastUpdated
+            })
+        case RECEIVE_ERROR:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isStale: true,
+                data: action.error,
                 lastUpdated: action.lastUpdated
             })
         default:
@@ -33,6 +42,7 @@ function cardsStateReducer(state = {}, action) {
         case SET_DATA_STALE:
         case REQUEST_DATA:
         case RECEIVE_DATA:
+        case RECEIVE_ERROR:
             return Object.assign({}, state, {
                 cards: Object.assign(state.cards, {
                     [action.card]: dataStates(state.cards[action.card], action)

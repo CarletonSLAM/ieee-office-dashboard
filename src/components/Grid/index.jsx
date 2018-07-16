@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 
 import tiles from '../tiles'
+import EmptyTile from '../tiles/EmptyTile';
 
 const styles = theme => ({
   root: {
@@ -24,14 +25,15 @@ class Grid extends Component {
     const flexAmount = (element.h === 1) ? element.w : element.h;
     this.layoutLevels++;    
     if(element.tile) {
-      const tileData = this.props[element.tile]
       const tileType = element.tile[0].toUpperCase() + element.tile.slice(1);
       const TileElement = tiles[`${tileType}Tile`]
-      return (
+      // Relay information from calendar to the info tile
+      const tileData = tileType == 'Info' ? this.props.calendar : this.props[element.tile]
+      return tileData ? 
         <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '1vh'}}>
-          <TileElement card={tileData}/>
-        </GridTile>
-      )
+          {tileData.data.success ? <TileElement card={tileData}/> : <EmptyTile provider={tileType} {...tileData.data} />}
+        </GridTile> : <div key={`level-${this.layoutLevels}-${index}`}/>
+      
     }
 
     // Create layout and call function recursively

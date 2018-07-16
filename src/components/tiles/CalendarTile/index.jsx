@@ -34,7 +34,7 @@ const sliderSettings = {
   autoplaySpeed: 5000,
 }
 
-const CalendarCard = ({ classes, card, onRefreshClick }) => {
+const CalendarTile = ({ classes, card, onRefreshClick }) => {
   const cardData = (card) ? card.data : []
   return (
     <div className={classes.root}>
@@ -56,4 +56,4 @@ const CalendarCard = ({ classes, card, onRefreshClick }) => {
   )
 }
 
-export default withStyles(styles)(CalendarCard);
+export default withStyles(styles)(CalendarTile);

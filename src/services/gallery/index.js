@@ -9,7 +9,7 @@ export default {
         .then(handleErrors)
         .then((response) => {
             const creds = JSON.parse(atob(response.data))
-            return new Promise((resolve, reject) => { 
+            return new Promise((resolve, reject) => {
                 gapi.load('client:auth2', () => {
                     gapi.client.init(creds.client).then(() => {
                         if (!gapi.auth2.getAuthInstance().currentUser.get().hasGrantedScopes(creds.client.scope)) {

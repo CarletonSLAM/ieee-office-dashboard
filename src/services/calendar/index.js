@@ -17,7 +17,7 @@ export default {
         .then(handleErrors)
         .then((response) => {
             const creds = JSON.parse(atob(response.data))
-            return new Promise ((resolve, reject) => gapi.load('client', () => {
+            return new Promise((resolve, reject) => gapi.load('client', () => {
                 gapi.client.init(creds.client).then(() => gapi.client.calendar.events.list({
                     calendarId: creds.calID,
                     timeMin: (new Date()).toISOString(),

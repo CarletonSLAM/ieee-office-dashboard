@@ -28,7 +28,7 @@ class Grid extends Component {
       const tileType = element.tile[0].toUpperCase() + element.tile.slice(1);
       const TileElement = tiles[`${tileType}Tile`]
       // Relay information from calendar to the info tile
-      const tileData = tileType == 'Info' ? this.props.calendar : this.props[element.tile]
+      const tileData = tileType === 'Info' ? this.props.calendar : this.props[element.tile]
       return tileData ? 
         <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '1vh'}}>
           {tileData.data.success ? <TileElement card={tileData}/> : <EmptyTile provider={tileType} {...tileData.data} />}

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GridTile from '../GridTile'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import { connect } from 'react-redux'
 
 import tiles from '../tiles'
 import EmptyTile from '../tiles/EmptyTile';
 
-const styles = theme => ({
+const styles = {
   root: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column'
   }
-});
+}
 
 class Grid extends Component {
   componentDidMount() {

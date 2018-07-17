@@ -1,10 +1,10 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import Slider from 'react-slick'
 import { flexAlign, card } from '../../../styles'
 
 
-const styles = theme => ({
+const styles = {
   root: {
     maxWidth: '31vw',
 
@@ -37,7 +37,7 @@ const styles = theme => ({
     maxWidth: '95%',
     maxHeight: '90%',
   }
-})
+}
 
 const GalleryTile = ({ classes, card, onRefreshClick }) => {
   const sliderSettings = {

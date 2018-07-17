@@ -1,8 +1,8 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 
 
-const styles = theme => ({
+const styles = {
   error: {
     fontSize: '30px',
     color: '#7f0000',
@@ -20,7 +20,7 @@ const styles = theme => ({
     paddingTop: '1vh',
     fontSize: '18px',
   }
-});
+}
 
 
 const EmptyTile = ({ classes, provider, type, error }) => {

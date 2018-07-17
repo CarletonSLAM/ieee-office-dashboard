@@ -1,14 +1,14 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import Slider from 'react-slick'
 import ArrivalSlide from './ArrivalSlide'
 
 
-const styles = theme => ({
+const styles = {
   root: {
     height: '13vh'
   }
-})
+}
 
 const sliderSettings = {
   arrows: false,

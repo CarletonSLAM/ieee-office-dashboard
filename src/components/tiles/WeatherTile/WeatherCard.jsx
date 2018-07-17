@@ -1,10 +1,10 @@
 
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import { card, flexAlign } from '../../../styles'
 
 
-const styles = theme => ({
+const styles = {
     root: {
         flex: '1 50%',
         padding: '1vh',
@@ -49,7 +49,7 @@ const styles = theme => ({
         color: '#444',
         fontSize: '0.7em'
     }
-});
+}
 
 const WeatherCard = ({ classes, date, condition, icon, high, low, wind, key }) => {
 

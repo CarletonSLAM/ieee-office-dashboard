@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 
 import { getDataIfNeeded, setDataStale } from './actions'
 import rootReducer from './reducers'
@@ -13,12 +13,10 @@ import { body } from './styles'
 import AppConfig from './App.config'
 
 
-const styles = theme => ({ body });
+const styles = { body }
 
-const loggerMiddleware = createLogger()
+// const loggerMiddleware = createLogger()
 
-
-const theme = createMuiTheme()
 
 const store = createStore(
     rootReducer,
@@ -48,13 +46,11 @@ class App extends Component {
     }
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <div  className={this.props.classes.body}>
             <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
           </div>
       </Provider>
-    </MuiThemeProvider>
     )
   }
 }

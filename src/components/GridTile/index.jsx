@@ -1,9 +1,9 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import { card, flexAlign } from '../../styles'
 
 
-const styles = theme => ({
+const styles = {
   tile: {
     borderRadius: '3px',
     ...card
@@ -19,7 +19,7 @@ const styles = theme => ({
   doneLoading: {
     backgroundColor: '#fff'
   },
-});
+}
 
 const GridTile = ({loading, className, children, classes, style}) => {
 

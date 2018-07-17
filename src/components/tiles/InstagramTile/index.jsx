@@ -1,9 +1,9 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import Slider from 'react-slick'
 import { card, flexAlign } from '../../../styles'
 
-const styles = theme => ({
+const styles = {
   root: {
     height: '30vh',
     maxWidth: '32vw',
@@ -53,7 +53,7 @@ const styles = theme => ({
     margin: 'auto',
     borderRadius: '3px',
   },
-});
+}
 
 const InstagramTile = ({ classes, card }) => {
   var sliderSettings = {

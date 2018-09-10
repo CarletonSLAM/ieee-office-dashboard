@@ -39,12 +39,12 @@ export const fetchData = card => dispatch => {
   return services[card].getData()
   .catch((error) => {
     errorOccured = true
-    dispatch(receiveError(card,{type: "API", error: error.message}))})
+    dispatch(receiveError(card,{type: "API", code: error.code, error: error.message}))})
   .then(services[card].transformResponse)
   .catch((error) => {
     if (errorOccured === true) return
     errorOccured = true
-    dispatch(receiveError(card,{type: "Transform", error: error.message}))
+    dispatch(receiveError(card,{type: "Transform", code: error.code, error: error.message}))
   })
   .then(data => data && dispatch(receiveData(card, data)))
 }

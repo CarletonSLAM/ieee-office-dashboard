@@ -1,10 +1,10 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import Slider from 'react-slick'
 import EventSlide from './EventSlide'
 
 
-const styles = theme => ({
+const styles = {
   root: {
     height: '170vh',
     maxWidth: '32vw',
@@ -17,12 +17,11 @@ const styles = theme => ({
     fontWeight: 'bold',
     color: '#444',
     paddingTop: '0.5vh',
-    flex: '1 5%'
   },
   slider: {
     flex: '1 95%'
   }
-})
+}
 
 const sliderSettings = {
   arrows: false,

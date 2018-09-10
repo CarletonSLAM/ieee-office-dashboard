@@ -1,9 +1,9 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import { card } from '../../../styles'
 
 const wordLimit = 700
-const styles = theme => ({
+const styles = {
     root: {
         textAlign: 'left',
         margin: '1vh',
@@ -47,7 +47,7 @@ const styles = theme => ({
         color: '#555',
 
     }
-})
+}
 
 const EventSlide = ({ classes, summary, duration, location, description }) => {
     let tempDesc = document.createElement('div');

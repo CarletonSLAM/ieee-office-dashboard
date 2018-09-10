@@ -1,9 +1,9 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import { card, flexAlign } from '../../../styles'
 
 
-const styles = theme => ({
+const styles = {
     root: {
         textAlign: 'center',
         margin: '1vh',
@@ -63,7 +63,7 @@ const styles = theme => ({
         fontWeight: 'bold',
         
     }
-})
+}
 
 const ArrivalsSlide = ({ classes, routeNo, trips, heading }) => {
     return (

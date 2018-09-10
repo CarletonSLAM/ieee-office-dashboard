@@ -1,14 +1,14 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 
 
-const styles = theme => ({
+const styles = {
   error: {
     fontSize: '30px',
     color: '#7f0000',
     backgroundColor: '#ffeaea',
-    padding: '3vh',
-    margin: '2vh',
+    padding: '2vh',
+    margin: '1vh',
     textAlign: 'center',
     borderRadius: '5px',
     
@@ -20,7 +20,7 @@ const styles = theme => ({
     paddingTop: '1vh',
     fontSize: '18px',
   }
-});
+}
 
 
 const EmptyTile = ({ classes, provider, type, error }) => {

@@ -1,9 +1,9 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import Slider from 'react-slick'
 import { card, flexAlign } from '../../../styles'
 
-const styles = theme => ({
+const styles = {
   root: {
     display:'flex',
     height: '39vh',
@@ -75,7 +75,8 @@ const styles = theme => ({
   img: {
     width: '14vw',
   },
-})
+}
+
 const sliderSettings = {
   arrows: false,
   infinite: true,

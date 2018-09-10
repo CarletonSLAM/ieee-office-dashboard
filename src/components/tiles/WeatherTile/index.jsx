@@ -1,12 +1,12 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import Slider from 'react-slick'
 
 
 import WeatherCard from './WeatherCard'
 
 
-const styles = theme => ({
+const styles = {
   error: {
     fontSize: '30px',
     color: '#333',
@@ -18,7 +18,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row'
   }
-});
+}
 
 const sliderSettings = {
   arrows: false,

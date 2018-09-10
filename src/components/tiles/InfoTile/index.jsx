@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import moment from 'moment'
 
 
@@ -7,7 +7,7 @@ const updateRateHalfMinute = 5000
 const timeFormat = 'ddd. MMM Do, hh:mm A'
 
 
-const styles = theme => ({
+const styles = {
   root: {
     fontWeight: 'bold',
     textAlign: 'center',
@@ -33,7 +33,7 @@ const styles = theme => ({
     color: '#222',
     fontSize: '3em'
   }
-})
+}
 
 class InfoTile extends Component {
   constructor(props) {

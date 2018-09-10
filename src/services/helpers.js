@@ -8,6 +8,11 @@ export const generateHeaders = () => ({
 })
 
 export const handleErrors = (response) => {
-    if (!response.ok) throw Error(response.statusText === '' ? response._bodyText : response.statusText)
+    if (!response.ok) {
+        throw {
+            message: response.statusText === '' ? response._bodyText : response.statusText,
+            code: response.status
+        }
+    }
     return response.json()
 }

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GridTile from '../GridTile'
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'react-jss'
 import { connect } from 'react-redux'
 
 import tiles from '../tiles'
 import EmptyTile from '../tiles/EmptyTile';
 
-const styles = theme => ({
+const styles = {
   root: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column'
   }
-});
+}
 
 class Grid extends Component {
   componentDidMount() {
@@ -31,7 +31,7 @@ class Grid extends Component {
       const tileData = tileType === 'Info' ? this.props.calendar : this.props[element.tile]
       return tileData ? 
         <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '1vh'}}>
-          {tileData.data.success ? <TileElement card={tileData}/> : <EmptyTile provider={tileType} {...tileData.data} />}
+          {tileData.error === undefined ? <TileElement card={tileData}/> : <EmptyTile provider={tileType} {...tileData.error} />}
         </GridTile> : <div key={`level-${this.layoutLevels}-${index}`}/>
       
     }

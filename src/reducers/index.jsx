@@ -18,6 +18,7 @@ const dataStates = (state = { isFetching: false, isStale: false, data: [] }, act
                 isStale: false
             })
         case RECEIVE_DATA:
+            delete state.error;
             return Object.assign({}, state, {
                 isFetching: false,
                 isStale: false,
@@ -26,18 +27,19 @@ const dataStates = (state = { isFetching: false, isStale: false, data: [] }, act
                 lastUpdated: action.lastUpdated
             })
         case RECEIVE_ERROR:
+            if(state.data === []) delete state.data;
             return Object.assign({}, state, {
                 isFetching: false,
                 isStale: true,
-                data: action.error,
-                lastUpdated: action.lastUpdated
+                isValid: false,
+                error: action.error
             })
         default:
             return state
     }
 }
 
-function cardsStateReducer(state = {}, action) {
+function cardsStateReducer(state = {cards: {}}, action) {
     switch (action.type) {
         case SET_DATA_STALE:
         case REQUEST_DATA:

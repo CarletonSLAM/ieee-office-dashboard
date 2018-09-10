@@ -31,7 +31,7 @@ class Grid extends Component {
       const tileData = tileType === 'Info' ? this.props.calendar : this.props[element.tile]
       return tileData ? 
         <GridTile key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{flex: `${flexAmount*100}%`, margin: '1vh'}}>
-          {tileData.data.success ? <TileElement card={tileData}/> : <EmptyTile provider={tileType} {...tileData.data} />}
+          {tileData.error === undefined ? <TileElement card={tileData}/> : <EmptyTile provider={tileType} {...tileData.error} />}
         </GridTile> : <div key={`level-${this.layoutLevels}-${index}`}/>
       
     }

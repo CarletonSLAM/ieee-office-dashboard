@@ -7,8 +7,8 @@ const styles = {
     fontSize: '30px',
     color: '#7f0000',
     backgroundColor: '#ffeaea',
-    padding: '3vh',
-    margin: '2vh',
+    padding: '2vh',
+    margin: '1vh',
     textAlign: 'center',
     borderRadius: '5px',
     

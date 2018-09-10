@@ -1,56 +1,59 @@
 import React, { Component } from 'react';
 
-import { createStore, applyMiddleware } from 'redux'
-import { createLogger } from 'redux-logger'
-import { Provider } from 'react-redux'
-import thunkMiddleware from 'redux-thunk'
 import withStyles from 'react-jss'
 
 import { getDataIfNeeded, setDataStale } from './actions'
-import rootReducer from './reducers'
+
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from './configureStore'
+
+
 import Grid from './components/Grid'
 import { body } from './styles'
 import AppConfig from './App.config'
 
-
 const styles = { body }
 
-// const loggerMiddleware = createLogger()
-
-
-const store = createStore(
-    rootReducer,
-    { cards: {} },
-    applyMiddleware(
-        thunkMiddleware,
-        // Enable for Debug State
-        // loggerMiddleware, 
-    )
-)
-
-
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            storeCreated: false,
+            store: null,
+        };
+    }
+    componentDidMount() {
+        configureStore().then(({ persistor, store }) =>
+        this.setState({ persistor, store, storeCreated: true }));
+    }
     onDashboardLoad() {
-        this.intervals = AppConfig.services.map(({name, timeout}) => {
-            this.fetchDatasource(name);
-            return setInterval( () => this.fetchDatasource(name), timeout);
-        });
+
+        setTimeout(() => {
+            this.intervals = AppConfig.services.map(({name, timeout}) => {
+                this.fetchDatasource(name);
+                return setInterval( () => this.fetchDatasource(name), timeout);
+            });
+        },1000)
     }
 
     fetchDatasource(name) {
-        store.dispatch(setDataStale(name))
-        store.dispatch(getDataIfNeeded(name))
+        this.state.store.dispatch(setDataStale(name))
+        this.state.store.dispatch(getDataIfNeeded(name))
     }
     componentWillUnmount() {
         this.intervals.forEach( i => clearInterval(i) );
     }
   render() {
+    if (!this.state.storeCreated) return null;
     return (
-        <Provider store={store}>
-          <div  className={this.props.classes.body}>
-            <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
-          </div>
-      </Provider>
+    <Provider store={this.state.store}>
+        <PersistGate loading={null} persistor={this.state.persistor}>
+            <div  className={this.props.classes.body}>
+                <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
+            </div>
+        </PersistGate>
+    </Provider>
     )
   }
 }

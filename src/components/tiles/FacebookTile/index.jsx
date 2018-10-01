@@ -67,13 +67,13 @@ const styles = {
   },
   messageBig: {
     flex: '1 100%',
-    fontSize: '3.5rem',
+    fontSize: '2em',
   },
   imgContainer: {
     flex: '1 30%',
   },
   img: {
-    width: '14vw',
+    height: '12vw',
   },
 }
 

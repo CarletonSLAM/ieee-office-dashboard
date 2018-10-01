@@ -36,9 +36,22 @@ export const receiveError = (card, error) => {
 export const fetchData = card => dispatch => {
   dispatch(requestData(card))
   let errorOccured = false
-  return services[card].getData()
+  let promiseChain;
+  if (typeof services[card].getAuth === "function") {
+    promiseChain = services[card].getAuth()
+    .catch((error) => {
+      errorOccured = true
+      dispatch(receiveError(card,{type: "Auth", code: error.code, error: error.message}))})
+    .then(services[card].getData)
+  }
+  else {
+    promiseChain = services[card].getData()
+  }
+  return promiseChain
   .catch((error) => {
+    if (errorOccured === true) return
     errorOccured = true
+    if(error.error !== undefined) error = error.error
     dispatch(receiveError(card,{type: "API", code: error.code, error: error.message}))})
   .then(services[card].transformResponse)
   .catch((error) => {

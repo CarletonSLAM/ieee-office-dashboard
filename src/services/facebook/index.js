@@ -1,4 +1,4 @@
-/* global atob */
+/* global FB atob */
 
 import moment from 'moment'
 import fetch from 'cross-fetch'
@@ -8,17 +8,41 @@ import { generateHeaders, handleErrors } from '../helpers'
 const postLimit = 10
 const postFields = 'id,message,story, caption,description,name, full_picture, created_time'
 export default {
-    getData: () => fetch(`${AppConfig.server}/facebook`, { headers: generateHeaders() })
+    getAuth: () => {
+        return fetch(`${AppConfig.server}/facebook`, { headers: generateHeaders() })
         .then(handleErrors)
         .then(serverResonse => JSON.parse(atob(serverResonse.data)))
-        .then(creds => fetch(`https://graph.facebook.com/oauth/access_token?client_id=${creds.client}&client_secret=${creds.secret}&grant_type=client_credentials`))
-        .then(handleErrors)
-        .then(({ access_token: accessToken }) => {
-            this.accessToken = accessToken
-            return fetch(`https://graph.facebook.com/v2.9/ieeecarleton/feed?access_token=${accessToken}&limit=${postLimit}`)
+        .then(creds => {
+            return new Promise((resolve, reject) => {
+                FB.init({
+                    appId            : creds.client,
+                    autoLogAppEvents : true,
+                    xfbml            : true,
+                    version          : 'v3.1'
+                });
+                FB.getLoginStatus(function(response) {
+                    if (response.authResponse) {
+                        resolve(response);
+                    }
+                    reject(response);
+                });
+            })
         })
-        .then(handleErrors)
-        .then(({ data }) => Promise.all(data.map(post => fetch(`https://graph.facebook.com/v2.9/${post.id}?access_token=${this.accessToken}&fields=${postFields}`).then(handleErrors)))),
+
+    },
+    getData: () => {
+        return new Promise((resolve, reject) => {
+            FB.api('/ieeecarleton/feed', {limit: postLimit }, (respfeed) => Array.isArray(respfeed.data) ? resolve(respfeed.data) : reject(respfeed))
+        })
+        .then(data =>
+            Promise.all(
+                data.map( post =>
+                    new Promise((resolve) =>
+                        FB.api(`/${post.id}`, {fields: postFields }, (response) => resolve(response))
+                    )
+            ))
+        )
+    },
     transformResponse: response => ((response && response[0] && response[0].id) ?
         response.map(({
             id, story, name, message, full_picture: src, created_time: time

@@ -1,12 +1,15 @@
 module.exports = {
     transpo: {
+        timeout: 0,
         appID: '',
         apiKey: ''
     },
     weather: {
+        timeout: 0,
         apiKey: ''
     },
     google: {
+        timeout: 0,
         client: {
             apiKey: '',
             clientId: '',
@@ -17,6 +20,7 @@ module.exports = {
         folderID: ''
     },
     facebook: {
+        timeout: 0,
         client: '',
         secret: ''
     }

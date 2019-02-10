@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- stable
+cache:
+  directories:
+  - node_modules
+script:
+- npm test
+- npm run build
+before_install:
+- openssl aes-256-cbc -K $encrypted_d752ce6954e8_key -iv $encrypted_d752ce6954e8_iv
+  -in config.js.enc -out ./config/config.js -d

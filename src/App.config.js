@@ -13,7 +13,7 @@ const SERVICES = {
 }
 
 module.exports = {
-    server: 'http://localhost:8129',
+    server: 'https://localhost:8129',
     layout: [
         {
             h: 0.84,

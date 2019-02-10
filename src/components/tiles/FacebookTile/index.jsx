@@ -64,16 +64,18 @@ const styles = {
     paddingLeft: '2vh',
     flex: '1 60%',
     fontSize: '1.2em',
+    overflow: '-webkit-paged-y',
   },
   messageBig: {
     flex: '1 100%',
     fontSize: '2em',
+    overflow: '-webkit-paged-y',
   },
   imgContainer: {
     flex: '1 30%',
   },
   img: {
-    height: '12vw',
+    width: '10vw',
   },
 }
 

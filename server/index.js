@@ -1,8 +1,11 @@
 
-const Koa = require('koa')
+const fs = require('fs')
 const path = require('path')
+
+const Koa = require('koa')
 const router = require('koa-router')()
 const serve = require('koa-static')
+const https = require('https')
 const api = require('./api')
 
 const app = new Koa()
@@ -23,7 +26,12 @@ app.use(serve(path.resolve(__dirname, '../build')))
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-
-const server = app.listen(8129, '127.0.0.1', () => {
-    console.log(`Server Listening on ${server.address().address}:${server.address().port}`)
+const httpsServer = https.createServer({
+    key: fs.readFileSync(path.join('server', 'ssl','server.key'), 'utf8'),
+    cert: fs.readFileSync(path.join('server','ssl','server.cert'), 'utf8'),
+    requestCert: false,
+    rejectUnauthorized: true
+}, app.callback())
+  .listen(8129, '127.0.0.1', () => {
+    console.log(`Server Listening on ${httpsServer.address().address}:${httpsServer.address().port}`)
 })

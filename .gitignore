@@ -26,4 +26,5 @@ config.js
 
 #credentials
 keys/
-
+server/ssl/*.cert
+server/ssl/*.key

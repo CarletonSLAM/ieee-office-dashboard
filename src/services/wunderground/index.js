@@ -12,7 +12,7 @@ export default {
                 high: cast.high.celsius,
                 low: cast.low.celsius,
                 condition: cast.conditions,
-                icon: cast.icon_url,
+                icon: cast.icon_url.replace('http://', 'https://'),
                 wind: cast.avewind.kph
             }))
         }

@@ -18,13 +18,24 @@ export default {
                     appId            : creds.client,
                     autoLogAppEvents : true,
                     xfbml            : true,
-                    version          : 'v3.1'
+                    cookie           : true,
+                    version          : 'v3.2'
                 });
-                FB.getLoginStatus(function(response) {
-                    if (response.authResponse) {
-                        resolve(response);
+                FB.getLoginStatus(function(responseLS) {
+                    if (responseLS.authResponse) {
+                        resolve(responseLS);
+                    } else {
+                        FB.login(function(response) {
+                            if (response.status === 'connected') {
+                                resolve(response);
+                              // Logged into your app and Facebook.
+                            } else {
+                                console.error(response);
+                                reject(response);
+                              // The person is not logged into this app or we are unable to tell.
+                            }
+                        });
                     }
-                    reject(response);
                 });
             })
         })

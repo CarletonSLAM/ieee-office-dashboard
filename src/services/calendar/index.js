@@ -27,7 +27,7 @@ export default {
                     orderBy: 'startTime'
                 })).then(
                     res => resolve(res.result),
-                    error => console.error(error) && reject(error.error),
+                    error => reject(error.error),
                 )
             }))
         }),

@@ -27,11 +27,11 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 const httpsServer = https.createServer({
-    key: fs.readFileSync(path.join('server', 'ssl','server.key'), 'utf8'),
-    cert: fs.readFileSync(path.join('server','ssl','server.cert'), 'utf8'),
+    key: fs.readFileSync(path.join('server', 'ssl', 'server.key'), 'utf8'),
+    cert: fs.readFileSync(path.join('server', 'ssl', 'server.cert'), 'utf8'),
     requestCert: false,
     rejectUnauthorized: true
 }, app.callback())
-  .listen(8129, '127.0.0.1', () => {
-    console.log(`Server Listening on ${httpsServer.address().address}:${httpsServer.address().port}`)
-})
+    .listen(8129, '127.0.0.1', () => {
+        console.log(`Server Listening on ${httpsServer.address().address}:${httpsServer.address().port}`)
+    })

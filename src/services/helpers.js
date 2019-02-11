@@ -9,10 +9,10 @@ export const generateHeaders = () => ({
 
 export const handleErrors = (response) => {
     if (!response.ok) {
-        throw {
-            message: response.statusText === '' ? response._bodyText : response.statusText,
+        Promise.reject({
+            message: response.statusText === '' ? response._bodyText : response.statusText, // eslint-disable-line no-underscore-dangle
             code: response.status
-        }
+        })
     }
     return response.json()
 }

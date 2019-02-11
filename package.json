@@ -31,6 +31,7 @@
     "build-config": "node ./config/build.js",
     "delete-map-files": "find ./build -name '*.map' -delete",
     "lint": "eslint ./src ./server ./config --fix",
+    "postinstall": "cp .githooks/* .git/hooks/",
     "test": "npm run build-config && react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "node server/index.js",
@@ -38,7 +39,7 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
-    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-react": "^7.7.0"
   },
   "browserslist": [

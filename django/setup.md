@@ -7,3 +7,6 @@
     cd <PROJECT_NAME> && python3 manage.py startapp <APP_NAME>
 3. Pull env dependencies
     pip3 install -r requirements.txt
+
+
+REST enpoints guide: https://django-rest-auth.readthedocs.io/en/latest/api_endpoints.html

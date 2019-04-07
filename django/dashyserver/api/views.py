@@ -1,24 +1,19 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from api.serializers import UserSerializer, GroupSerializer
-from api.permissions import IsSuperUser, IsUser
+from django.http import JsonResponse
+from rest_framework.views import APIView
+from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.models import SocialToken
+import requests
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    def get_queryset(self):
-        if self.action == 'list':
-            return self.queryset.filter(id=self.request.user.id)
-        return self.queryset
-    
+class CredentialDetail(APIView):
+    def get(self, request, type):
+        if type not in ['google', 'facebook']:
+            return JsonResponse(status=400, data={'detail':'Unknown provider'})
 
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+        context = {}
+        provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
+        if provider_uid.exists():
+            provider_uid = provider_uid[0].uid
+            context['token'] = SocialToken.objects.filter(account__user=request.user, account__provider=type).first()
+        else:
+            return JsonResponse(status=404, data={'detail':'User not registered with provider'})
+        return JsonResponse(data={ 'token': str(context['token']) }, status=200)

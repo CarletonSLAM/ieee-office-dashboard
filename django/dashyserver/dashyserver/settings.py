@@ -20,7 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DASHY_SECRET_KEY', 'f-#9=y0yf*&l5w5im@5+-n2l%o6h**1(o(usc=zg)(w#a+v%i0')
+SECRET_KEY = os.environ.get(
+    'DASHY_SECRET_KEY', 'f-#9=y0yf*&l5w5im@5+-n2l%o6h**1(o(usc=zg)(w#a+v%i0')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DASHY_PROD', True)
@@ -53,6 +54,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     'rest_framework',
     'api',
     'pages',
@@ -87,7 +94,7 @@ TEMPLATES = [
         },
     },
 ]
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'socialaccount_connections'
 LOGOUT_REDIRECT_URL = 'home'
 
 WSGI_APPLICATION = 'dashyserver.wsgi.application'
@@ -141,3 +148,34 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# For django-allauth
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email', ],
+        'AUTH_PARAMS': {
+            'auth_type': 'reauthenticate',
+        },
+        'METHOD': 'oauth2',
+        'LOCALE_FUNC': lambda request: 'pt_BR',
+    },
+    'google': {
+        'SCOPE': [
+            'https://www.googleapis.com/auth/userinfo.profile', 'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+    },
+}

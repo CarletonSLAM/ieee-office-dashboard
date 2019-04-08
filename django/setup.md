@@ -8,5 +8,6 @@
 3. Pull env dependencies
     pip3 install -r requirements.txt
 
-
+# Guides
 REST enpoints guide: https://django-rest-auth.readthedocs.io/en/latest/api_endpoints.html
+Allauth templates: https://github.com/pennersr/django-allauth/tree/master/allauth/templates

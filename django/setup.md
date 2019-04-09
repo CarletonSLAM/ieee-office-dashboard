@@ -1,12 +1,14 @@
 1. Run the following commands first
-    python3 -m venv env
-    source  env/bin/activate
-2. Install django puglins
-    pip3 install django djangorestframework
-    django-admin startproject <PROJECT_NAME>
-    cd <PROJECT_NAME> && python3 manage.py startapp <APP_NAME>
+
+        pip3 install --user pipenv
+
+2. Install requirements through pipenv shell
+
+        pipenv shell
+
 3. Pull env dependencies
-    pip3 install -r requirements.txt
+
+        pipenv install
 
 # Guides
 REST enpoints guide: https://django-rest-auth.readthedocs.io/en/latest/api_endpoints.html

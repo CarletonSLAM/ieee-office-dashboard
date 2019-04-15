@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-
+import React, { Component } from 'react'
 import withStyles from 'react-jss'
-
-import { getDataIfNeeded, setDataStale } from './actions'
-
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { getDataIfNeeded, setDataStale } from './actions'
 import configureStore from './configureStore'
 
 
@@ -17,46 +14,50 @@ const styles = { body }
 
 class App extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             storeCreated: false,
-            store: null,
-        };
+            store: null
+        }
     }
-    componentDidMount() {
-        configureStore().then(({ persistor, store }) =>
-        this.setState({ persistor, store, storeCreated: true }));
-    }
-    onDashboardLoad() {
 
+    componentDidMount() {
+        configureStore().then(({ persistor, store }) => this.setState({ persistor, store, storeCreated: true }))
+    }
+
+    componentWillUnmount() {
+        this.intervals.forEach(i => clearInterval(i))
+    }
+
+    onDashboardLoad() {
         setTimeout(() => {
-            this.intervals = AppConfig.services.map(({name, timeout}) => {
-                this.fetchDatasource(name);
-                return setInterval( () => this.fetchDatasource(name), timeout);
-            });
-        },1000)
+            this.intervals = AppConfig.services.map(({ name, timeout }) => {
+                this.fetchDatasource(name)
+                return setInterval(() => this.fetchDatasource(name), timeout)
+            })
+        }, 1000)
     }
 
     fetchDatasource(name) {
-        this.state.store.dispatch(setDataStale(name))
-        this.state.store.dispatch(getDataIfNeeded(name))
+        const { store } = this.state
+        store.dispatch(setDataStale(name))
+        store.dispatch(getDataIfNeeded(name))
     }
-    componentWillUnmount() {
-        this.intervals.forEach( i => clearInterval(i) );
+
+    render() {
+        const { storeCreated } = this.state
+        if (!storeCreated) return null
+        return (
+            <Provider store={this.state.store}>
+                <PersistGate loading={null} persistor={this.state.persistor}>
+                    <div className={this.props.classes.body}>
+                        <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
+                    </div>
+                </PersistGate>
+            </Provider>
+        )
     }
-  render() {
-    if (!this.state.storeCreated) return null;
-    return (
-    <Provider store={this.state.store}>
-        <PersistGate loading={null} persistor={this.state.persistor}>
-            <div  className={this.props.classes.body}>
-                <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
-            </div>
-        </PersistGate>
-    </Provider>
-    )
-  }
 }
 
 const AppWithStyles = withStyles(styles)(App)
-export default (() => <AppWithStyles/>);
+export default (() => <AppWithStyles />)

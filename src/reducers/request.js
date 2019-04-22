@@ -2,11 +2,11 @@ import {
     SET_DATA_STALE,
     REQUEST_DATA,
     RECEIVE_DATA,
-    RECEIVE_ERROR
+    RECEIVE_ERROR,
 } from '../actions'
 
 
-const dataStates = (state = { isFetching: false, isStale: false, data: [] }, action) => {
+const newCardState = (state = { isFetching: false, isStale: false, data: [] }, action) => {
     switch (action.type) {
         case SET_DATA_STALE:
             return Object.assign({}, state, {
@@ -39,7 +39,8 @@ const dataStates = (state = { isFetching: false, isStale: false, data: [] }, act
     }
 }
 
-function cardsStateReducer(state = {cards: {}}, action) {
+
+export const cardsStateReducer = (state = {cards: {}}, action) => {
     switch (action.type) {
         case SET_DATA_STALE:
         case REQUEST_DATA:
@@ -47,12 +48,10 @@ function cardsStateReducer(state = {cards: {}}, action) {
         case RECEIVE_ERROR:
             return Object.assign({}, state, {
                 cards: Object.assign(state.cards, {
-                    [action.card]: dataStates(state.cards[action.card], action)
+                    [action.card]: newCardState(state.cards[action.card], action)
                 })
             })
         default:
             return state
     }
 }
-
-export default cardsStateReducer

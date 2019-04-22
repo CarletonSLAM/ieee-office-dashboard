@@ -7,6 +7,7 @@ import configureStore from './configureStore'
 
 
 import Grid from './components/Grid'
+import { Login } from './components/Login'
 import { body } from './styles'
 import AppConfig from './App.config'
 
@@ -45,14 +46,17 @@ class App extends Component {
     }
 
     render() {
-        const { storeCreated } = this.state
+        const { storeCreated, account } = this.state
         if (!storeCreated) return null
         return (
             <Provider store={this.state.store}>
                 <PersistGate loading={null} persistor={this.state.persistor}>
-                    <div className={this.props.classes.body}>
-                        <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
-                    </div>
+                    { !account || !account.accessToken || account.accessToken === '' ?
+                        <Login/>:
+                        <div className={this.props.classes.body}>
+                            <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
+                        </div>
+                    }
                 </PersistGate>
             </Provider>
         )

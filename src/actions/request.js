@@ -63,7 +63,7 @@ export const fetchData = card => dispatch => {
 }
 
 
-function shouldGetData(state, card) {
+const shouldGetData = (state, card) => {
   const cardData = state.cards[card]
   if (!cardData) {
     return true
@@ -74,7 +74,7 @@ function shouldGetData(state, card) {
   }
 }
 
-export function getDataIfNeeded(card) {
+export const getDataIfNeeded = card => {
   return (dispatch, getState) => {
     if (shouldGetData(getState(), card)) {
       return dispatch(fetchData(card))

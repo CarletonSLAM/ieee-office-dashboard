@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import withStyles from 'react-jss'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { getDataIfNeeded, setDataStale } from './actions'
+import { performLogin, getDataIfNeeded, setDataStale } from './actions'
 import configureStore from './configureStore'
 
 
 import Grid from './components/Grid'
-import { Login } from './components/Login'
+import Login from './components/Login'
 import { body } from './styles'
 import AppConfig from './App.config'
 
@@ -18,7 +18,8 @@ class App extends Component {
         super(props)
         this.state = {
             storeCreated: false,
-            store: null
+            store: null,
+            persistor: null
         }
     }
 
@@ -45,14 +46,20 @@ class App extends Component {
         store.dispatch(getDataIfNeeded(name))
     }
 
+    userLogin({username, password}) {
+        const { store } = this.state
+        store.dispatch(performLogin({username, password}))
+    }
+
     render() {
-        const { storeCreated, account } = this.state
+        const { storeCreated, persistor, store } = this.state
         if (!storeCreated) return null
+        const { account } =  store.getState()
         return (
-            <Provider store={this.state.store}>
-                <PersistGate loading={null} persistor={this.state.persistor}>
-                    { !account || !account.accessToken || account.accessToken === '' ?
-                        <Login/>:
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    { !account || !account.success ?
+                        <Login onSubmit={this.userLogin.bind(this)}/>:
                         <div className={this.props.classes.body}>
                             <Grid onLoad={this.onDashboardLoad.bind(this)} layout={AppConfig.layout} />
                         </div>

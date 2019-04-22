@@ -14,6 +14,7 @@ const SERVICES = {
 
 module.exports = {
     server: 'https://localhost:8129',
+    DJserver: 'http://localhost:8000',
     layout: [
         {
             h: 0.84,

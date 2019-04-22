@@ -6,13 +6,13 @@ class Login extends Component {
         super(props);
 
         this.state = {
-          uname: "",
+          username: "",
           password: ""
         };
       }
 
       validateForm() {
-        return this.state.uname.length > 0 && this.state.password.length > 0;
+        return this.state.username.length > 0 && this.state.password.length > 0;
       }
 
       handleChange = event => {
@@ -23,16 +23,19 @@ class Login extends Component {
 
       handleSubmit = event => {
         event.preventDefault();
+        const {username, password} = this.state;
+        this.props.onSubmit({username, password})
       }
     render() {
+        const { username, password } = this.state
         return (
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <h4>Sign in</h4>
-                <label htmlFor="uname">Username</label>
-                <input type="text" id="uname"/>
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" value={username}onChange={this.handleChange}/>
                 <br />
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password"/>
+                <input type="password" id="password" value={password} onChange={this.handleChange}/>
                 <div>
                     <button color="indigo" type="submit">Login</button>
                 </div>

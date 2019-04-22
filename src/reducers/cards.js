@@ -40,18 +40,18 @@ const newCardState = (state = { isFetching: false, isStale: false, data: [] }, a
 }
 
 
-export const cardsStateReducer = (state = {cards: {}}, action) => {
+const cardsStateReducer = (state = {}, action) => {
     switch (action.type) {
         case SET_DATA_STALE:
         case REQUEST_DATA:
         case RECEIVE_DATA:
         case RECEIVE_ERROR:
             return Object.assign({}, state, {
-                cards: Object.assign(state.cards, {
-                    [action.card]: newCardState(state.cards[action.card], action)
-                })
+                [action.card]: newCardState(state[action.card], action)
             })
         default:
             return state
     }
 }
+
+export default cardsStateReducer

@@ -21,7 +21,7 @@ const styles = {
   },
 }
 
-const GridTile = ({loading, className, children, classes, style}) => {
+const GridTile = ({loading, children, classes, style}) => {
 
   const dynamicClass = loading ? classes.loading : classes.doneLoading;
   return (

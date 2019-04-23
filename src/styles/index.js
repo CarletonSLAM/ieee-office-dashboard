@@ -1,4 +1,5 @@
 module.exports = {
+    borderRadius: '5px',
     body: {
         background: '#113b65',
         fontFamily: '\'Roboto\', sans-serif',

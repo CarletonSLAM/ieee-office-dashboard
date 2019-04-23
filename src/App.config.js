@@ -13,6 +13,7 @@ const SERVICES = {
 }
 
 module.exports = {
+    appName: 'Dashy',
     server: 'https://localhost:8129',
     DJserver: 'http://localhost:8000',
     layout: [

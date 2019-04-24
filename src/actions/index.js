@@ -1,3 +1,3 @@
 
-export * from './cards';
-export * from './account';
+export * from './cards'
+export * from './account'

@@ -1,6 +1,6 @@
 {
     "parser": "babel-eslint",
-    "extends": "standard",
+    "extends": "airbnb",
     "plugins": [
         "react"
     ],
@@ -9,6 +9,7 @@
         "comma-dangle": ["error", "never"],
         "max-len": [1,200],
         "semi": [2, "never"],
-        "no-trailing-spaces": "error"
+        "no-trailing-spaces": "error",
+        "no-param-reassign": 0
     }
 }

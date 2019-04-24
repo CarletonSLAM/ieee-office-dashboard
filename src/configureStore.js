@@ -22,7 +22,7 @@ const loggerMiddleware = createLogger()
 const configStore = async () => {
     const store = createStore(persistedReducer, applyMiddleware(thunkMiddleware, loggerMiddleware))
     const persistor = persistStore(store)
-    await persistor.flush();
+    await persistor.flush()
     return { persistor, store }
 }
 export default configStore

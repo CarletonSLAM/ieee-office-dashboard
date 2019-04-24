@@ -13,5 +13,5 @@ export default {
     InfoTile,
     InstagramTile,
     TranspoTile,
-    WeatherTile   
+    WeatherTile
 }

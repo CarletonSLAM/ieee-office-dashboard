@@ -25,13 +25,13 @@ const sliderSettings = {
 const TranspoTile = ({ classes, card }) => {
     const cardData = (card) ? card.data : []
     return (
-      <div className={classes.root}>
-          <Slider {...sliderSettings}>
-          {
+        <div className={classes.root}>
+            <Slider {...sliderSettings}>
+                {
                     cardData.map((bus, ind) => (
                         <div key={`bus-${ind}`}>
                             <ArrivalSlide {...bus} />
-                      </div>
+                        </div>
                     ))
                 }
             </Slider>

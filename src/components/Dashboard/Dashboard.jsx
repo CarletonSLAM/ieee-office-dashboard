@@ -16,7 +16,7 @@ const styles = {
     }
 }
 
-class Grid extends Component {
+class Dashboard extends Component {
     componentDidMount() {
         this.layoutLevels = 0
         this.onDashboardLoad()
@@ -50,8 +50,8 @@ class Grid extends Component {
             return tileData
                 ? (
                     <TileFrame key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{ flex: `${flexAmount * 100}%`, margin: '1vh' }}>
-                    {tileData.error === undefined ? <TileElement card={tileData} /> : <EmptyTile provider={tileType} {...tileData.error} />}
-                  </TileFrame>
+                        {tileData.error === undefined ? <TileElement card={tileData} /> : <EmptyTile provider={tileType} {...tileData.error} />}
+                    </TileFrame>
                 ) : <div key={`level-${this.layoutLevels}-${index}`} />
         }
 
@@ -63,9 +63,9 @@ class Grid extends Component {
                 key={`level-${this.layoutLevels}-${index}`} style={{
                     display: 'flex', flex: `${flexAmount * 100}%`, flexDirection: flexDir, margin: this.layoutHasChildren ? '' : '1vh'
                 }}
-          >
+            >
                 {element.layout.map(this.createLayout.bind(this))}
-          </div>
+            </div>
         )
     }
 
@@ -73,8 +73,8 @@ class Grid extends Component {
         const { classes, layout } = this.props
         this.layoutHasChildren = false
         return (
-          <div className={classes.root}>
-              {layout.map(this.createLayout.bind(this))}
+            <div className={classes.root}>
+                {layout.map(this.createLayout.bind(this))}
             </div>
         )
     }
@@ -87,9 +87,14 @@ const mapDispatchToProps = dispatch => ({
     setDataStale: name => dispatch(setDataStale(name))
 })
 
-Grid.propTypes = {
-    classes: PropTypes.object.isRequired
+Dashboard.propTypes = {
+    classes: PropTypes.object.isRequired,
+    services: PropTypes.array.isRequired,
+    getDataIfNeeded: PropTypes.func.isRequired,
+    setDataStale: PropTypes.func.isRequired,
+    calendar: PropTypes.object.isRequired,
+    layout: PropTypes.object.isRequired
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Grid))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard))

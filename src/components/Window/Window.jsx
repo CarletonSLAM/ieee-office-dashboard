@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 import { connect } from 'react-redux'
 import { performLogin, clearLoginMessage } from '../../actions'
@@ -11,7 +12,7 @@ import { body } from '../../styles'
 const styles = { body }
 
 class Window extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.clearLoginMessage()
     }
 
@@ -23,14 +24,27 @@ class Window extends Component {
         const { accountSuccess, accountError, classes } = this.props
         return (
             <div className={classes.body}>
-            {
+                {
                     !accountSuccess
                         ? <Login onSubmit={this.userLogin.bind(this)} message={accountError ? accountError.message : ''} />
                         : <Dashboard layout={this.props.layout} services={this.props.services} />
                 }
-          </div>
+            </div>
         )
     }
+}
+
+
+Window.propTypes = {
+    classes: PropTypes.object.isRequired,
+    children: PropTypes.element.isRequired,
+    layout: PropTypes.object.isRequired,
+    services: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+    performLogin: PropTypes.func.isRequired,
+    clearLoginMessage: PropTypes.func.isRequired,
+    accountError: PropTypes.object.isRequired,
+    accountSuccess: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

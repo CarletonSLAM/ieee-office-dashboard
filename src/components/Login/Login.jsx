@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 import { body, borderRadius } from '../../styles'
 import { appName } from '../../App.config'
@@ -68,20 +69,28 @@ class Login extends Component {
           const { classes, message } = this.props
           const { username, password } = this.state
           return (
-            <div className={classes.frame}>
-                <form onSubmit={this.handleSubmit}>
+              <div className={classes.frame}>
+                  <form onSubmit={this.handleSubmit}>
                       <h2>{ appName || 'App' }</h2>
-                <input className={classes.input} type="text" id="username" placeholder="Username" value={username} onChange={this.handleChange} />
-                <br />
-                <input className={classes.input} type="password" id="password" placeholder="Password" value={password} onChange={this.handleChange} />
-                <div>
-                        <button className={classes.login} type="submit">Login</button>
+                      <input className={classes.input} type="text" id="username" placeholder="Username" value={username} onChange={this.handleChange} />
+                      <br />
+                      <input className={classes.input} type="password" id="password" placeholder="Password" value={password} onChange={this.handleChange} />
+                      <div>
+                          <button className={classes.login} type="submit">Login</button>
                       </div>
                   </form>
-                <span>{message ? 'Error: Please Try again' : '' }</span>
+                  <span>{message ? 'Error: Please Try again' : '' }</span>
               </div>
           )
       }
 }
+
+
+Login.propTypes = {
+    classes: PropTypes.object.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    message: PropTypes.string.isRequired
+}
+
 
 export default withStyles(styles)(Login)

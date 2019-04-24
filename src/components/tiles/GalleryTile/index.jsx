@@ -51,25 +51,25 @@ const GalleryTile = ({ classes, card, onRefreshClick }) => {
     }
     const cardData = (card) ? card.data : []
     return (
-      <div className={classes.root}>
+        <div className={classes.root}>
             <Slider {...sliderSettings}>
-          {
+                {
                     (cardData).map(({ src, name }, ind) => (
                         <div key={`event-${ind}`}>
-                        <div className={classes.container}>
-                              <div className={classes.item}>
-                                  <div className={classes.imgContainer}>
-                                      <img className={classes.img} src={src} alt={src} />
+                            <div className={classes.container}>
+                                <div className={classes.item}>
+                                    <div className={classes.imgContainer}>
+                                        <img className={classes.img} src={src} alt={src} />
                                     </div>
                                     <div className={classes.caption}>
                                         {name || 'IEEE Carleton Event'}
-                                </div>
+                                    </div>
                                 </div>
                             </div>
-                      </div>
+                        </div>
                     ))
                 }
-        </Slider>
+            </Slider>
         </div>
     )
 }

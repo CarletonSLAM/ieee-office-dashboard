@@ -36,15 +36,15 @@ const sliderSettings = {
 const CalendarTile = ({ classes, card, onRefreshClick }) => {
     const cardData = (card) ? card.data : []
     return (
-      <div className={classes.root}>
-          <div className={classes.title}>Upcoming Events</div>
-          <div className={classes.slider}>
-              <Slider {...sliderSettings}>
-                  {
+        <div className={classes.root}>
+            <div className={classes.title}>Upcoming Events</div>
+            <div className={classes.slider}>
+                <Slider {...sliderSettings}>
+                    {
                         cardData.map((event, ind) => (
                             <div className={classes.item} key={`event-${ind}`}>
                                 <EventSlide {...event} />
-                          </div>
+                            </div>
                         ))
                     }
                 </Slider>

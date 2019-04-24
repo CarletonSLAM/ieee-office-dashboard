@@ -92,16 +92,16 @@ const sliderSettings = {
 const SocialCard = ({ classes, card }) => {
     const cardData = (card) ? card.data : []
     return (
-      <div className={classes.root}>
-          <div className={classes.label}>Facebook</div>
-          <div className={classes.slider}>
-          <Slider {...sliderSettings}>
+        <div className={classes.root}>
+            <div className={classes.label}>Facebook</div>
+            <div className={classes.slider}>
+                <Slider {...sliderSettings}>
                     {cardData.map(({
                         story, src, message, name, time
                     }, ind) => (
                         <div key={`fb-${ind}`}>
-                        <div className={classes.container}>
-                              <div className={classes.story}>{story || 'IEEE Carleton Posted'}</div>
+                            <div className={classes.container}>
+                                <div className={classes.story}>{story || 'IEEE Carleton Posted'}</div>
                                 <div className={classes.time}>{time}</div>
                                 {name ? <div className={classes.name}>{name}</div> : ''}
                                 <div className={(src) ? classes.postBody : classes.postBodyBig}>
@@ -110,9 +110,9 @@ const SocialCard = ({ classes, card }) => {
                                         : ''
                                     }
                                     {message ? <div className={(src) ? classes.message : classes.messageBig}>{(message.length > 280) ? `${message.substring(0, 280)}...` : message}</div> : ''}
-                          </div>
+                                </div>
                             </div>
-                      </div>
+                        </div>
                     ))}
                 </Slider>
             </div>

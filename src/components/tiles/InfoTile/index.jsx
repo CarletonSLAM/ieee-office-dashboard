@@ -62,15 +62,15 @@ class InfoTile extends Component {
 
         const cardData = card ? card.data : {}
         return (
-          <div className={classes.root}>
-              <div className={classes.time}>{this.state.dateTime}</div>
-              <div className={classes.nextEvent}>Next Event</div>
-              {cardData[0]
+            <div className={classes.root}>
+                <div className={classes.time}>{this.state.dateTime}</div>
+                <div className={classes.nextEvent}>Next Event</div>
+                {cardData[0]
                     ? (
                         <div>
-                        <div className={classes.summary}>{cardData[0].summary}</div>
-                        <div className={classes.duration}>{cardData[0].duration}</div>
-                      </div>
+                            <div className={classes.summary}>{cardData[0].summary}</div>
+                            <div className={classes.duration}>{cardData[0].duration}</div>
+                        </div>
                     )
                     : <div className={classes.front}>Ask the Front Desk for More Info!</div>
                 }

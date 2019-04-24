@@ -37,9 +37,9 @@ const WeatherTile = ({ classes, card, onRefreshClick }) => {
         return (
             <div className={classes.error}>
         Server Error:
-            {' '}
-            {card.data[0].msg}
-          </div>
+                {' '}
+                {card.data[0].msg}
+            </div>
         )
     }
 
@@ -51,16 +51,16 @@ const WeatherTile = ({ classes, card, onRefreshClick }) => {
         <Slider {...sliderSettings}>
             {
                 dataRows.map((dataRow, indD) => (
-                  <div key={`weather-dataSet-${indD}`}>
-                      <div className={classes.rowFlex}>
-                          {dataRow.map((data, ind) => (
+                    <div key={`weather-dataSet-${indD}`}>
+                        <div className={classes.rowFlex}>
+                            {dataRow.map((data, ind) => (
                                 <WeatherCard {...data} key={`weather-dataSet-${(indD * 2) + ind}`} />
                             ))}
                         </div>
                     </div>
                 ))
             }
-      </Slider>
+        </Slider>
     )
 }
 

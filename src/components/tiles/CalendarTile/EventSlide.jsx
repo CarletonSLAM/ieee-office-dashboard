@@ -59,23 +59,23 @@ const EventSlide = ({
     return (
         <div className={classes.root}>
             <div className={classes.summary}>
-            {summary}
-          </div>
-        <div className={classes.duration}>
-              <div className={classes.label}>Duration</div>
-              {duration}
+                {summary}
+            </div>
+            <div className={classes.duration}>
+                <div className={classes.label}>Duration</div>
+                {duration}
             </div>
             <div className={classes.location}>
-            <div className={classes.label}> Location</div>
-            {location}
-          </div>
+                <div className={classes.label}> Location</div>
+                {location}
+            </div>
             <div className={classes.description}>
                 <div className={classes.label}> Description</div>
                 <p style={{ margin: 0 }}>
                     {description || 'No Description Provided'}
-              </p>
-          </div>
-      </div>
+                </p>
+            </div>
+        </div>
     )
 }
 

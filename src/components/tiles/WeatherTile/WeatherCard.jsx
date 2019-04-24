@@ -54,31 +54,31 @@ const styles = {
 const WeatherCard = ({
     classes, date, condition, icon, high, low, wind, key
 }) => (
-  <div key={key} className={classes.root}>
+    <div key={key} className={classes.root}>
         <div className={classes.topSection}>
-      <div className={classes.day}>{date}</div>
+            <div className={classes.day}>{date}</div>
             <div className={classes.icon}>
-            <img className={classes.iconContainer} src={icon} alt={condition} />
-          </div>
-            <div className={classes.condition}>{condition}</div>
-    </div>
-        <div className={classes.bottomSection}>
-      <div className={classes.metric}>
-            <div>
-          {high}
-          {' '}
-℃
-        </div>
-            <div className={classes.label}>HIGH</div>
-
+                <img className={classes.iconContainer} src={icon} alt={condition} />
             </div>
-      <div className={classes.metric}>
+            <div className={classes.condition}>{condition}</div>
+        </div>
+        <div className={classes.bottomSection}>
+            <div className={classes.metric}>
                 <div>
-          {low}
+                    {high}
                     {' '}
 ℃
-        </div>
-              <div className={classes.label}>LOW</div>
+                </div>
+                <div className={classes.label}>HIGH</div>
+
+            </div>
+            <div className={classes.metric}>
+                <div>
+                    {low}
+                    {' '}
+℃
+                </div>
+                <div className={classes.label}>LOW</div>
 
             </div>
             <div className={classes.metric}>
@@ -86,10 +86,10 @@ const WeatherCard = ({
                     {wind}
                     {' '}
 kph
-              </div>
+                </div>
                 <div className={classes.label}>WIND</div>
-          </div>
-    </div>
+            </div>
+        </div>
     </div>
 )
 export default withStyles(styles)(WeatherCard)

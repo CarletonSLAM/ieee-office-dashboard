@@ -32,11 +32,11 @@ class App extends Component {
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <Window layout={AppConfig.layout} services={AppConfig.services} />
-              </PersistGate>
-          </Provider>
+                </PersistGate>
+            </Provider>
         )
     }
 }
 
 const AppWithStyles = withStyles(styles)(App)
-export default (() => <AppWithStyles />)
+export default (() => <AppWithStyles />) // eslint-disable-line

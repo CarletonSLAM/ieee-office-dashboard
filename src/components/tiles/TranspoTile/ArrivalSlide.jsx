@@ -68,22 +68,22 @@ const styles = {
 const ArrivalsSlide = ({
     classes, routeNo, trips, heading
 }) => (
-  <div className={classes.root}>
-      <div className={classes.leftSection}>
-          <div className={classes.routeNumber}>{routeNo}</div>
-          <div className={classes.routeHeading}>{heading}</div>
+    <div className={classes.root}>
+        <div className={classes.leftSection}>
+            <div className={classes.routeNumber}>{routeNo}</div>
+            <div className={classes.routeHeading}>{heading}</div>
         </div>
         <div className={classes.rightSection}>
-      {(trips && trips.length)
+            {(trips && trips.length)
                 ? trips.map(({ dest, time }, ind) => (
-                  <div key={`trip-${ind}`} className={classes.trip}>
-                      <div className={classes.tripTime}>{ time }</div>
-                      <div className={classes.tripDest}>{ dest }</div>
+                    <div key={`trip-${ind}`} className={classes.trip}>
+                        <div className={classes.tripTime}>{ time }</div>
+                        <div className={classes.tripDest}>{ dest }</div>
                     </div>
                 ))
                 : <div className={classes.tripNone}> No times scheduled </div>
             }
-    </div>
+        </div>
     </div>
 )
 

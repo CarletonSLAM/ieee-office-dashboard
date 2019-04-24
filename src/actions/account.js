@@ -20,6 +20,14 @@ export const loginFailure = error => {
 }
 
 
+export const CLEAR_LOGIN_MESSAGE = 'CLEAR_LOGIN_MESSAGE'
+export const clearLoginMessage = () => {
+  return {
+    type: CLEAR_LOGIN_MESSAGE
+  }
+}
+
+
 export const performLogin = ({username, password}) => async dispatch => {
     try {
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import withStyles from 'react-jss'
 import { connect } from 'react-redux'
-import { performLogin } from '../../actions'
+import { performLogin, clearLoginMessage } from '../../actions'
 
 
 import Dashboard from '../Dashboard'
@@ -11,17 +11,19 @@ import { body } from '../../styles'
 const styles = { body }
 
 class Window extends Component {
+    componentWillMount(){
+        this.props.clearLoginMessage()
+    }
     userLogin({ username, password }) {
-        debugger
         this.props.performLogin({ username, password })
     }
     render() {
-        const { accountSuccess, classes } = this.props
+        const { accountSuccess, accountError, classes } = this.props
         return (
             <div className={classes.body}>
                 {
                     !accountSuccess ?
-                    <Login onSubmit={this.userLogin.bind(this)} /> :
+                    <Login onSubmit={this.userLogin.bind(this)} message ={accountError ? accountError.message : ''} /> :
                     <Dashboard layout={this.props.layout} services={this.props.services} />
                 }
             </div>
@@ -30,12 +32,16 @@ class Window extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { accountSuccess: state.account.success }
+    return {
+        accountSuccess: state.account.success,
+        accountError: state.account.error
+    }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
       performLogin: ({username, password}) => dispatch(performLogin({username, password})),
+      clearLoginMessage: () => dispatch(clearLoginMessage()),
     }
   }
 

@@ -9,6 +9,7 @@ const styles = {
     width: '60%',
     maxWidth: '500px',
     padding: '5%',
+    paddingBottom: '10%',
     margin: '25vh auto',
     textAlign: 'center',
     borderRadius:borderRadius,
@@ -63,21 +64,22 @@ class Login extends Component {
         this.props.onSubmit({username, password})
       }
     render() {
-      const { classes } = this.props
-        const { username, password } = this.state
-        return (
-            <div className={classes.frame}>
-              <form onSubmit={this.handleSubmit}>
-                  <h2>{ appName || "App" }</h2>
-                  <input className={classes.input} type="text" id="username" placeholder="Username" value={username}onChange={this.handleChange}/>
-                  <br />
-                  <input className={classes.input} type="password" id="password" placeholder="Password"  value={password} onChange={this.handleChange}/>
-                  <div>
-                      <button className={classes.login} type="submit">Login</button>
-                  </div>
-              </form>
-            </div>
-        )
+      const { classes, message } = this.props
+      const { username, password } = this.state
+      return (
+          <div className={classes.frame}>
+            <form onSubmit={this.handleSubmit}>
+                <h2>{ appName || "App" }</h2>
+                <input className={classes.input} type="text" id="username" placeholder="Username" value={username}onChange={this.handleChange}/>
+                <br />
+                <input className={classes.input} type="password" id="password" placeholder="Password"  value={password} onChange={this.handleChange}/>
+                <div>
+                    <button className={classes.login} type="submit">Login</button>
+                </div>
+            </form>
+            <span>{message ? 'Error: Please Try again' : '' }</span>
+          </div>
+      )
     }
 }
 

@@ -8,20 +8,20 @@ const styles = {
         textAlign: 'center',
         margin: '1vh',
         padding: '1vh',
-        display:'flex',
+        display: 'flex',
         height: '9.5vh',
         flexDirection: 'row',
         ...card
     },
     leftSection: {
         flex: '1 25%',
-        display:'flex',
+        display: 'flex',
         flexDirection: 'column',
         ...flexAlign.centerHorVert
     },
     rightSection: {
         flex: '1 75%',
-        display:'flex',
+        display: 'flex',
         flexDirection: 'row',
         textAlign: 'center',
         ...flexAlign.centerHorVert
@@ -30,17 +30,17 @@ const styles = {
         flex: '1 60%',
         fontSize: '5em',
         fontWeight: 'bold',
-        color: '#b70101',
+        color: '#b70101'
     },
     routeHeading: {
         flex: '1 40%',
         color: '#444',
         fontSize: '2em',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     },
     trip: {
         flex: '1 33%',
-        flexDirection: 'column',
+        flexDirection: 'column'
     },
     tripTime: {
         flex: '1 50%',
@@ -60,34 +60,31 @@ const styles = {
     tripNone: {
         color: '#444',
         fontSize: '2rem',
-        fontWeight: 'bold',
-        
+        fontWeight: 'bold'
+
     }
 }
 
-const ArrivalsSlide = ({ classes, routeNo, trips, heading }) => {
-    return (
-        <div className={classes.root} >
-            <div className={classes.leftSection}>
-                <div className={classes.routeNumber}>{routeNo}</div>
-                <div className={classes.routeHeading}>{heading}</div>
-            </div>
-            <div className={classes.rightSection}>
-            {(trips && trips.length) ? 
-                    trips.map(({dest, time}, ind) => {
-                        return (
-                            <div key={`trip-${ind}`}className={classes.trip}>
-                                <div className={classes.tripTime}>{ time }</div>
-                                <div className={classes.tripDest}>{ dest }</div>
-                            </div>
-                        )
-                    })
-                : 
-                <div className={classes.tripNone}> No times scheduled </div>
-            }
-            </div>
+const ArrivalsSlide = ({
+    classes, routeNo, trips, heading
+}) => (
+  <div className={classes.root}>
+      <div className={classes.leftSection}>
+          <div className={classes.routeNumber}>{routeNo}</div>
+          <div className={classes.routeHeading}>{heading}</div>
         </div>
-    )
-}
+        <div className={classes.rightSection}>
+      {(trips && trips.length)
+                ? trips.map(({ dest, time }, ind) => (
+                  <div key={`trip-${ind}`} className={classes.trip}>
+                      <div className={classes.tripTime}>{ time }</div>
+                      <div className={classes.tripDest}>{ dest }</div>
+                    </div>
+                ))
+                : <div className={classes.tripNone}> No times scheduled </div>
+            }
+    </div>
+    </div>
+)
 
-export default withStyles(styles)(ArrivalsSlide);
+export default withStyles(styles)(ArrivalsSlide)

@@ -1,6 +1,4 @@
-import fetch from 'cross-fetch'
-import { DJserver } from '../App.config'
-import { handleErrors } from '../services/helpers'
+import services from '../services'
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const loginSuccess = creds => ({
@@ -22,16 +20,17 @@ export const clearLoginMessage = () => ({
 })
 
 
+export const LOGIN_REFRESH_SUCCESS = 'LOGIN_REFRESH_SUCCESS'
+export const loginRefreshSuccess = access => ({
+    type: LOGIN_REFRESH_SUCCESS,
+    access
+})
+
+
+
 export const performLogin = ({ username, password }) => async (dispatch) => {
     try {
-        const response = await fetch(`${DJserver}/api/token/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        })
-        const resJson = await handleErrors(response)
+        const resJson = await services.user.login(username, password)
         dispatch(loginSuccess(resJson))
     } catch (error) {
         dispatch(loginFailure(error))

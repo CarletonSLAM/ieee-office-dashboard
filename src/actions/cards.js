@@ -1,4 +1,5 @@
 import services from '../services'
+import { loginRefreshSuccess } from './account';
 
 export const SET_DATA_STALE = 'SET_DATA_STALE'
 export const setDataStale = card => ({ type: SET_DATA_STALE, card })
@@ -27,15 +28,28 @@ export const receiveError = (card, error) => ({
 })
 
 
-export const fetchData = card => (dispatch) => {
+export const fetchData = (card) => (dispatch, getState) => {
     dispatch(requestData(card))
     let errorOccured = false
     let promiseChain
     if (typeof services[card].getAuth === 'function') {
-        promiseChain = services[card].getAuth()
+        const { access, refresh } = getState().account.data
+        promiseChain = services[card].getAuth(access)
             .catch((error) => {
-                errorOccured = true
-                dispatch(receiveError(card, { type: 'Auth', code: error.code, error: error.message }))
+                if(error.code === 401) {
+                    dispatch(receiveError(card, { type: 'Auth', code: error.code, error: error.message }))
+                    return services.user.loginRefresh(refresh)
+                        .then((resJson) => {
+                            debugger
+                            dispatch(loginRefreshSuccess(resJson))
+                            window.location.reload()
+                    })
+                }
+                else {
+                    errorOccured = true
+                    debugger
+                    dispatch(receiveError(card, { type: 'Auth', code: error.code, error: error.message }))
+                }
             })
             .then(services[card].getData)
     } else {
@@ -45,7 +59,7 @@ export const fetchData = card => (dispatch) => {
         .catch((error) => {
             if (errorOccured === true) return
             errorOccured = true
-            error = error && error.error
+            if(error.error !== undefined) error = error.error
             dispatch(receiveError(card, { type: 'API', code: error.code, error: error.message }))
         })
         .then(services[card].transformResponse)
@@ -68,7 +82,7 @@ const shouldGetData = (state, card) => {
     return cardData.isStale
 }
 
-export const getDataIfNeeded = card => (dispatch, getState) => {
+export const getDataIfNeeded = (card) => (dispatch, getState) => {
     if (shouldGetData(getState(), card)) {
         return dispatch(fetchData(card))
     }

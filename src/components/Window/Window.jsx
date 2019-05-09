@@ -37,14 +37,12 @@ class Window extends Component {
 
 Window.propTypes = {
     classes: PropTypes.object.isRequired,
-    children: PropTypes.element.isRequired,
-    layout: PropTypes.object.isRequired,
+    layout: PropTypes.array.isRequired,
     services: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired,
     performLogin: PropTypes.func.isRequired,
     clearLoginMessage: PropTypes.func.isRequired,
-    accountError: PropTypes.object.isRequired,
-    accountSuccess: PropTypes.object.isRequired
+    accountError: PropTypes.object,
+    accountSuccess: PropTypes.bool,
 }
 
 const mapStateToProps = state => ({

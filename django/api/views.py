@@ -1,19 +1,35 @@
 from django.http import JsonResponse
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.models import SocialToken
+from api.models import APIKeyProvider
+from api.serializers import APIKeyProviderSerializer
+from rest_framework.renderers import JSONRenderer
 import requests
 
 class CredentialDetail(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, type):
-        if type not in ['google', 'facebook']:
+        if type not in ['google', 'facebook', 'octranspo', 'weather', 'openweathermap']:
             return JsonResponse(status=400, data={'detail':'Unknown provider'})
 
         context = {}
-        provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
-        if provider_uid.exists():
-            provider_uid = provider_uid[0].uid
-            context['token'] = SocialToken.objects.filter(account__user=request.user, account__provider=type).first()
+
+        if type not in ['google', 'facebook']:
+            context['token'] = {}
+            data = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).data
+            print(data)
+            if 'api_key' in data:
+                context['token'] = data['api_key']
+            if 'api_id' in data and data['api_id'] != '':
+                context['app_id'] = data['api_id']
         else:
-            return JsonResponse(status=404, data={'detail':'User not registered with provider'})
-        return JsonResponse(data={ 'token': str(context['token']) }, status=200)
+            provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
+            if provider_uid.exists():
+                provider_uid = provider_uid[0].uid
+                context['token'] = str(SocialToken.objects.filter(account__user=request.user, account__provider=type).first())
+            else:
+                return JsonResponse(status=404, data={'detail':'User not registered with provider'})
+        return JsonResponse(data=context, status=200)

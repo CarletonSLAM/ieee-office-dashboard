@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch'
-import AppConfig from '../../App.config'
+import AppConfig from '../App.config'
 import { generateHeaders } from '../helpers'
 
 export default {

@@ -10,7 +10,6 @@ const styles = {
         width: '60%',
         maxWidth: '500px',
         padding: '5%',
-        paddingBottom: '10%',
         margin: '25vh auto',
         textAlign: 'center',
         borderRadius
@@ -34,8 +33,11 @@ const styles = {
         fontWeight: 'bold',
         backgroundColor: body.background,
         color: 'white',
+        marginBottom: '7%',
         borderRadius
-
+    },
+    message: {
+        display: 'inline-block'
     }
 }
 
@@ -79,7 +81,7 @@ class Login extends Component {
                           <button className={classes.login} type="submit">Login</button>
                       </div>
                   </form>
-                  <span>{message ? 'Error: Please Try again' : '' }</span>
+                  <div className={classes.message}>{message || '' }</div>
               </div>
           )
       }

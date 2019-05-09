@@ -1,9 +1,11 @@
-import transpo from './octranspo'
-import weather from './wunderground'
-import calendar from './calendar'
-import gallery from './gallery'
-import instagram from './instagram'
-import facebook from './facebook'
+import transpo from './octranspoService'
+import weather from './wundergroundService'
+import openweathermap from './openweathermapService'
+import calendar from './calendarService'
+import gallery from './galleryService'
+import instagram from './instagramService'
+import facebook from './facebookService'
+import user from './userService'
 
 export default {
     transpo,
@@ -11,5 +13,7 @@ export default {
     calendar,
     instagram,
     facebook,
-    gallery
+    gallery,
+    openweathermap,
+    user
 }

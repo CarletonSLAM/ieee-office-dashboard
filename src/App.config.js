@@ -4,7 +4,8 @@ const ONE_HOUR = ONE_MINUE * 60
 
 const SERVICES = {
     TRANSPO: 'transpo',
-    WEATHER: 'weather',
+    // WEATHER: 'weather',
+    OPENWEATHERMAP: 'openweathermap',
     CALENDAR: 'calendar',
     GALLERY: 'gallery',
     FACEBOOK: 'facebook',
@@ -13,7 +14,7 @@ const SERVICES = {
 }
 
 module.exports = {
-    appName: 'Dashy',
+    appName: 'IEEE Carleton Dashboard',
     server: 'https://localhost:8129',
     DJserver: 'http://localhost:8000',
     layout: [
@@ -72,14 +73,14 @@ module.exports = {
                 {
                     w: 0.5,
                     h: 1,
-                    tile: SERVICES.WEATHER
+                    tile: SERVICES.OPENWEATHERMAP
                 }
             ]
         }
     ],
     services: [
         { name: SERVICES.TRANSPO, timeout: 2 * ONE_MINUE },
-        { name: SERVICES.WEATHER, timeout: ONE_HOUR },
+        { name: SERVICES.OPENWEATHERMAP, timeout: ONE_HOUR },
         { name: SERVICES.CALENDAR, timeout: ONE_HOUR },
         { name: SERVICES.GALLERY, timeout: 4 * ONE_HOUR },
         { name: SERVICES.FACEBOOK, timeout: ONE_HOUR / 4 },

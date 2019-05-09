@@ -1,7 +1,8 @@
 import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    CLEAR_LOGIN_MESSAGE
+    CLEAR_LOGIN_MESSAGE,
+    LOGIN_REFRESH_SUCCESS
 } from '../actions'
 
 
@@ -21,9 +22,15 @@ const loginStateReducer = (state = { data: {}, error: {}, success: false }, acti
         })
     case CLEAR_LOGIN_MESSAGE:
         delete state.error
+        return Object.assign({}, state)
+    case LOGIN_REFRESH_SUCCESS:
+        delete state.error
+        debugger
         return Object.assign({}, state, {
-            success: false
+            success: true,
+            data: Object.assign({}, state.data, {access: action.access})
         })
+
     default:
         return state
     }

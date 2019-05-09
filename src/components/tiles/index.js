@@ -5,6 +5,7 @@ import InfoTile from './InfoTile'
 import InstagramTile from './InstagramTile'
 import TranspoTile from './TranspoTile'
 import WeatherTile from './WeatherTile'
+import OpenweathermapTile from './OpenweathermapTile'
 
 export default {
     CalendarTile,
@@ -13,5 +14,6 @@ export default {
     InfoTile,
     InstagramTile,
     TranspoTile,
-    WeatherTile
+    WeatherTile,
+    OpenweathermapTile
 }

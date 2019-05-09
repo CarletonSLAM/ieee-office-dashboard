@@ -93,7 +93,7 @@ Dashboard.propTypes = {
     getDataIfNeeded: PropTypes.func.isRequired,
     setDataStale: PropTypes.func.isRequired,
     calendar: PropTypes.object.isRequired,
-    layout: PropTypes.object.isRequired
+    layout: PropTypes.array.isRequired
 }
 
 

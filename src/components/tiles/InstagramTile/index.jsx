@@ -67,7 +67,28 @@ const InstagramTile = ({ classes, card }) => {
     }
     const cardData = (card) ? card.data : []
     return (
-        <div></div>
+        <div className={classes.root}>
+                    <div className={classes.label}>Instagram</div>
+                    <div className={classes.slider}>
+                        <Slider {...sliderSettings}>
+                            {cardData.map((data, ind) => {
+                                const { caption, imgSrc } = data
+                                return (
+                                    <div key={`img-${ind}`}>
+                                        <div className={classes.container}>
+                                            <div className={classes.imgCon}>
+                                                <img className={classes.img} src={imgSrc} alt={caption} />
+                                            </div>
+                                            <div className={classes.caption}>
+                                                {(caption.length > 350) ? `${caption.substring(0, 350)}...` : caption}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </Slider>
+                    </div>
+                </div>
     )
 }
 

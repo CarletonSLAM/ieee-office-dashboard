@@ -3,6 +3,8 @@ import moment from 'moment'
 import { generateHeaders, handleErrors } from '../helpers'
 import AppConfig from '../App.config'
 
+const URL_BASE = 'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes'
+
 const OCTranspoStops = { otrain: '3062', mackenzie: '5813' }
 
 const aggregateTrips = (trips = []) => {
@@ -13,7 +15,22 @@ const aggregateTrips = (trips = []) => {
     }))
 }
 export default {
-    getData: () => Promise.all(Object.values(OCTranspoStops).map(stopNo => fetch(`${AppConfig.server}/transpo?stopNo=${stopNo}`, { headers: generateHeaders() }).then(handleErrors))),
+    getAuth: async (access_token) => {
+        const response = await fetch(`${AppConfig.DJserver}/api/credentials/octranspo/`, { headers: { Authorization: `Bearer ${access_token}` } })
+        const { token, app_id } = await handleErrors(response)
+        return {token, app_id}
+    },
+    getData: ({token, app_id}) => {
+        return Promise.all(Object.values(OCTranspoStops).map( async (stopNo) => {
+            const response = await fetch(`${URL_BASE}?appID=${app_id}&apiKey=${token}&stopNo=${stopNo}&format=json`,{
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            const json =  await handleErrors(response)
+            return json
+        }))
+    },
     transformResponse: (responses) => {
         const routearrays = responses.map((response) => {
             const stop = response.GetRouteSummaryForStopResult

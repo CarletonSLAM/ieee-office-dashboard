@@ -181,6 +181,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email',
             'https://www.googleapis.com/auth/drive.readonly',
+            'https://www.googleapis.com/auth/calendar.events.readonly',
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',

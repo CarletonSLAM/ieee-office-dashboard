@@ -40,14 +40,12 @@ export const fetchData = (card) => (dispatch, getState) => {
                     dispatch(receiveError(card, { type: 'Auth', code: error.code, error: error.message }))
                     return services.user.loginRefresh(refresh)
                         .then((resJson) => {
-                            debugger
                             dispatch(loginRefreshSuccess(resJson))
                             window.location.reload()
                     })
                 }
                 else {
                     errorOccured = true
-                    debugger
                     dispatch(receiveError(card, { type: 'Auth', code: error.code, error: error.message }))
                 }
             })

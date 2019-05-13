@@ -41,12 +41,13 @@ class ServiceRequest(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, type):
-        if type is not 'octranspo':
+
+        if type != 'octranspo':
             return JsonResponse(status=400, data={'detail':'Unknown provider'})
 
         provider = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).data
-        stop_nums = request.GET['stops']
-        res = requests.get(OCTRANSPO_GET_BASE_URL.format(provider['api_id'],provider['api_key'], stop_nums))
+        stop_num = request.GET['stop']
+        res = requests.get(OCTRANSPO_GET_BASE_URL.format(provider['api_id'],provider['api_key'], stop_num))
 
         context = res.json()
         if res.status_code is not 200:

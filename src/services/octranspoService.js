@@ -4,7 +4,7 @@ import { generateHeaders, handleErrors } from '../helpers'
 import AppConfig from '../App.config'
 
 // const URL_BASE = 'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes'
-const URL_BASE = `${AppConfig.DJserver}/api/services/octranspo`
+const URL_BASE = `${AppConfig.DJserver}/api/services/octranspo/`
 
 const OCTranspoStops = { otrain: '3062', mackenzie: '5813' }
 
@@ -17,15 +17,13 @@ const aggregateTrips = (trips = []) => {
 }
 export default {
     getAuth: async (access_token) => {
-        const response = await fetch(`${AppConfig.DJserver}/api/credentials/octranspo/`, { headers: { Authorization: `Bearer ${access_token}` } })
-        const { token, app_id } = await handleErrors(response)
-        return {token, app_id}
+        return {access_token}
     },
-    getData: ({token, app_id}) => {
+    getData: ({access_token}) => {
         return Promise.all(Object.values(OCTranspoStops).map( async (stopNo) => {
-            const response = await fetch(`${URL_BASE}?stops=${stopNo}`,{
+            const response = await fetch(`${URL_BASE}?stop=${stopNo}`,{
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Authorization': `Bearer ${access_token}`,
                 },
             })
             const json =  await handleErrors(response)

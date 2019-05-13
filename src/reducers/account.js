@@ -25,7 +25,6 @@ const loginStateReducer = (state = { data: {}, error: {}, success: false }, acti
         return Object.assign({}, state)
     case LOGIN_REFRESH_SUCCESS:
         delete state.error
-        debugger
         return Object.assign({}, state, {
             success: true,
             data: Object.assign({}, state.data, {access: action.access})

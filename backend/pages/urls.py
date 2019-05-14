@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home'),
-    re_path(r'^dash/', views.catchall),
+    path('dash/', views.catchall, name='dash'),
 ]

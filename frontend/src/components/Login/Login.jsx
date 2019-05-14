@@ -34,6 +34,7 @@ const styles = {
         backgroundColor: body.background,
         color: 'white',
         marginBottom: '7%',
+        cursor: 'pointer',
         borderRadius
     },
     message: {

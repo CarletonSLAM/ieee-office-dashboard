@@ -32,6 +32,22 @@ const styles = {
     front: {
         color: '#222',
         fontSize: '3em'
+    },
+    logoutButton: {
+        maxWidth: '150px',
+        borderRadius: '5px',
+        padding: '0.5vh',
+        float: 'none',
+        margin: 'auto',
+        textAlign: 'center',
+        backgroundColor: '#ddd',
+        color: '#aaa',
+        '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: '#aaa',
+            color: '#777',
+
+        }
     }
 }
 
@@ -56,25 +72,33 @@ class InfoTile extends Component {
         })
     }
 
+    onLogout() {
+        window.localStorage.clear()
+        window.location.reload()
+    }
+
 
     render() {
         const { classes, card } = this.props
 
         const cardData = card ? card.data : {}
         return (
-            <div className={classes.root}>
-                <div className={classes.time}>{this.state.dateTime}</div>
-                <div className={classes.nextEvent}>Next Event</div>
-                {cardData[0]
-                    ? (
-                        <div>
-                            <div className={classes.summary}>{cardData[0].summary}</div>
-                            <div className={classes.duration}>{cardData[0].duration}</div>
-                        </div>
-                    )
-                    : <div className={classes.front}>Ask the Front Desk for More Info!</div>
-                }
-            </div>
+            <>
+                <div className={classes.root}>
+                    <div className={classes.time}>{this.state.dateTime}</div>
+                    <div className={classes.nextEvent}>Next Event</div>
+                    {cardData[0]
+                        ? (
+                            <div>
+                                <div className={classes.summary}>{cardData[0].summary}</div>
+                                <div className={classes.duration}>{cardData[0].duration}</div>
+                            </div>
+                        )
+                        : <div className={classes.front}>Ask the Front Desk for More Info!</div>
+                    }
+                </div>
+                <div className={classes.logoutButton} onClick={this.onLogout.bind(this)}>Logout</div>
+            </>
         )
     }
 }

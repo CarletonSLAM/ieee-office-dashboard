@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'allauth',
@@ -69,6 +70,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -83,11 +85,30 @@ CORS_ALLOW_CREDENTIALS = False
 
 ROOT_URLCONF = 'dashyserver.urls'
 
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+BACKEND_DIR = BASE_DIR
+FRONTEND_DIR = os.path.abspath(os.path.join(BACKEND_DIR, '..', 'frontend'))
+
+STATICFILES_DIRS = [os.path.join(FRONTEND_DIR, 'build', 'static')]
+
+STATICFILES_STORAGE = (
+    'whitenoise.storage.CompressedManifestStaticFilesStorage')
+
+STATIC_ROOT = os.path.join(BACKEND_DIR, 'static')
+
+STATIC_URL = '/static/'  # already declared in the default settings
+
+WHITENOISE_ROOT = os.path.join(FRONTEND_DIR, 'build')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'pages/templates'),
+            os.path.join(FRONTEND_DIR, 'build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -149,11 +170,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
 
 # For django-allauth
 AUTHENTICATION_BACKENDS = (

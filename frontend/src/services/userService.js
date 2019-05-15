@@ -6,7 +6,7 @@ import { handleErrors } from '../helpers'
 
 export default {
     login: async (username, password) => {
-        const response = await fetch(`${AppConfig.DJserver}/api/token/`, {
+        const response = await fetch(`${AppConfig.serverURL}/api/token/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ export default {
         return userData
     },
     loginRefresh: async (refresh) => {
-        const response = await fetch(`${AppConfig.DJserver}/api/token/refresh/`, {
+        const response = await fetch(`${AppConfig.serverURL}/api/token/refresh/`, {
             headers: {
                 'Content-Type': 'application/json'
             },

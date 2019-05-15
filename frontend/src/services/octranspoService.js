@@ -4,7 +4,7 @@ import { generateHeaders, handleErrors } from '../helpers'
 import AppConfig from '../App.config'
 
 // const URL_BASE = 'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes'
-const URL_BASE = `${AppConfig.DJserver}/api/services/octranspo/`
+const URL_BASE = `${AppConfig.serverURL}/api/services/octranspo/`
 
 const OCTranspoStops = { otrain: '3062', mackenzie: '5813' }
 

@@ -7,12 +7,39 @@ import TileFrame from '../TileFrame'
 import tiles from '../tiles'
 import EmptyTile from '../tiles/EmptyTile'
 import { getDataIfNeeded, setDataStale } from '../../actions'
+import { serverURL } from '../../App.config'
 
 const styles = {
     root: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column'
+    },
+    banner: {
+        position: 'absolute',
+        fontSize: '60%',
+        color: '#fff',
+        display:'flex',
+        top: '0.5%',
+        textDecoration: 'underline',
+        '&:hover': {
+            cursor: 'pointer',
+            color: '#fff'
+        }
+    },
+    bannerLink: {
+        '&:link': {
+            color: '#fff'
+        },
+        '&:visited': {
+            color: '#fff'
+        },
+        '&:active': {
+            color: '#fff'
+        }
+    },
+    bannerPaddng: {
+        paddingLeft: '10px',
     }
 }
 
@@ -69,11 +96,20 @@ class Dashboard extends Component {
         )
     }
 
+    onLogout() {
+        window.localStorage.clear()
+        window.location.reload()
+    }
+
     render() {
         const { classes, layout } = this.props
         this.layoutHasChildren = false
         return (
             <div className={classes.root}>
+                <div className={classes.banner}>
+                    <a className={`${classes.bannerLink} ${classes.bannerPaddng}`} href={serverURL}>Go to Admin Site</a>
+                    <div className={classes.bannerPaddng} onClick={this.onLogout.bind(this)}>Logout</div>
+                </div>
                 {layout.map(this.createLayout.bind(this))}
             </div>
         )

@@ -9,7 +9,7 @@ const QUERY = `parents in '1aWcL4Wc7lOQuSI1-fZ2gX49__n0uwpuX'`
 const URL = `https://www.googleapis.com/drive/v3/files`
 
 export default { getAuth: async (access_token) => {
-    const response = await fetch(`${AppConfig.DJserver}/api/credentials/google/`, { headers: { Authorization: `Bearer ${access_token}` } })
+    const response = await fetch(`${AppConfig.serverURL}/api/credentials/google/`, { headers: { Authorization: `Bearer ${access_token}` } })
     const { token } = await handleErrors(response)
     return token
 },

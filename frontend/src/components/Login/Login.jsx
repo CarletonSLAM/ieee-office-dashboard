@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 import { body, borderRadius } from '../../styles'
-import { appName } from '../../App.config'
+import { appName ,serverURL } from '../../App.config'
 
 const styles = {
     frame: {
@@ -78,10 +78,9 @@ class Login extends Component {
                       <input className={classes.input} type="text" id="username" placeholder="Username" value={username} onChange={this.handleChange} />
                       <br />
                       <input className={classes.input} type="password" id="password" placeholder="Password" value={password} onChange={this.handleChange} />
-                      <div>
-                          <button className={classes.login} type="submit">Login</button>
-                      </div>
+                      <button className={classes.login} type="submit">Login</button>
                   </form>
+                  <div className={classes.message}><a href={serverURL}>Go to Admin Site</a></div>
                   <div className={classes.message}>{message || '' }</div>
               </div>
           )

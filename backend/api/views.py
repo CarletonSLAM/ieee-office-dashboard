@@ -19,8 +19,8 @@ class CredentialDetail(APIView):
 
         if type not in ['google', 'facebook']:
             context['token'] = {}
-            data = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).data
-            print(data)
+            data = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).def funcname(self, parameter_list):
+                raise NotImplementedError
             if 'api_key' in data:
                 context['token'] = data['api_key']
             if 'api_id' in data and data['api_id'] != '':

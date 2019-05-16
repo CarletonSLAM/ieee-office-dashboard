@@ -15,23 +15,13 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'DASHY_SECRET_KEY', 'f-#9=y0yf*&l5w5im@5+-n2l%o6h**1(o(usc=zg)(w#a+v%i0')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DASHY_PROD', True)
-
 ALLOWED_HOSTS = [
     '0.0.0.0',
-    '127.0.0.1',
     'localhost'
 ]
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # Application definition
 REST_FRAMEWORK = {
@@ -89,7 +79,7 @@ ROOT_URLCONF = 'dashyserver.urls'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-BACKEND_DIR = BASE_DIR
+BACKEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
 FRONTEND_DIR = os.path.abspath(os.path.join(BACKEND_DIR, '..', 'frontend'))
 
 STATICFILES_DIRS = [os.path.join(FRONTEND_DIR, 'build', 'static')]
@@ -107,7 +97,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'pages/templates'),
+            os.path.join(BACKEND_DIR, 'pages/templates'),
             os.path.join(FRONTEND_DIR, 'build')
         ],
         'APP_DIRS': True,
@@ -125,17 +115,6 @@ LOGIN_REDIRECT_URL = 'socialaccount_connections'
 LOGOUT_REDIRECT_URL = 'home'
 
 WSGI_APPLICATION = 'dashyserver.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 
 # Password validation

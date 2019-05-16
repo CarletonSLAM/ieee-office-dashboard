@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+    <style>
+        {% include "styles.css" %}
+    </style>
+  </head>
+  <body>
+    {% block body %}
+
+        <div class="menu-container">
+            {% include "menu.html" %}
+        </div>
+        <div class="content-container">
+            {% block content %}
+                {% if messages %}
+                <div>
+                    <strong>Messages:</strong>
+                    <ul>
+                        {% for message in messages %}
+                        <div>{{message}}</div>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>

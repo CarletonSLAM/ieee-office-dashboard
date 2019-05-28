@@ -16,3 +16,35 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, '..', 'db.sqlite3'),
     }
 }
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+BACKEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
+FRONTEND_DIR = os.path.abspath(os.path.join(BACKEND_DIR, '..', 'frontend'))
+STATICFILES_DIRS = [
+    os.path.join(FRONTEND_DIR, 'build', 'static'),
+    os.path.join(BACKEND_DIR, 'pages', 'static'),
+]
+STATICFILES_STORAGE = (
+    'whitenoise.storage.CompressedManifestStaticFilesStorage')
+STATIC_ROOT = os.path.join(BACKEND_DIR, 'static')
+STATIC_URL = '/static/'  # already declared in the default settings
+WHITENOISE_ROOT = os.path.join(FRONTEND_DIR, 'build')
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BACKEND_DIR, 'pages/templates'),
+            os.path.join(FRONTEND_DIR, 'build')
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]

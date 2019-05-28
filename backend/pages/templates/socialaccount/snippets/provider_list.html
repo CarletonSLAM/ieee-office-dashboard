@@ -13,6 +13,31 @@
       </div>
     {% endfor %}
   {% endif %}
+  {% if provider.id == "google" %}
+    <div class="hor-div"></div>
+    <div>
+      <h3>Google</h3>
+      <h4>We use your credentials to show the latest:</h4>
+      <div>
+        - Calendar events available on <a href="https://calendar.google.com/calendar/embed?src=ieee.carleton.ca_0oehshcagcul0e8pe5e9fie70s%40group.calendar.google.com&ctz=America%2FToronto">the IEEE Carleton University Student Branch Calendar</a>
+      </div>
+      <div>
+        - Gallery items that are on publically accessible Google Drive
+      </div>
+    </div>
+    <br/>
+  {% endif %}
+  {% if provider.id == "facebook" %}
+    <div class="hor-div"></div>
+    <div>
+      <h3>Facebook</h3>
+      <h4>We understand that privacy is of utmost importance to you. That is why we are only using your Facebook credentials to:</h4>
+      <div>
+      - Only show the lastest public posts created by the <a href="https://www.facebook.com/ieeecarleton/">IEEE Carleton Facebook Page</a>
+      </div>
+    </div>
+    <br/>
+  {% endif %}
   <div class="socialaccount_provider {{provider.id}}" >
     <a title="{{provider.name}}"
       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">

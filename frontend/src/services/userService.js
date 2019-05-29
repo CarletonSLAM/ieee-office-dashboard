@@ -1,5 +1,3 @@
-
-/* global gapi */
 import fetch from 'cross-fetch'
 import AppConfig from '../App.config'
 import { handleErrors } from '../helpers'

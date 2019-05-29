@@ -1,5 +1,3 @@
-/* global gapi */
-
 import moment from 'moment'
 import fetch from 'cross-fetch'
 import AppConfig from '../App.config'
@@ -17,7 +15,12 @@ const URL = `https://www.googleapis.com/calendar/v3/calendars/${CAL_ID}/events`
 
 export default {
     getAuth: async (access_token) => {
-        const response = await fetch(`${AppConfig.serverURL}/api/credentials/google/`, { headers: { Authorization: `Bearer ${access_token}` } })
+        const response = await fetch(`${AppConfig.serverURL}/api/credentials/google/`, {headers: { Authorization: `Bearer ${access_token}` } })
+        const { token } = await handleErrors(response)
+        return token
+    },
+    getAuthRefresh: async (access_token) => {
+        const response = await fetch(`${AppConfig.serverURL}/api/credentials/google/refresh/`, { method: "post", headers: { Authorization: `Bearer ${access_token}` } })
         const { token } = await handleErrors(response)
         return token
     },

@@ -58,7 +58,6 @@ export const fetchData = (card) => (dispatch, getState) => {
             if (error.code === 401) {
                 const { access, refresh } = getState().account.data
                 if(typeof services[card].getAuthRefresh === 'function') {
-                    console.log('refreshed')
                     return services[card].getAuthRefresh(access).then(services[card].getData).catch((error) => {
                         dispatch(receiveError(card, { type: 'API', code: error.code, error: error.message }))
                     })

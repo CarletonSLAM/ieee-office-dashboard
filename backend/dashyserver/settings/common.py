@@ -139,13 +139,13 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     'google': {
         'SCOPE': [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email',
+            'profile',
+            'email',
             'https://www.googleapis.com/auth/drive.metadata.readonly',
             'https://www.googleapis.com/auth/calendar.events.readonly',
         ],
         'AUTH_PARAMS': {
-            'access_type': 'online',
+            'access_type': 'offline',
         },
     },
 }

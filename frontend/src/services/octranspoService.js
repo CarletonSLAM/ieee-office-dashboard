@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch'
 import moment from 'moment'
-import { generateHeaders, handleErrors } from '../helpers'
+import { handleErrors } from '../helpers'
 import AppConfig from '../App.config'
 
 // const URL_BASE = 'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes'

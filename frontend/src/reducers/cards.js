@@ -10,6 +10,7 @@ const newCardState = (state = { isFetching: false, isStale: false, data: [] }, a
     switch (action.type) {
     case SET_DATA_STALE:
         return Object.assign({}, state, {
+            isFetching: false,
             isStale: true
         })
     case REQUEST_DATA:

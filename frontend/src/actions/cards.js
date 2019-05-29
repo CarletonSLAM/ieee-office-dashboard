@@ -36,13 +36,10 @@ export const fetchData = (card) => (dispatch, getState) => {
         const { access, refresh } = getState().account.data
         promiseChain = services[card].getAuth(access)
             .catch((error) => {
-                if(error.code === 401) {
-                    dispatch(receiveError(card, { type: 'Auth', code: error.code, error: error.message }))
+                if(error.code === 401 || error.code === 403) {
                     return services.user.loginRefresh(refresh)
-                        .then((resJson) => {
-                            dispatch(loginRefreshSuccess(resJson))
-                            window.location.reload()
-                    })
+                        .then((resJson) => dispatch(loginRefreshSuccess(resJson)))
+                        .then(() => window.location.reload())
                 }
                 else {
                     errorOccured = true
@@ -58,7 +55,21 @@ export const fetchData = (card) => (dispatch, getState) => {
             if (errorOccured === true) return
             errorOccured = true
             if(error.error !== undefined) error = error.error
-            dispatch(receiveError(card, { type: 'API', code: error.code, error: error.message }))
+            if (error.code === 401) {
+                const { access, refresh } = getState().account.data
+                if(typeof services[card].getAuthRefresh === 'function') {
+                    console.log('refreshed')
+                    return services[card].getAuthRefresh(access).then(services[card].getData).catch((error) => {
+                        dispatch(receiveError(card, { type: 'API', code: error.code, error: error.message }))
+                    })
+                } else {
+                    return services.user.loginRefresh(refresh)
+                        .then((resJson) => dispatch(loginRefreshSuccess(resJson)))
+                        .then(() => window.location.reload())
+                }
+            } else {
+                dispatch(receiveError(card, { type: 'API', code: error.code, error: error.message }))
+            }
         })
         .then(services[card].transformResponse)
         .catch((error) => {

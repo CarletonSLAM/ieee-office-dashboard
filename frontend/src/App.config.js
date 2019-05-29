@@ -15,7 +15,7 @@ const SERVICES = {
 
 module.exports = {
     appName: 'IEEE Carleton Dashboard',
-    serverURL: `${process.env.BACKEND || window.location.origin}`,
+    serverURL: `${process.env.BACKEND_URL || window.location.origin}`,
     layout: [
         {
             h: 0.84,

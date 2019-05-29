@@ -1,5 +1,3 @@
-/* global atob */
-
 export const handleErrors = (response) => {
     if (!response.ok) {
         return Promise.reject({

@@ -1,8 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from allauth.socialaccount.models import SocialAccount
-from allauth.socialaccount.models import SocialToken
+from allauth.socialaccount.models import SocialAccount, SocialApp, SocialToken
 from api.models import APIKeyProvider
 from api.serializers import APIKeyProviderSerializer
 from rest_framework.renderers import JSONRenderer
@@ -28,9 +27,42 @@ class CredentialDetail(APIView):
             provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
             if provider_uid.exists():
                 provider_uid = provider_uid[0].uid
-                context['token'] = str(SocialToken.objects.filter(account__user=request.user, account__provider=type).first())
+                context['token'] = str(SocialToken.objects.filter(account__user=request.user, account__provider=type).first().token)
             else:
                 return JsonResponse(status=404, data={'detail':'User not registered with provider'})
+        return JsonResponse(data=context, status=200)
+
+GOOGLE_REFRESH_URL='https://www.googleapis.com/oauth2/v4/token'
+class CredentialRefresh(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, type):
+        if type not in ['google']:
+            return JsonResponse(status=400, data={'detail':'Unknown provider'})
+
+        context = {}
+
+        provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
+        if provider_uid.exists():
+            provider_uid = provider_uid[0].uid
+            token_obj = SocialToken.objects.filter(account__user=request.user, account__provider=type).first()
+            socialapp = SocialApp.objects.filter(provider=type).first()
+            res = requests.post(GOOGLE_REFRESH_URL, data={
+                'client_id': socialapp.client_id,
+                'client_secret': socialapp.secret,
+                'refresh_token': token_obj.token_secret,
+                'grant_type': 'refresh_token'
+            })
+
+            if res.status_code is not 200:
+                return JsonResponse(status=res.status_code, data={'detail': res.text})
+            res_data = res.json()
+            token_obj.token = res_data['access_token']
+            context['token'] = token_obj.token
+            token_obj.save()
+
+        else:
+            return JsonResponse(status=404, data={'detail':'User not registered with provider'})
         return JsonResponse(data=context, status=200)
 
 

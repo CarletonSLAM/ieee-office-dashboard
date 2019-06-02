@@ -3,13 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@koa/cors": "^2.2.1",
     "cross-fetch": "^1.1.1",
-    "koa": "^2.4.1",
-    "koa-router": "^7.3.0",
-    "koa-static": "^4.0.2",
     "moment": "^2.20.1",
-    "node-rsa": "^0.4.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-jss": "^8.6.1",
@@ -19,9 +14,8 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.2.0",
-    "request": "^2.85.0",
-    "request-promise-native": "^1.0.5",
-    "typeface-roboto": "0.0.45"
+    "typeface-roboto": "0.0.45",
+    "prop-types": "^15.7.2"
   },
   "scripts": {
     "client-dev": "HTTPS=true react-scripts start",
@@ -30,16 +24,13 @@
     "build-config": "node ./config/build.js",
     "delete-map-files": "find ./build -name '*.map' -delete",
     "lint": "eslint --ext jsx,js ./src ./server ./config --fix",
-    "postinstall": "cp .githooks/* .git/hooks/",
+    "postinstall": "cp ../.github/hooks/* ../.git/hooks/",
     "test": "npm run build-config && react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "server": "node server/index.js",
-    "serve": "npm run build && npm run server"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1",
     "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
+    "babel-eslint": "^10.0.1",
     "eslint-plugin-react": "^7.12.4",
     "react-scripts": "^3.0.0"
   },

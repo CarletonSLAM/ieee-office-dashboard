@@ -1,15 +1,12 @@
 
+{% if user.is_authenticated %}
 <div>Welcome {{user.username}}</div>
+  <div><a href="{% url 'account_logout' %}">Sign Out</a></div>
 <br/>
 <div><h3>Menu</h3></div>
-{% if user.is_authenticated %}
   <div><a href="{% url 'account_email' %}">Change E-mail</a></div>
+  <div><a href="{% url 'account_reset_password' %}">Change Password</a></div>
   <div><a href="{% url 'socialaccount_connections' %}">View Social Connectors</a></div>
-  <div><a href="{% url 'dash' %}">Go to Dashboard Site</a></div>
-  <br/>
-  <br/>
-  <br/>
-  <div><a href="{% url 'account_logout' %}">Sign Out</a></div>
-{% else %}
+  <div><a href="{% url 'privacy' %}">View Our Privacy Policy</a></div>
   <div><a href="{% url 'dash' %}">Go to Dashboard Site</a></div>
 {% endif %}

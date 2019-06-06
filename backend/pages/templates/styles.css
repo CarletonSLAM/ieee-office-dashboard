@@ -5,7 +5,7 @@ body {
     flex-direction:row;
     padding: 1vh;
     bottom: 0;
-    height:  96vh;
+    min-height:  96vh;
 }
 
 .menu-container {
@@ -169,4 +169,11 @@ div.socialaccount_provider.facebook .btn-text {
     letter-spacing: 0.2px;
     font-family: Helvetica, Arial, sans-serif;
     color: #fff;
+}
+
+div.privacy-container {
+    text-align: left;
+    margin: auto;
+    float: none;
+    max-width: 1000px;
 }

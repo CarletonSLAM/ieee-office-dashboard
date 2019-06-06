@@ -12,5 +12,6 @@ def home_redirect(request):
 
 urlpatterns = [
     path('', home_redirect, name='home'),
+    path('privacy/', views.PrivacyPageView.as_view(), name='privacy'),
     path('dash/', views.catchall, name='dash'),
 ]

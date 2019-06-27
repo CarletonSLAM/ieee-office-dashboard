@@ -1,5 +1,8 @@
 import services from '../services'
-import { loginRefreshSuccess } from './account';
+import {
+    loginRefreshBegin,
+    loginRefreshSuccess
+} from './account';
 
 export const SET_DATA_STALE = 'SET_DATA_STALE'
 export const setDataStale = card => ({ type: SET_DATA_STALE, card })
@@ -36,10 +39,10 @@ export const fetchData = (card) => (dispatch, getState) => {
         const { access, refresh } = getState().account.data
         promiseChain = services[card].getAuth(access)
             .catch((error) => {
-                if(error.code === 401 || error.code === 403) {
+                if(error.code === 401 || error.code === 403 && getState().account.beginRefresh !== true) {
+                    dispatch(loginRefreshBegin())
                     return services.user.loginRefresh(refresh)
                         .then((resJson) => dispatch(loginRefreshSuccess(resJson)))
-                        .then(() => window.location.reload())
                 }
                 else {
                     errorOccured = true
@@ -62,6 +65,7 @@ export const fetchData = (card) => (dispatch, getState) => {
                         dispatch(receiveError(card, { type: 'API', code: error.code, error: error.message }))
                     })
                 } else {
+                    dispatch(loginRefreshBegin())
                     return services.user.loginRefresh(refresh)
                         .then((resJson) => dispatch(loginRefreshSuccess(resJson)))
                         .then(() => window.location.reload())

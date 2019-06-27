@@ -2,7 +2,7 @@ install:
 	npm install
 
 run-dev:
-	REACT_APP_BACKEND_URL='localhost:8000' npm run client-dev
+	REACT_APP_BACKEND_URL='http://localhost:8000' npm run client-dev
 
 build-dev:
 	npm run build

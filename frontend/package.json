@@ -21,7 +21,6 @@
     "client-dev": "HTTPS=true react-scripts start",
     "start": "npm run build-config && concurrently 'npm run server' 'npm run client-dev'",
     "build": "react-scripts build && npm run delete-map-files",
-    "build-config": "node ./config/build.js",
     "delete-map-files": "find ./build -name '*.map' -delete",
     "lint": "eslint --ext jsx,js ./src ./server ./config --fix",
     "postinstall": "cp ../.github/hooks/* ../.git/hooks/",

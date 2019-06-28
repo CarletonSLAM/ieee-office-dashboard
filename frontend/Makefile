@@ -7,6 +7,5 @@ run-dev:
 build-dev:
 	npm run build
 
-build-prod:
-	build-dev
+build-prod:	build-dev
 	cp ./build ../backend/frontend

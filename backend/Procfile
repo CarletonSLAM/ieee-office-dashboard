@@ -1,0 +1,1 @@
+web: gunicorn dashyserver.wsgi --log-file -

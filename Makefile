@@ -1,7 +1,7 @@
 deploy-heroku:
-	git checkout -D deploy-heroku
-	$(MAKE) -C build
-	cp -r frontend/build backend/frontend
+	git checkout dev
+	git branch -D deploy-heroku; true
+	$(MAKE) -C frontend build-prod
 	git checkout -b deploy-heroku
 	git add .
 	git commit -m "Deploy at $(date +%s)"

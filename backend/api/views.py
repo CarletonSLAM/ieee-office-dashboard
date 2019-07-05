@@ -6,17 +6,18 @@ from api.models import APIKeyProvider
 from api.serializers import APIKeyProviderSerializer
 from rest_framework.renderers import JSONRenderer
 import requests
+import base64
 
 class CredentialDetail(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, type):
-        if type not in ['google', 'facebook', 'octranspo', 'weather', 'openweathermap']:
+        if type not in ['google', 'facebook', 'octranspo', 'weather', 'openweathermap', 'twitter']:
             return JsonResponse(status=400, data={'detail':'Unknown provider'})
 
         context = {}
 
-        if type not in ['google', 'facebook']:
+        if type not in ['google', 'facebook', 'twitter']:
             context['token'] = {}
             data = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).data
             if 'api_key' in data:
@@ -27,7 +28,11 @@ class CredentialDetail(APIView):
             provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
             if provider_uid.exists():
                 provider_uid = provider_uid[0].uid
-                context['token'] = str(SocialToken.objects.filter(account__user=request.user, account__provider=type).first().token)
+                if type == 'twitter':
+                    twitter_app = SocialApp.objects.filter(provider=type).first()
+                    context['token'] = base64.b64encode((twitter_app.client_id + ':' + twitter_app.secret).encode()).decode('utf-8')
+                else:
+                    context['token'] = str(SocialToken.objects.filter(account__user=request.user, account__provider=type).first().token)
             else:
                 return JsonResponse(status=404, data={'detail':'User not registered with provider'})
         return JsonResponse(data=context, status=200)

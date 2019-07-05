@@ -18,6 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
+    '127.0.0.1',
     'localhost'
 ]
 
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     'corsheaders',
     'rest_framework',
     'api',

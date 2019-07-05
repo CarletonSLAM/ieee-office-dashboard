@@ -7,6 +7,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

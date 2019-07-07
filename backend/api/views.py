@@ -105,6 +105,7 @@ class ServiceRequest(APIView):
             if not provider_uid.exists():
                 return JsonResponse(status=404, data={'detail':'User not registered with provider'})
             twitter_app = SocialApp.objects.filter(provider=type).first()
+            # Using Application-only Authentication (https://developer.twitter.com/en/docs/basics/authentication/overview/application-only.html)
             basic_token = base64.b64encode((twitter_app.client_id + ':' + twitter_app.secret).encode()).decode('utf-8')
             res = requests.post(TWITTER_GET_TOKEN_URL, headers= {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',

@@ -31,9 +31,20 @@
     <div class="hor-div"></div>
     <div>
       <h3>Facebook</h3>
-      <h4>We understand that privacy is of utmost importance to you. That is why we are only using your Facebook credentials to:</h4>
+      <h4>We understand that privacy is of utmost importance to you. That is why we are only using your Facebook account to:</h4>
       <div>
       - Only show the lastest public posts created by the <a href="https://www.facebook.com/ieeecarleton/">IEEE Carleton Facebook Page</a>
+      </div>
+    </div>
+    <br/>
+  {% endif %}
+  {% if provider.id == "twitter" %}
+    <div class="hor-div"></div>
+    <div>
+      <h3>Twitter</h3>
+      <h4>We understand that privacy is of utmost importance to you. That is why we are only using your Twitter account to:</h4>
+      <div>
+      - Only show the lastest public posts made by the @ieeecu account</a>
       </div>
     </div>
     <br/>
@@ -49,6 +60,11 @@
         {% if provider.id == "facebook" %}
         <div class="facebook-icon-wrapper">
           <img class="facebook-icon" src="/static/img/facebook-logo.svg"/>
+        </div>
+        {% endif %}
+        {% if provider.id == "twitter" %}
+        <div class="twitter-icon-wrapper">
+          <img class="twitter-icon" src="/static/img/twitter-logo.svg"/>
         </div>
         {% endif %}
         <span class="btn-text">Sign in with {{provider.name}}</span>

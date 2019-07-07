@@ -12,12 +12,12 @@ class CredentialDetail(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, type):
-        if type not in ['google', 'facebook', 'octranspo', 'weather', 'openweathermap', 'twitter']:
+        if type not in ['google', 'facebook', 'octranspo', 'weather', 'openweathermap']:
             return JsonResponse(status=400, data={'detail':'Unknown provider'})
 
         context = {}
 
-        if type not in ['google', 'facebook', 'twitter']:
+        if type not in ['google', 'facebook']:
             context['token'] = {}
             data = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).data
             if 'api_key' in data:
@@ -28,11 +28,7 @@ class CredentialDetail(APIView):
             provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
             if provider_uid.exists():
                 provider_uid = provider_uid[0].uid
-                if type == 'twitter':
-                    twitter_app = SocialApp.objects.filter(provider=type).first()
-                    context['token'] = base64.b64encode((twitter_app.client_id + ':' + twitter_app.secret).encode()).decode('utf-8')
-                else:
-                    context['token'] = str(SocialToken.objects.filter(account__user=request.user, account__provider=type).first().token)
+                context['token'] = str(SocialToken.objects.filter(account__user=request.user, account__provider=type).first().token)
             else:
                 return JsonResponse(status=404, data={'detail':'User not registered with provider'})
         return JsonResponse(data=context, status=200)
@@ -73,20 +69,56 @@ class CredentialRefresh(APIView):
 
 OCTRANSPO_GET_BASE_URL='https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes?format=json&appID={}&apiKey={}&stopNo={}'
 
+TWITTER_GET_TOKEN_URL = 'https://api.twitter.com/oauth2/token?grant_type=client_credentials'
+TWITTER_GET_TWEERTS_URL = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count={}'
 class ServiceRequest(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, type):
+        context = {}
+        if type == 'octranspo':
+            try:
+                stop_num = int(request.GET['stop'])
+            except ValueError:
+                return JsonResponse(status=400, data={'detail':'Invalid type for stop_num'})
 
-        if type != 'octranspo':
+            provider = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).data
+
+            res = requests.get(OCTRANSPO_GET_BASE_URL.format(provider['api_id'],provider['api_key'], stop_num))
+
+            if res.status_code is not 200:
+                return JsonResponse(status=res.status_code, data={'detail': res.text})
+            context = res.json()
+        elif type == 'twitter':
+            try:
+                screen_name = str(request.GET['screen_name'])
+            except ValueError:
+                return JsonResponse(status=400, data={'detail':'Invalid type for screen_name'})
+
+            try:
+                count = int(request.GET['count'])
+            except ValueError:
+                return JsonResponse(status=400, data={'detail':'Invalid type for count'})
+
+
+            provider_uid = SocialAccount.objects.filter(user_id=request.user.id, provider=type)
+            if not provider_uid.exists():
+                return JsonResponse(status=404, data={'detail':'User not registered with provider'})
+            twitter_app = SocialApp.objects.filter(provider=type).first()
+            basic_token = base64.b64encode((twitter_app.client_id + ':' + twitter_app.secret).encode()).decode('utf-8')
+            res = requests.post(TWITTER_GET_TOKEN_URL, headers= {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                'Authorization': 'Basic {}'.format(basic_token)
+            })
+            if res.status_code is not 200:
+                return JsonResponse(status=res.status_code, data={'detail': res.text})
+            bearer_token = res.json()['access_token']
+            res = requests.get(TWITTER_GET_TWEERTS_URL.format(screen_name, count), headers= {
+                'Authorization': 'Bearer {}'.format(bearer_token)
+            })
+            if res.status_code is not 200:
+                return JsonResponse(status=res.status_code, data={'detail': res.text})
+            context['data'] = res.json()
+        else:
             return JsonResponse(status=400, data={'detail':'Unknown provider'})
-
-        provider = APIKeyProviderSerializer(APIKeyProvider.objects.filter(name=type).first()).data
-        stop_num = request.GET['stop']
-        res = requests.get(OCTRANSPO_GET_BASE_URL.format(provider['api_id'],provider['api_key'], stop_num))
-
-        context = res.json()
-        if res.status_code is not 200:
-            return JsonResponse(status=res.status_code, data={'detail': res.text})
-
         return JsonResponse(status=200, data=context)

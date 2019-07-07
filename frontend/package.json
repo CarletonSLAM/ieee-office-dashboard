@@ -5,8 +5,10 @@
   "dependencies": {
     "cross-fetch": "^1.1.1",
     "moment": "^2.20.1",
+    "prop-types": "^15.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-emoji-render": "^0.6.0",
     "react-jss": "^8.6.1",
     "react-redux": "^5.0.6",
     "react-slick": "^0.16.0",
@@ -14,11 +16,10 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.2.0",
-    "typeface-roboto": "0.0.45",
-    "prop-types": "^15.7.2"
+    "typeface-roboto": "0.0.45"
   },
   "scripts": {
-    "client-dev": "HTTPS=true react-scripts start",
+    "client-dev": "react-scripts start",
     "start": "npm run build-config && concurrently 'npm run server' 'npm run client-dev'",
     "build": "react-scripts build && npm run delete-map-files",
     "delete-map-files": "find ./build -name '*.map' -delete",

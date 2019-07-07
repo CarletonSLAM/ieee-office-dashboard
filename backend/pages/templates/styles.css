@@ -145,7 +145,7 @@ div.socialaccount_provider.facebook {
     color: #fff;
     max-width: 272px;
     min-width: initial;
-    width: 184px;
+    width: 190px;
     height: 42px;
 }
 
@@ -166,10 +166,46 @@ div.socialaccount_provider.facebook .btn-text {
     margin: 12px 8px 0 0;
     color: #fff;
     font-size: 13px;
-    letter-spacing: 0.2px;
+    letter-spacing: -0.2px;
     font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
     color: #fff;
 }
+
+
+div.socialaccount_provider.twitter {
+    background-color: #00acee;
+    border-radius: 4px;
+    color: #fff;
+    max-width: 272px;
+    min-width: initial;
+    width: 175px;
+    height: 42px;
+}
+
+div.socialaccount_provider.twitter .twitter-icon-wrapper {
+    position: absolute;
+    margin: 2px;
+    width: 40px;
+    height: 40px;
+}
+
+div.socialaccount_provider.twitter .twitter-icon {
+    width: 27px;
+    height: 37px;
+}
+
+div.socialaccount_provider.twitter .btn-text {
+    float: right;
+    margin: 12px 8px 0 0;
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    color: #fff;
+}
+
 
 div.privacy-container {
     text-align: left;

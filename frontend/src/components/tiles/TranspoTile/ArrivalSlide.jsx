@@ -70,7 +70,7 @@ const ArrivalsSlide = ({
 }) => (
     <div className={classes.root}>
         <div className={classes.leftSection}>
-            <div className={classes.routeNumber}>{(routeNo.length > 15) ? `${dest.substring(0, 12)}...` : routeNo}</div>
+            <div className={classes.routeNumber}>{(routeNo.length > 15) ? `${routeNo.substring(0, 12)}...` : routeNo}</div>
             <div className={classes.routeHeading}>{heading}</div>
         </div>
         <div className={classes.rightSection}>

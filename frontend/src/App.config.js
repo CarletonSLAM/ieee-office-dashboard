@@ -4,11 +4,11 @@ const ONE_HOUR = ONE_MINUE * 60
 
 const SERVICES = {
     TRANSPO: 'transpo',
-    // WEATHER: 'weather',
     OPENWEATHERMAP: 'openweathermap',
     CALENDAR: 'calendar',
     GALLERY: 'gallery',
     FACEBOOK: 'facebook',
+    TWITTER: 'twitter',
     INSTAGRAM: 'instagram',
     INFO: 'info'
 }
@@ -33,7 +33,7 @@ module.exports = {
                         {
                             w: 1,
                             h: 0.5,
-                            tile: SERVICES.FACEBOOK
+                            tile: SERVICES.TWITTER
                         }
                     ]
                 },
@@ -78,11 +78,11 @@ module.exports = {
         }
     ],
     services: [
-        { name: SERVICES.TRANSPO, timeout: 2 * ONE_MINUE },
+        { name: SERVICES.TRANSPO, timeout: 5 * ONE_MINUE },
         { name: SERVICES.OPENWEATHERMAP, timeout: ONE_HOUR },
         { name: SERVICES.CALENDAR, timeout: ONE_HOUR },
         { name: SERVICES.GALLERY, timeout: 4 * ONE_HOUR },
-        { name: SERVICES.FACEBOOK, timeout: ONE_HOUR / 4 },
+        { name: SERVICES.TWITTER, timeout: ONE_HOUR / 4 },
         { name: SERVICES.INSTAGRAM, timeout: ONE_HOUR }
     ]
 }

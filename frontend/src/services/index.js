@@ -4,6 +4,7 @@ import calendar from './calendarService'
 import gallery from './galleryService'
 import instagram from './instagramService'
 import facebook from './facebookService'
+import twitter from './twitterService'
 import user from './userService'
 
 export default {
@@ -11,6 +12,7 @@ export default {
     calendar,
     instagram,
     facebook,
+    twitter,
     gallery,
     openweathermap,
     user

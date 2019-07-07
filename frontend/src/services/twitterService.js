@@ -5,37 +5,28 @@ import { handleErrors } from '../helpers'
 
 const TWEET_COUNT = 10
 const TWITTER_NAME = 'ieeecu'
+const SERVICE_URL = `${AppConfig.serverURL}/api/services/twitter/?`
 export default {
     getAuth: async (access_token) => {
-        const response = await fetch(`${AppConfig.serverURL}/api/credentials/twitter/`, { headers: { Authorization: `Bearer ${access_token}` } })
-        const { token } = await handleErrors(response)
-        const response2 = await fetch(`https://api.twitter.com/oauth2/token?grant_type=client_credentials`, {
-            method: 'POST',
-            headers : {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                Authorization: `Basic ${token}`
-            }
-        })
-        const { access_token } = await handleErrors(response2)
         return access_token
     },
     getData: async (access_token) => {
         const params = new URLSearchParams({ screen_name: TWITTER_NAME, count: TWEET_COUNT })
-        const response = await fetch('https://api.twitter.com/1.1/statuses/user_timeline.json?' + params, {
+        const response = await fetch(SERVICE_URL + params,{
             headers: {
-                Authorization: `Bearer ${access_token}`
-            }
+                'Authorization': `Bearer ${access_token}`,
+            },
         })
-        const data = await handleErrors(response)
-        console.log("TWITTERRR", data)
+        const { data } = await handleErrors(response)
+        console.log(typeof data)
         return data
     },
-    transformResponse: response => ((response && response[0] && response[0].id)
-        ? response.map(({
-            id, story, name, message, full_picture: src, created_time: time
-        }) => (
-                {
-                    id, story, name, message, src, time: moment(time).calendar()
-                }
-            )) : response)
+    transformResponse: response => (( response && response[0])
+        ? response.map(({id, text, created_at: time }) => {
+            return {
+                id,
+                message: text,
+                time: moment(time, 'ddd MMM DD HH:mm:ss Z YYYY').calendar(),
+            }
+        }) : response)
 }

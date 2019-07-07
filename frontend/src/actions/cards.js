@@ -39,7 +39,7 @@ export const fetchData = (card) => (dispatch, getState) => {
         const { access, refresh } = getState().account.data
         promiseChain = services[card].getAuth(access)
             .catch((error) => {
-                if(error.code === 401 || error.code === 403 && getState().account.beginRefresh !== true) {
+                if((error.code === 401 || error.code === 403) && getState().account.beginRefresh !== true) {
                     dispatch(loginRefreshBegin())
                     return services.user.loginRefresh(refresh)
                         .then((resJson) => dispatch(loginRefreshSuccess(resJson)))

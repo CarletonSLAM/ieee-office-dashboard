@@ -3,6 +3,8 @@ import fetch from 'cross-fetch'
 import AppConfig from '../App.config'
 import { handleErrors } from '../helpers'
 
+const serviceConfig = AppConfig.services.find(x => x.name === 'calendar').config || {}
+
 const calculateEventDuration = (start, end) => {
     if (start.format('l') === end.format('l')) {
         return start.format('dddd, MMM Do[:] h:mm A [-] ') + end.format('h:mm A')
@@ -10,7 +12,7 @@ const calculateEventDuration = (start, end) => {
     return start.format('dddd, MMM Do[:] h:mm A [-] ') + end.format('dddd, MMM Do[:] h:mm A')
 }
 
-const CAL_ID = `ieee.carleton.ca_0oehshcagcul0e8pe5e9fie70s@group.calendar.google.com`
+const CAL_ID = serviceConfig.calID || `ieee.carleton.ca_0oehshcagcul0e8pe5e9fie70s@group.calendar.google.com`
 const URL = `https://www.googleapis.com/calendar/v3/calendars/${CAL_ID}/events`
 
 export default {

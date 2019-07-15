@@ -2,8 +2,9 @@ import fetch from 'cross-fetch'
 import AppConfig from '../App.config'
 import { handleErrors } from '../helpers'
 
+const serviceConfig = AppConfig.services.find(x => x.name === 'gallery').config || {}
 
-const QUERY = `parents in '1aWcL4Wc7lOQuSI1-fZ2gX49__n0uwpuX'`
+const QUERY = `parents in '${serviceConfig.folder || '1aWcL4Wc7lOQuSI1-fZ2gX49__n0uwpuX'}'`
 const URL = `https://www.googleapis.com/drive/v3/files`
 
 export default {

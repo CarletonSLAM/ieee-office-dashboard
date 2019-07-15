@@ -78,11 +78,50 @@ module.exports = {
         }
     ],
     services: [
-        { name: SERVICES.TRANSPO, timeout: 5 * ONE_MINUE },
-        { name: SERVICES.OPENWEATHERMAP, timeout: ONE_HOUR },
-        { name: SERVICES.CALENDAR, timeout: ONE_HOUR },
-        { name: SERVICES.GALLERY, timeout: 4 * ONE_HOUR },
-        { name: SERVICES.TWITTER, timeout: ONE_HOUR / 4 },
-        { name: SERVICES.INSTAGRAM, timeout: ONE_HOUR }
+        {
+            name: SERVICES.TRANSPO,
+            timeout: 5 * ONE_MINUE,
+            config: {
+                stops: [ '5813' ]
+            }
+        },
+        {
+            name: SERVICES.OPENWEATHERMAP,
+            timeout: ONE_HOUR,
+            config: {
+                location: 'Ottawa,ca',
+                units: 'metric'
+            }
+        },
+        {
+            name: SERVICES.CALENDAR,
+            timeout: ONE_HOUR,
+            config: {
+                calID: 'ieee.carleton.ca_0oehshcagcul0e8pe5e9fie70s@group.calendar.google.com'
+            }
+        },
+        {
+            name: SERVICES.GALLERY,
+            timeout: 4 * ONE_HOUR,
+            config: {
+                folderID: '1aWcL4Wc7lOQuSI1-fZ2gX49__n0uwpuX'
+            }
+        },
+        {
+            name: SERVICES.TWITTER,
+            timeout: ONE_HOUR / 4,
+            config: {
+                account: 'ieeecu',
+                count: 10
+            }
+        },
+        {
+            name: SERVICES.INSTAGRAM,
+            timeout: ONE_HOUR,
+            config: {
+                account: 'ieeeorg',
+                count: 10
+            }
+         }
     ]
 }

@@ -1,9 +1,12 @@
 import fetch from 'cross-fetch'
+import AppConfig from '../App.config'
+
+const serviceConfig = AppConfig.services.find(x => x.name === 'instagram').config || {}
 
 export default {
     getData: async() => {
 
-        const response = await fetch('https://instagram.com/ieeeorg')
+        const response = await fetch(`https://instagram.com/${serviceConfig.account}`)
         if (!response.ok) {
             return Promise.reject({
                 message: response.statusText === '' ? response._bodyText : response.statusText, // eslint-disable-line no-underscore-dangle

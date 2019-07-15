@@ -3,8 +3,9 @@ import moment from 'moment'
 import { handleErrors } from '../helpers'
 import AppConfig from '../App.config'
 
-const API_LOCATION = 'Ottawa,ca'
-const UNITS = 'metric'
+
+const serviceConfig = AppConfig.services.find(x => x.name === 'openweathermap').config || {}
+
 export default {
     getAuth: async (access_token) => {
         const response = await fetch(`${AppConfig.serverURL}/api/credentials/openweathermap/`, { headers: { Authorization: `Bearer ${access_token}` } })
@@ -12,7 +13,9 @@ export default {
         return token
     },
     getData: async (token) => {
-        const params = new URLSearchParams({ appid: token, q: API_LOCATION, units: UNITS })
+        const apiLocation = serviceConfig.location || 'Ottawa,ca'
+        const apiUnits = serviceConfig.units || 'metric'
+        const params = new URLSearchParams({ appid: token, q: apiLocation, units: apiUnits })
         const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?' + params)
         const data = await handleErrors(response)
         return data

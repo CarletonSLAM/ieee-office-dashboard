@@ -3,15 +3,19 @@ import fetch from 'cross-fetch'
 import AppConfig from '../App.config'
 import { handleErrors } from '../helpers'
 
-const TWEET_COUNT = 10
-const TWITTER_NAME = 'ieeecu'
+
+const serviceConfig = AppConfig.services.find(x => x.name === 'twitter').config || {}
+
 const SERVICE_URL = `${AppConfig.serverURL}/api/services/twitter/?`
 export default {
     getAuth: async (access_token) => {
         return access_token
     },
     getData: async (access_token) => {
-        const params = new URLSearchParams({ screen_name: TWITTER_NAME, count: TWEET_COUNT })
+        const apiAccount = serviceConfig.account || 'ieeecu';
+        const apiCount = serviceConfig.count || 10;
+
+        const params = new URLSearchParams({ screen_name: apiAccount, count: apiCount })
         const response = await fetch(SERVICE_URL + params,{
             headers: {
                 'Authorization': `Bearer ${access_token}`,

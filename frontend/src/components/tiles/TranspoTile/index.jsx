@@ -29,9 +29,10 @@ const TranspoTile = ({ classes, card }) => {
             <Slider {...sliderSettings}>
                 {
                     cardData.map((bus, ind) => (
-                        <div key={`bus-${ind}`}>
-                            <ArrivalSlide {...bus} />
-                        </div>
+                        (bus && bus.routeNo) ?
+                        (<div key={`bus-${ind}`}><ArrivalSlide {...bus} /></div>)
+                        :
+                        <></>
                     ))
                 }
             </Slider>

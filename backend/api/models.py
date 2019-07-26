@@ -9,3 +9,12 @@ class APIKeyProvider(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+
+class ServiceConfig(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    owner = models.OneToOneField('auth.User', on_delete=models.CASCADE, unique=True)
+    config = models.TextField()
+
+    class Meta:
+        ordering = ('created',)

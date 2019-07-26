@@ -2,11 +2,23 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from allauth.socialaccount.models import SocialAccount, SocialApp, SocialToken
-from api.models import APIKeyProvider
-from api.serializers import APIKeyProviderSerializer
+from api.models import APIKeyProvider, ServiceConfig
+from api.serializers import APIKeyProviderSerializer, ServiceConfigSerializer
 from rest_framework.renderers import JSONRenderer
 import requests
 import base64
+
+class ServiceConfigView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        configObj = ServiceConfig.objects.filter(owner=self.request.user)
+        if not configObj.exists():
+            return JsonResponse(status=404, data={'detail':'Config Not Found'})
+        context = dict()
+        context['config'] = configObj.first().config
+        return JsonResponse(data=context, status=200)
+
 
 class CredentialDetail(APIView):
     permission_classes = (IsAuthenticated,)

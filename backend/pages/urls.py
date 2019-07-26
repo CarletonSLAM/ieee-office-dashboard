@@ -13,6 +13,6 @@ def home_redirect(request):
 urlpatterns = [
     path('', home_redirect, name='home'),
     path('privacy/', views.PrivacyPageView.as_view(), name='privacy'),
-    path('config/', views.DashboardConfigView.as_view(), name='dash-config'),
+    path('config/', views.DashboardConfigView.as_view(), name='config'),
     path('dash/', views.catchall, name='dash'),
 ]

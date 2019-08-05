@@ -31,7 +31,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <Window layout={AppConfig.layout} services={AppConfig.services} />
+                    <Window layout={AppConfig.layout} />
                 </PersistGate>
             </Provider>
         )

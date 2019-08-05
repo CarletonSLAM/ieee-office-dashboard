@@ -6,8 +6,9 @@ import TileFrame from '../TileFrame'
 
 import tiles from '../tiles'
 import EmptyTile from '../tiles/EmptyTile'
-import { getDataIfNeeded, setDataStale } from '../../actions'
+import { getDataIfNeeded, setDataStale, getConfig } from '../../actions'
 import { serverURL } from '../../App.config'
+import services from '../../services'
 
 const styles = {
     root: {
@@ -44,9 +45,13 @@ const styles = {
 }
 
 class Dashboard extends Component {
-    componentDidMount() {
+    constructor(props) {
+        super(props)
         this.layoutLevels = 0
-        this.onDashboardLoad()
+        this.intervals = []
+    }
+    async componentDidMount() {
+        await this.onDashboardLoad()
     }
 
 
@@ -54,26 +59,33 @@ class Dashboard extends Component {
         this.intervals.forEach(i => clearInterval(i))
     }
 
-    onDashboardLoad() {
-        this.intervals = this.props.services.map(({ name, timeout }) => {
-            this.fetchDatasource(name)
-            return setInterval(() => this.fetchDatasource(name), timeout)
-        })
+    async onDashboardLoad() {
+        await this.props.getConfig()
     }
 
-    fetchDatasource(name) {
+    fetchDatasource(name, serviceConfig) {
         this.props.setDataStale(name)
-        this.props.getDataIfNeeded(name)
+        this.props.getDataIfNeeded(name, serviceConfig)
     }
 
     createLayout(element, index) {
         const flexAmount = (element.h === 1) ? element.w : element.h
         this.layoutLevels++
         if (element.tile) {
-            const tileType = element.tile[0].toUpperCase() + element.tile.slice(1)
+            console.log(element.tile)
+            const tileName = element.tile.name
+            const tileType = tileName[0].toUpperCase() + tileName.slice(1)
             const TileElement = tiles[`${tileType}Tile`]
             // Relay information from calendar to the info tile
-            const tileData = tileType === 'Info' ? this.props.calendar : this.props[element.tile]
+            let tileData
+            if (tileType === 'Info') {
+                tileData = this.props.calendar
+            } else {
+                tileData = this.props[tileName]
+                const serviceConfig = element.tile.config
+                const serviceTimeout = services.user.convertConfigTimeoutToMS(serviceConfig.timeout)
+                this.intervals.push(setInterval(() => this.fetchDatasource(tileName, serviceConfig), serviceTimeout))
+            }
             return tileData
                 ? (
                     <TileFrame key={`level-${this.layoutLevels}-${index}`} loading={tileData && tileData.isFetching} style={{ flex: `${flexAmount * 100}%`, margin: '1vh' }}>
@@ -102,30 +114,37 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { classes, layout } = this.props
+        let { classes, config } = this.props
         this.layoutHasChildren = false
+        config = config === undefined ? config : Object.values(config)
         return (
-            <div className={classes.root}>
-                <div className={classes.banner}>
-                    <a className={`${classes.bannerLink} ${classes.bannerPaddng}`} href={serverURL}>Go to Admin Site</a>
-                    <div className={classes.bannerPaddng} onClick={this.onLogout.bind(this)}>Logout</div>
-                </div>
-                {layout.map(this.createLayout.bind(this))}
-            </div>
+            <>
+                {
+                    config ?
+                    <div className={classes.root}>
+                        <div className={classes.banner}>
+                            <a className={`${classes.bannerLink} ${classes.bannerPaddng}`} href={serverURL}>Go to Admin Site</a>
+                            <div className={classes.bannerPaddng} onClick={this.onLogout.bind(this)}>Logout</div>
+                        </div>
+                        {config.map(this.createLayout.bind(this))}
+                    </div>
+                    : <div></div>
+                }
+            </>
         )
     }
 }
 
-const mapStateToProps = state => ({ ...state.cards })
+const mapStateToProps = state => ({ config: state.account.config, ...state.cards })
 
 const mapDispatchToProps = dispatch => ({
-    getDataIfNeeded: name => dispatch(getDataIfNeeded(name)),
-    setDataStale: name => dispatch(setDataStale(name))
+    getDataIfNeeded: (name, serviceConfig) => dispatch(getDataIfNeeded(name, serviceConfig)),
+    setDataStale: name => dispatch(setDataStale(name)),
+    getConfig: () => dispatch(getConfig()),
 })
 
 Dashboard.propTypes = {
     classes: PropTypes.object.isRequired,
-    services: PropTypes.array.isRequired,
     getDataIfNeeded: PropTypes.func.isRequired,
     setDataStale: PropTypes.func.isRequired,
     calendar: PropTypes.object.isRequired,

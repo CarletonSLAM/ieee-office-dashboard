@@ -3,7 +3,7 @@ import openweathermap from './openweathermapService'
 import calendar from './calendarService'
 import gallery from './galleryService'
 import instagram from './instagramService'
-import facebook from './facebookService'
+// import facebook from './facebookService'
 import twitter from './twitterService'
 import user from './userService'
 
@@ -11,7 +11,7 @@ export default {
     transpo,
     calendar,
     instagram,
-    facebook,
+    // facebook,
     twitter,
     gallery,
     openweathermap,

@@ -1,10 +1,7 @@
 import fetch from 'cross-fetch'
-import AppConfig from '../App.config'
-
-const serviceConfig = AppConfig.services.find(x => x.name === 'instagram').config || {}
 
 export default {
-    getData: async() => {
+    getData: async(serviceConfig) => {
 
         const response = await fetch(`https://instagram.com/${serviceConfig.account}`)
         if (!response.ok) {

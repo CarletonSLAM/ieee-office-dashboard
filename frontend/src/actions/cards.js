@@ -31,7 +31,7 @@ export const receiveError = (card, error) => ({
 })
 
 
-export const fetchData = (card) => (dispatch, getState) => {
+export const fetchData = (card, serviceConfig) => (dispatch, getState) => {
     dispatch(requestData(card))
     let errorOccured = false
     let promiseChain
@@ -49,9 +49,11 @@ export const fetchData = (card) => (dispatch, getState) => {
                     dispatch(receiveError(card, { type: 'Auth', code: error.code, error: error.message }))
                 }
             })
-            .then(services[card].getData)
+            .then(access => {
+                return services[card].getData(access, serviceConfig)
+            })
     } else {
-        promiseChain = services[card].getData()
+        promiseChain = services[card].getData(serviceConfig)
     }
     return promiseChain
         .catch((error) => {
@@ -94,8 +96,8 @@ const shouldGetData = (state, card) => {
     return cardData.isStale
 }
 
-export const getDataIfNeeded = (card) => (dispatch, getState) => {
+export const getDataIfNeeded = (card, serviceConfig) => (dispatch, getState) => {
     if (shouldGetData(getState(), card)) {
-        return dispatch(fetchData(card))
+        return dispatch(fetchData(card, serviceConfig))
     }
 }

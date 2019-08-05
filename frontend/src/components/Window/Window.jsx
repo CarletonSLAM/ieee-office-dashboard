@@ -27,7 +27,7 @@ class Window extends Component {
                 {
                     !accountSuccess
                         ? <Login onSubmit={this.userLogin.bind(this)} message={accountError ? accountError.message : ''} />
-                        : <Dashboard layout={this.props.layout} services={this.props.services} />
+                        : <Dashboard layout={this.props.layout} />
                 }
             </div>
         )
@@ -38,7 +38,6 @@ class Window extends Component {
 Window.propTypes = {
     classes: PropTypes.object.isRequired,
     layout: PropTypes.array.isRequired,
-    services: PropTypes.array.isRequired,
     performLogin: PropTypes.func.isRequired,
     clearLoginMessage: PropTypes.func.isRequired,
     accountError: PropTypes.object,

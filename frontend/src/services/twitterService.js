@@ -3,15 +3,12 @@ import fetch from 'cross-fetch'
 import AppConfig from '../App.config'
 import { handleErrors } from '../helpers'
 
-
-const serviceConfig = AppConfig.services.find(x => x.name === 'twitter').config || {}
-
 const SERVICE_URL = `${AppConfig.serverURL}/api/services/twitter/?`
 export default {
     getAuth: async (access_token) => {
         return access_token
     },
-    getData: async (access_token) => {
+    getData: async (access_token, serviceConfig) => {
         const apiAccount = serviceConfig.account || 'ieeecu';
         const apiCount = serviceConfig.count || 10;
 

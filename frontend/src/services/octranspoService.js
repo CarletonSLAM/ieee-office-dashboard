@@ -5,8 +5,6 @@ import AppConfig from '../App.config'
 
 const URL_BASE = `${AppConfig.serverURL}/api/services/octranspo/`
 
-const serviceConfig = AppConfig.services.find(x => x.name === 'transpo').config || {}
-
 const aggregateTrips = (trips = []) => {
     const tripAggregate = !(trips instanceof Array) ? [trips] : trips
     return tripAggregate.map(trip => ({
@@ -16,9 +14,9 @@ const aggregateTrips = (trips = []) => {
 }
 export default {
     getAuth: async (access_token) => {
-        return {access_token}
+        return access_token
     },
-    getData: ({access_token}) => {
+    getData: (access_token, serviceConfig) => {
         const apiStops = serviceConfig.stops || []
         return Promise.all(apiStops.map( async (stopNo) => {
             const response = await fetch(`${URL_BASE}?stop=${stopNo}`,{

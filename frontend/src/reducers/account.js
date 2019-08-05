@@ -3,11 +3,13 @@ import {
     LOGIN_FAILURE,
     CLEAR_LOGIN_MESSAGE,
     LOGIN_REFRESH_BEGIN,
-    LOGIN_REFRESH_SUCCESS
+    LOGIN_REFRESH_SUCCESS,
+    GET_CONFIG_SUCCESS,
+    GET_CONFIG_FAILURE
 } from '../actions'
 
 
-const loginStateReducer = (state = { data: {}, error: {}, success: false }, action) => {
+const loginStateReducer = (state = { config: {}, data: {}, error: {}, success: false }, action) => {
     switch (action.type) {
     case LOGIN_SUCCESS:
         delete state.error
@@ -36,7 +38,17 @@ const loginStateReducer = (state = { data: {}, error: {}, success: false }, acti
         return Object.assign({}, state, {
             data: Object.assign({}, state.data, {access: action.access})
         })
-
+    case GET_CONFIG_SUCCESS:
+        delete state.error
+        return Object.assign({}, state, {
+            config: Object.assign({}, state.config, action.config)
+        })
+    case GET_CONFIG_FAILURE:
+        delete state.config
+        return Object.assign({}, state, {
+            success: false,
+            error: action.error
+        })
     default:
         return state
     }

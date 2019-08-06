@@ -9,14 +9,14 @@
 {% block content %}
     <h1>{% trans "Dashboard Configuration" %}</h1>
 
-    <form method="POST">
+    {% if form.non_field_errors %}
+        <div id="errorMsg">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <form id="configForm" method="POST">
         {% csrf_token %}
-
         <div>
-            {% if form.non_field_errors %}
-                <div id="errorMsg">{{ form.non_field_errors }}</div>
-            {% endif %}
             <pre id="config" style="background-color: #e4f1ff;padding: 50px;border-radius: 10px;text-align: left; max-width:800px;float:none; margin:auto"></pre>
+            <div id="errorConfig"></div>
             <div>
                 <button class="button primary" name="submit-btn" type="submit">{% trans 'Update' %}</button>
             </div>
@@ -37,7 +37,6 @@
 
             var configEl = $('#config');
             configEl.click(function(target) {
-                console.log("dd");
                 var editableTextEl =$("<textarea/>");
                 editableTextEl
                     .val(configEl.html())
@@ -52,6 +51,16 @@
                     .css('float','none')
                     .css('margin','auto');
                 configEl.replaceWith(editableTextEl);
+            });
+
+            $('#configForm').submit(function() {
+                try {
+                    JSON.parse($("#config").html());
+                    return true;
+                } catch(e) {
+                    $("#errorConfig").text("Invalid Format. Please try again");
+                    return false;
+                }
             });
         });
     })()

@@ -50,27 +50,7 @@ export default {
             },
             method: 'GET',
         })
-        console.log(response)
-        // let { config } = await handleErrors(response)
-        // config = JSON.parse(config)
-        // Object.keys(services).forEach(key => {
-        //     let toStr = services[key].timeout
-        //     let timeout = parseInt(toStr.slice(0,toStr.length-1))
-        //     const unit = toStr[toStr.length-1]
-        //     switch(unit) {
-        //     case 'H':
-        //         timeout *= 60 /*eslint-disable-line no-fallthrough */
-        //     case 'M':
-        //         timeout *= 60 /*eslint-disable-line no-fallthrough */
-        //     case 'S':
-        //         timeout *= 1000
-        //         break;
-        //     default:
-        //         console.error('Unknown timeout unit')
-        //     }
-        //     services[key].timeout = timeout
-        // })
         const { config } = await handleErrors(response)
-        return JSON.parse(config)
+        return Object.values(JSON.parse(config))
     }
 }

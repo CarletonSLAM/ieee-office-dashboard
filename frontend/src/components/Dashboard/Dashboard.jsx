@@ -48,7 +48,11 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.layoutLevels = 0
-        this.intervals = []
+        this.serviceIntervals = []
+        this.serviceInit = []
+        this.fetchDatasource = this.fetchDatasource.bind(this)
+        this.createLayout = this.createLayout.bind(this)
+        this.onLogout = this.onLogout.bind(this)
     }
     async componentDidMount() {
         await this.onDashboardLoad()
@@ -56,7 +60,7 @@ class Dashboard extends Component {
 
 
     componentWillUnmount() {
-        this.intervals.forEach(i => clearInterval(i))
+        this.serviceIntervals.forEach(i => clearInterval(i))
     }
 
     async onDashboardLoad() {
@@ -72,7 +76,6 @@ class Dashboard extends Component {
         const flexAmount = (element.h === 1) ? element.w : element.h
         this.layoutLevels++
         if (element.tile) {
-            console.log(element.tile)
             const tileName = element.tile.name
             const tileType = tileName[0].toUpperCase() + tileName.slice(1)
             const TileElement = tiles[`${tileType}Tile`]
@@ -84,7 +87,11 @@ class Dashboard extends Component {
                 tileData = this.props[tileName]
                 const serviceConfig = element.tile.config
                 const serviceTimeout = services.user.convertConfigTimeoutToMS(serviceConfig.timeout)
-                this.intervals.push(setInterval(() => this.fetchDatasource(tileName, serviceConfig), serviceTimeout))
+                if(!this.serviceInit.includes(tileName)) {
+                    this.fetchDatasource(tileName, serviceConfig)
+                    this.serviceIntervals.push(setInterval(() => this.fetchDatasource(tileName, serviceConfig), serviceTimeout))
+                    this.serviceInit.push(tileName)
+                }
             }
             return tileData
                 ? (
@@ -103,7 +110,7 @@ class Dashboard extends Component {
                     display: 'flex', flex: `${flexAmount * 100}%`, flexDirection: flexDir, margin: this.layoutHasChildren ? '' : '1vh'
                 }}
             >
-                {element.layout.map(this.createLayout.bind(this))}
+                {element.layout.map(this.createLayout)}
             </div>
         )
     }
@@ -116,17 +123,17 @@ class Dashboard extends Component {
     render() {
         let { classes, config } = this.props
         this.layoutHasChildren = false
-        config = config === undefined ? config : Object.values(config)
+        config = config ? Object.values(config) : []
         return (
             <>
                 {
-                    config ?
+                    config[0] ?
                     <div className={classes.root}>
                         <div className={classes.banner}>
                             <a className={`${classes.bannerLink} ${classes.bannerPaddng}`} href={serverURL}>Go to Admin Site</a>
-                            <div className={classes.bannerPaddng} onClick={this.onLogout.bind(this)}>Logout</div>
+                            <div className={classes.bannerPaddng} onClick={this.onLogout}>Logout</div>
                         </div>
-                        {config.map(this.createLayout.bind(this))}
+                        {config.map(this.createLayout)}
                     </div>
                     : <div></div>
                 }
@@ -146,9 +153,7 @@ const mapDispatchToProps = dispatch => ({
 Dashboard.propTypes = {
     classes: PropTypes.object.isRequired,
     getDataIfNeeded: PropTypes.func.isRequired,
-    setDataStale: PropTypes.func.isRequired,
-    calendar: PropTypes.object.isRequired,
-    layout: PropTypes.array.isRequired
+    setDataStale: PropTypes.func.isRequired
 }
 
 

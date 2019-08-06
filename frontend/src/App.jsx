@@ -7,7 +7,6 @@ import configureStore from './configureStore'
 
 import Window from './components/Window'
 import { body } from './styles'
-import AppConfig from './App.config'
 
 const styles = { body }
 
@@ -31,7 +30,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <Window layout={AppConfig.layout} />
+                    <Window />
                 </PersistGate>
             </Provider>
         )

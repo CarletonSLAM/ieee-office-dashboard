@@ -19,7 +19,7 @@ class DashboardConfigView(View):
     template_name = 'config.html'
 
     def get(self, request, *args, **kwargs):
-        config = '[]'
+        config = '[{"h":0.84,"w":1,"layout":[{"w":0.33,"h":1,"layout":[{"w":1,"h":0.5,"tile":{"name":"instagram","config":{"timeout":"1H","account":"ieeeorg","count":10}}},{"w":1,"h":0.5,"tile":{"name":"twitter","config":{"timeout":"15M","account":"ieeecu","count":10}}}]},{"w":0.33,"h":1,"layout":[{"w":1,"h":0.4,"tile":{"name":"info"}},{"w":1,"h":0.6,"tile":{"name":"gallery","config":{"timeout":"4H","folderID":"1aWcL4Wc7lOQuSI1-fZ2gX49__n0uwpuX"}}}]},{"w":0.33,"h":1,"tile":{"name":"calendar","config":{"timeout":"30M","calID":"ieee.carleton.ca_0oehshcagcul0e8pe5e9fie70s@group.calendar.google.com"}}}]},{"h":0.16,"w":1,"layout":[{"w":0.5,"h":1,"tile":{"name":"transpo","config":{"timeout":"5M","stops":["5813"]}}},{"w":0.5,"h":1,"tile":{"name":"openweathermap","config":{"timeout":"1H","location":"Ottawa,ca","units":"metric"}}}]}]'
         configObj = ServiceConfig.objects.filter(owner=self.request.user)
         if configObj.exists():
             config = configObj.first().config

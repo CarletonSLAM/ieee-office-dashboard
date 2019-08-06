@@ -31,6 +31,19 @@ export const loginRefreshSuccess = access => ({
     access
 })
 
+export const GET_CONFIG_SUCCESS = 'GET_CONFIG_SUCCESS'
+export const getConfigSuccess = config => ({
+    type: GET_CONFIG_SUCCESS,
+    config
+})
+
+
+export const GET_CONFIG_FAILURE = 'GET_CONFIG_FAILURE'
+export const getConfigFailure = error => ({
+    type: GET_CONFIG_FAILURE,
+    error
+})
+
 
 
 export const performLogin = ({ username, password }) => async (dispatch) => {
@@ -39,5 +52,16 @@ export const performLogin = ({ username, password }) => async (dispatch) => {
         dispatch(loginSuccess(resJson))
     } catch (error) {
         dispatch(loginFailure(error))
+    }
+}
+
+
+export const getConfig = () => async (dispatch, getState) => {
+    try {
+        const { access } = getState().account.data
+        const resJson = await services.user.getConfig(access)
+        return dispatch(getConfigSuccess(resJson))
+    } catch (error) {
+        return dispatch(getConfigFailure(error))
     }
 }

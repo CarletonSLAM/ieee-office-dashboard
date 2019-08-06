@@ -1,6 +1,7 @@
 # IEEE Carleton Dashboard
 A web dashboard for the IEEE Office to display the latest information useful for students that walk in.
 
+![Alt text](.github/readme/demo.png?raw=true "Title")
 
 ## Components
 This app is separated into a Django based backend and a React based frontend.

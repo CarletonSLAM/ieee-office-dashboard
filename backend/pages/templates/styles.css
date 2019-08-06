@@ -213,3 +213,7 @@ div.privacy-container {
     float: none;
     max-width: 1000px;
 }
+
+#errorConfig {
+    color: red;
+}

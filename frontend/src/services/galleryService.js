@@ -14,7 +14,7 @@ export default {
         const { token } = await handleErrors(response)
         return token
     },
-    getData: async (access_token, serviceConfig) => {        
+    getData: async (access_token, serviceConfig) => {
         const QUERY = `parents in '${serviceConfig.folder || '1aWcL4Wc7lOQuSI1-fZ2gX49__n0uwpuX'}'`
         const URL = `https://www.googleapis.com/drive/v3/files`
         const params = new URLSearchParams({

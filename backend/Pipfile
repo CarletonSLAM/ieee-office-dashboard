@@ -8,7 +8,7 @@ verify_ssl = true
 [packages]
 django = "==2.2"
 django-allauth = "==0.39.1"
-djangorestframework = "==3.9.2"
+djangorestframework = "==3.11.2"
 djangorestframework-simplejwt = "==4.1.3"
 django-cors-headers = "*"
 requests = "*"
